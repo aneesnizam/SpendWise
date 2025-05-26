@@ -1,1 +1,28 @@
+#home{
+margin: 0;
+ background-color: #e0e5ec;
+ height: 100vh;
+ overflow-y: auto;
+}
+#home .header{
+display: flex;
+justify-content: space-between;
+align-items:center;
+padding: 15px 20px;
 
+}
+#home .header .left{
+color: black;
+margin:0;
+}
+#home .header .left h4{
+margin: 0;
+font-size: 12px;
+}
+#home .header .right{
+
+}
+#home .header .right a{
+text-decoration: none;
+color: rgb(0, 53, 0);
+}
