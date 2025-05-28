@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import userlogindata from "./Authstore";
+import api from "../utilities/axios";
+import { toast } from "react-toastify";
 export default function Forgetpass({ onForgetPassword }) {
   const [email, setEmail] = useState("");
   const [sendcode, setSendCode] = useState(false);
@@ -7,21 +9,34 @@ export default function Forgetpass({ onForgetPassword }) {
   const [success, setSuccess] = useState(" ");
   const [password, setPassword] = useState("");
   const [confirmpass, setConfirmpass] = useState("");
+  const [otp,setOtp] = useState("")
 
    const {
 setForgetPassword 
  } = userlogindata()
 
-  const handleSendCode = () => {
+  const handleSendCode = async() => {
     if (!email || !email.includes("@") ) {
       setError("please eneter a valid email");
       return;
     }
-    setSuccess("code sended");
+try{
+  await api.post("api/auth/forgot-password",{email})
+  .then((res) => {
+toast.success(res.data.message)
+  })
+}
+catch(err){
+  toast.error(err.message)
+
+}
+  
     setSendCode(true);
     setError(" ");
   };
-  const handlereset = () => {
+
+
+  const handlereset = async() => {
     if (!password || !confirmpass) {
       setSuccess("");
       setError("all field required");
@@ -32,12 +47,31 @@ setForgetPassword
       setError("do not match");
       return;
     }
+try{
+await api.post("api/auth/reset-password",{email,otp,newPassword : password})
+.then((res) => {
+if(res.data.success){
+  toast.success(res.data.message)
+}
+else{
+  toast.error(res.data.message)
+}
+})
+
+}
+catch(err){
+toast.error(err.message)
+
+}
+
+
     setError("");
     setSuccess("completed");
     setTimeout(() => {
       setForgetPassword(false);
     }, 1500);
   };
+
 
   return (
    
@@ -61,7 +95,7 @@ setForgetPassword
           {sendcode && (
             <>
               <div className="input_field">
-                <input type="text" placeholder="Enter the Code" />
+                <input type="text" placeholder="Enter the Code" onChange={(e) => setOtp(e.target.value)}/>
               </div>
               <div className="input_field">
                 <input
