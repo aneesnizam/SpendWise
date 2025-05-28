@@ -1,55 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./insert.css";
-
+import api from "../utilities/axios";
+import { toast } from "react-toastify";
 export default function DataBox() {
-  const [foodcost, setFoodcost] = useState("");
-  const [vehicle, setVehicle] = useState("Bus");
-  const [vehiclecost, setVehiclecost] = useState("");
   const [customcategory, setCustomCategory] = useState("");
   const [categorycost, setCategorycost] = useState("");
   const [history, setHistory] = useState([]);
   const [currency, setCurrency] = useState("₹");
   const [discription, setDiscription] = useState(" ");
   const [error, setError] = useState(" ");
-  const [totalcost,setTotalcost] = useState(0)
-  const [userlimit,setUserlimit] = useState(100)
-  const [dollar,setDollar] = useState()
-const rate = 1 / 85.1; // or any latest rate, e.g., 1 / 83.33
+  const [totalcost, setTotalcost] = useState(0);
+  const [userlimit, setUserlimit] = useState(100);
+  const [dollar, setDollar] = useState();
 
+  const rate = 1 / 85.1; // or any latest rate, e.g., 1 / 83.33
 
-  const handleSubmit = (e) => {
+  const fetchhistory = async () => {
+    try {
+      await api.get("api/expenses").then((res) => {
+        setHistory(res.data.expenses);
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchhistory();
+  }, [categorycost]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newEntries = [];
     const time = new Date().toLocaleTimeString();
     const date = new Date().toLocaleDateString();
     const toINR = (value) => {
-      const num = parseFloat(value)
-      return currency === "$" ? ( num / rate) : num
+      const num = parseFloat(value);
+      return currency === "$" ? num / rate : num;
+    };
 
-
-    }
-
-    if (foodcost.trim()) {
-      newEntries.push({
-        category: "Food",
-        cost: toINR(foodcost),
-        time,
-        date,
-        discription,
-      });
-      setError(" ");
-    }
-    if (vehiclecost.trim()) {
-      newEntries.push({
-        category: vehicle,
-        cost: toINR(vehiclecost),
-        time,
-        date,
-        discription,
-      });
-      setError(" ");
-    }
     if (categorycost.trim()) {
       newEntries.push({
         category: customcategory ? customcategory : "Other",
@@ -64,27 +54,67 @@ const rate = 1 / 85.1; // or any latest rate, e.g., 1 / 83.33
       setError("Fill atleast one input");
       return;
     }
- 
-    const total = parseFloat(totalcost) + toINR(foodcost || 0) + toINR(categorycost || 0) + toINR(vehiclecost || 0)
-       const limit = parseFloat(userlimit) - total
-    setHistory([...newEntries, ...history]);
+
+    const newcost = toINR(categorycost);
+
+    // const total = parseFloat(totalcost) + toINR(categorycost || 0)
+    //  const limit = parseFloat(userlimit) - total
+    // setHistory([...newEntries, ...history]);
+
+    try {
+      await api
+        .post("api/expenses/", {
+          title: discription,
+          amount: newcost,
+          category: customcategory,
+        })
+        .then((res) => {
+          toast.success(res.data.message);
+          console.log(res.data);
+        });
+    } catch (err) {
+      toast.error(err.message);
+    }
+
     setCategorycost("");
-    setFoodcost("");
     setDiscription("");
     setCustomCategory("");
-    setVehiclecost("");
-    setVehicle("Bus");
+
     setTotalcost(total);
     setUserlimit(limit);
   };
-  const handleDelete = (index) => {
+
+  const DateDisplay = (dateString) => {
+    const date = new Date(dateString);
+
+    const formattedDate = date.toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+    return formattedDate;
+  };
+
+  const handleDelete = async (id) => {
     const updatedentries = [...history];
-    const newtotalcost = totalcost - updatedentries[index]["cost"]
-    const newlimit =  userlimit + updatedentries[index]["cost"]
-    updatedentries.splice(index, 1);
-    setHistory(updatedentries);
-    setTotalcost(newtotalcost)
-    setUserlimit(newlimit)
+    await api
+      .delete(`api/expenses/${id}`)
+      .then((res) => {
+        if (res.data.success) {
+          toast.success(res.data.message);
+          const newHistory = updatedentries.filter((data) => data._id !== id);
+          setHistory(newHistory);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+
+    // const newtotalcost = totalcost - updatedentries[id]["cost"];
+    // const newlimit = userlimit + updatedentries[id]["cost"];
+    // updatedentries.splice(id, 1);
+    // setTotalcost(newtotalcost);
+    // setUserlimit(newlimit);
   };
 
   return (
@@ -105,40 +135,19 @@ const rate = 1 / 85.1; // or any latest rate, e.g., 1 / 83.33
         <div className="form-left">
           <form onSubmit={handleSubmit}>
             <div className="input-group">
-              <label htmlFor="">Food</label>
-              <input
-                type="text"
-                value={foodcost}
-                onChange={(e) => setFoodcost(e.target.value)}
-              />
-            </div>
-
-            <div className="input-group">
-              <select
-                value={vehicle}
-                onChange={(e) => setVehicle(e.target.value)}
-              >
-                <option value="car">Bus</option>
-                <option value="bus">Car</option>
-                <option value="bike">Bike</option>
-              </select>
-              <input
-                type="text"
-                placeholder="Cost"
-                value={vehiclecost}
-                onChange={(e) => setVehiclecost(e.target.value)}
-              />
-            </div>
-
-            <h6>Add Custom</h6>
-
-            <div className="input-group">
               <label htmlFor="">Category</label>
-              <input 
+              <input
+                list="categories"
                 type="text"
                 value={customcategory}
                 onChange={(e) => setCustomCategory(e.target.value)}
               />
+              <datalist id="categories">
+                <option value="Food" />
+                <option value="Travel" />
+                <option value="Clothing" />
+                <option value="Education" />
+              </datalist>
             </div>
 
             <div className="input-group">
@@ -177,34 +186,49 @@ const rate = 1 / 85.1; // or any latest rate, e.g., 1 / 83.33
 
         <div className="form-right">
           <div className="info-block">
-            <h5> <p style={{color: Number(userlimit) > 0 ? "green" : "red"}}>{currency}{ currency == "$" ? (userlimit * rate) .toFixed(2) : userlimit .toFixed(2)}</p><p>remaining</p></h5>
+            <h5>
+              {" "}
+              <p style={{ color: Number(userlimit) > 0 ? "green" : "red" }}>
+                {currency}
+                {currency == "$"
+                  ? (userlimit * rate).toFixed(2)
+                  : userlimit.toFixed(2)}
+              </p>
+              <p>remaining</p>
+            </h5>
           </div>
 
           <div className="info-block">
-            <h4>Total cost: {currency}{ currency == "$" ? (totalcost * rate) .toFixed(2) : totalcost.toFixed(2)} </h4>
+            <h4>
+              Total cost: {currency}
+              {currency == "$"
+                ? (totalcost * rate).toFixed(2)
+                : totalcost.toFixed(2)}{" "}
+            </h4>
           </div>
         </div>
       </div>
 
       <div className="history-section">
         <ul>
-          {history.map((data, index) => (
-            <li key={index}>
+          {history.map((data) => (
+            <li key={data._id}>
               <div className="entry-card">
                 <div className="entry-header">
                   <div className="entry-row">
                     <p>{data.category} : </p>
                     <span>
-                      {currency}{ currency == "$" ? (data.cost * rate) .toFixed(2) : data.cost.toFixed(2)}
-                      
+                      {currency}
+                      {currency == "$"
+                        ? (data.amount * rate).toFixed(2)
+                        : data.amount.toFixed(2)}
                     </span>
                   </div>
-                  <p>{data.time}</p>
-                  <p>{data.date}</p>
-                  <button onClick={() => handleDelete(index)}>Delete</button>
+                  <p>{DateDisplay(data.date)}</p>
+                  <button onClick={() => handleDelete(data._id)}>Delete</button>
                 </div>
                 <div className="entry-footer">
-                  <p>{data.discription}</p>
+                  <p>{data.title}</p>
                 </div>
               </div>
             </li>
