@@ -6,7 +6,7 @@ margin: 0;
 }
 #home .header{
 display: flex;
-justify-content: space-between;
+justify-content: space-around;
 align-items:center;
 padding: 15px 20px;
 
@@ -14,6 +14,7 @@ padding: 15px 20px;
 #home .header .left{
 color: black;
 margin:0;
+z-index: 4;
 }
 #home .header .left h4{
 margin: 0;
@@ -25,4 +26,7 @@ font-size: 12px;
 #home .header .right a{
 text-decoration: none;
 color: rgb(0, 53, 0);
+}
+.react-datepicker{
+    border-radius: 10px;
 }

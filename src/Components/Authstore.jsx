@@ -5,6 +5,9 @@ const userlogindata = create((set) => {
   return {
     showRegister: false,
     forgetPassword: false,
+    searchdate: false,
+    setSearchdate: (value) => set({ searchdate: value }),
+
     setForgetPassword: (value) => set({ forgetPassword: value }),
     setShowRegister: (value) => set({ showRegister: value }),
     user: userData || null,

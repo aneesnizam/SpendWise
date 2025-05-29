@@ -17,8 +17,9 @@ export default function DataBox() {
 
   const fetchhistory = async () => {
     try {
-      const res = await api.get("api/expenses");
+      const res = await api.get("api/expenses?today=true");
       setHistory(res.data.expenses);
+      setTotalcost(res.data.totalAmount)
     } catch (err) {
       console.log(err.message);
     }
@@ -62,7 +63,7 @@ export default function DataBox() {
 
     const updatedTotal = totalcost + newcost;
     const updatedLimit = userlimit - newcost;
-    setTotalcost(updatedTotal);
+    // setTotalcost(updatedTotal);
     setUserlimit(updatedLimit);
     setError("");
   };
