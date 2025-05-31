@@ -84,6 +84,7 @@ export default function DataBox() {
         toast.success(res.data.message);
         const newHistory = history.filter((data) => data._id !== id);
         setHistory(newHistory);
+       
       }
     } catch (err) {
       console.log(err.message);

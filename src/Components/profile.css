@@ -1,0 +1,58 @@
+#profileContainer{
+     position: fixed;
+  top: 0;
+ right: 0;
+  width: 25%;
+  height: 100vh;
+  background-color: #1e1e1e;
+  color: white;
+  z-index: 1000;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  transition: all 0.3s ease-in-out;
+}
+#profileContainer .profilebox{
+    position: relative;
+    height: 90%;
+}
+#profileContainer .profilebox .top{
+
+}
+#profileContainer .profilebox .top button{
+
+}
+#profileContainer .profilebox .middle{
+    display:flex ;
+    align-items: center;
+    justify-content:center ;
+    padding: 0;
+    margin: 0 auto;
+    margin-top: 20%;
+    text-align: center;
+
+}
+
+#profileContainer .profilebox .middle ul{
+padding: 0;
+margin: 0 auto
+}
+#profileContainer .profilebox .middle li{
+margin-bottom: 20px;
+font-size: 20px;
+}
+
+#profileContainer .profilebox .bottom{
+width: 100%;
+position: absolute;
+bottom: 10px;
+left: 0;
+display: flex;
+}
+#profileContainer .profilebox .bottom button{
+width: 90%;
+margin: 0 auto;
+background: orangered;
+border: none;
+padding: 10px 2px;
+}

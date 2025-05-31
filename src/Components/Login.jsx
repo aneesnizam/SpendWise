@@ -7,8 +7,6 @@ import api from "../utilities/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-
-
 export default function Login() {
   const [error, setError] = useState(" ");
   const [success, setSuccess] = useState(" ");
@@ -33,16 +31,17 @@ export default function Login() {
     if (!password) {
       setError("please enter the password");
       setSuccess("");
+
+      
       return;
     }
     try {
       setLoading(true);
       await api.post("api/auth/login", { email, password }).then((res) => {
-        setUser(res.data.user); //id ,name ,email
+        setUser(res.data.user);
+        localStorage.setItem("user", JSON.stringify(res.data.user)); //id ,name ,email
 
         if (res.data.success) {
-    
-
           toast.success(res.data.message);
           navigate("/home");
         } else {

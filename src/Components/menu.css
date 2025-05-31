@@ -1,0 +1,55 @@
+/* menu.css */
+
+#menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 25%;
+  height: 100vh;
+  background-color: #1e1e1e;
+  color: white;
+  z-index: 1000;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  transition: all 0.3s ease-in-out;
+
+}
+
+#menu .top {
+width: 100%;
+text-align: left;
+
+}
+
+#menu .top button {
+ 
+  padding: 6px 12px;
+  background: #444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+display: inline-block;
+
+}
+
+#menu .bottom{
+    padding: 5px 20px;
+}
+
+#menu .bottom ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 20px;
+}
+
+#menu .bottom ul li {
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+#menu .bottom ul ul {
+  margin-left: 20px;
+  margin-top: 5px;
+}
