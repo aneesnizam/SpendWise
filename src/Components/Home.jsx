@@ -1,42 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import "./home.css";
 import Nav from "./Nav";
 import DataBox from "./DataBox";
+import DateFilter from "./DateFilter";
+import FilterPanel from "./FilterPanel";
 import userlogindata from "./Authstore";
-import SearchByDate from "./SearchByDate";
-import DateRange from "./DateRange"
-
-
-
 
 export default function Home() {
-  const { setSearchdate, searchdate,currentView } = userlogindata();
-const render = () => {
+  const { currentView } = userlogindata();
 
-  switch(currentView){
-    case 'home':
-      return <DataBox />;
-      case 'filterByDate':
-      return < SearchByDate  />;
-      case 'dateRange':
-        return <DateRange/>
+  const renderView = () => {
+    switch (currentView) {
+      case "filterByDate":
+        return <DateFilter />;
+      case "dateRange":
+        return <FilterPanel />;
+      case "home":
       default:
         return <DataBox />;
-  }
-}
+    }
+  };
+
   return (
-    <section id="home">
+    <main id="home-page">
       <Nav />
-      <section className="header">
-        {/* <div className="left">
-          {searchdate ?  <button onClick={() => setSearchdate(false)}>Back</button> :  <button onClick={() => setSearchdate(true)}>search by date</button>}
-         
-        </div>
-        <div className="right">
-          <a href="https://letsgoforatrip.netlify.app/">calculate fuel cost</a>
-        </div> */}
+      <section className="content-area">
+        {renderView()}
       </section>
-      {render()}
-    </section>
+    </main>
   );
 }

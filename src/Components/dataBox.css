@@ -1,0 +1,62 @@
+/* Root Section */
+#data-box {
+}
+
+/* Currency Selector */
+.currency-selector {
+}
+.currency-selector select {
+}
+
+/* Form Layout */
+.form-container {
+}
+.expense-form {
+}
+.form-group {
+}
+.form-group label {
+}
+.form-group input {
+}
+.form-group select {
+}
+.expense-form button {
+}
+
+/* Error Message */
+.error-message {
+}
+
+/* Summary Section */
+.summary-info {
+}
+.summary-box {
+}
+.limit-value {
+}
+.limit-value.positive {
+}
+.limit-value.negative {
+}
+.summary-box .label {
+}
+
+/* History Section */
+.expense-history {
+}
+.expense-history ul {
+}
+.history-item {
+}
+.entry-card {
+}
+.entry-header {
+}
+.entry-details {
+}
+.entry-footer {
+}
+.delete-btn {
+}
+

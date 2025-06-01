@@ -1,0 +1,90 @@
+#filter-panel {
+}
+
+#filter-panel .form-section {
+}
+
+#filter-panel .form-section .form-left {
+}
+
+#filter-panel .form-section .form-left h2 {
+}
+
+#filter-panel .form-section .form-left .top-container {
+}
+
+#filter-panel .form-section .form-left .top-container select {
+}
+
+#filter-panel .form-section .form-left .top-container input {
+}
+
+#filter-panel .form-section .form-left .top-container input[type="number"] {
+}
+
+#filter-panel .form-section .form-left .top-container .react-datepicker-wrapper {
+}
+
+#filter-panel .form-section .form-left .top-container .react-datepicker__input-container input {
+}
+
+#filter-panel .form-section .form-left .top-container select {
+}
+
+#filter-panel .form-section .form-left .top-container select:nth-child(n) {
+  /* For specificity if needed */
+}
+
+#filter-panel .form-section .history-section {
+}
+
+#filter-panel .form-section .history-section .top {
+}
+
+#filter-panel .form-section .history-section .top input[type="checkbox"] {
+}
+
+#filter-panel .form-section .history-section .top label {
+}
+
+#filter-panel .form-section .history-section .top button {
+}
+
+#filter-panel .history-section {
+}
+
+#filter-panel .history-section p {
+}
+
+#filter-panel .history-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#filter-panel .history-section ul li {
+}
+
+#filter-panel .history-section ul li .entry-card {
+}
+
+#filter-panel .history-section ul li .entry-card .entry-header {
+}
+
+#filter-panel .history-section ul li .entry-card .entry-header .entry-row {
+}
+
+#filter-panel .history-section ul li .entry-card .entry-header .entry-row p {
+}
+
+#filter-panel .history-section ul li .entry-card .entry-header .entry-row span {
+}
+
+#filter-panel .history-section ul li .entry-card .entry-header p {
+}
+
+#filter-panel .history-section ul li .entry-card .entry-footer {
+}
+
+#filter-panel .history-section ul li .entry-card .entry-footer p {
+}

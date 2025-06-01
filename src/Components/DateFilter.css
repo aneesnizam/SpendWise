@@ -1,0 +1,96 @@
+/* Highlighted dates in DatePicker */
+.custom-highlight {
+  background-color: #4CAF50 !important;
+  color: white !important;
+  border-radius: 50% !important;
+}
+
+/* Alternatively, if react-datepicker default highlighted day class is used */
+.react-datepicker__day--highlighted {
+  background-color: #4CAF50 !important;
+  color: white !important;
+  border-radius: 50% !important;
+}
+
+/* DatePicker input style */
+.react-datepicker__input-container input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+/* DatePicker popup container */
+.react-datepicker {
+  font-family: inherit;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* DatePicker header style */
+.react-datepicker__header {
+  background-color: #f5f5f5;
+}
+
+/* Hide the month-year title in calendar header */
+h2.react-datepicker__current-month {
+  display: none;
+}
+
+/* Container sections */
+#date-filter{
+  /* Section wrapper */
+}
+
+#date-filter .form-section {
+  /* Wrapper for the form area */
+}
+
+#date-filter .selector {
+  /* The form containing the select dropdown */
+}
+
+#date-filter .form-left {
+  /* Left side container (for date picker) */
+}
+
+#date-filter .date-input-container {
+  /* Container around the DatePicker input */
+}
+
+#date-filter .form-right {
+  /* Right side container (for total cost display) */
+}
+
+#date-filter .info-block {
+  /* The block showing total cost */
+}
+
+#date-filter .history-section {
+  /* Container for the list of expense entries */
+}
+
+#date-filter .history-section ul {
+  /* The unordered list wrapping expense items */
+}
+
+#date-filter .history-section li {
+  /* Each list item (expense entry) */
+}
+
+#date-filter .entry-card {
+  /* The card wrapping each expense entry */
+}
+
+#date-filter .entry-header {
+  /* Header section of the entry card */
+}
+
+#date-filter .entry-row {
+  /* Row inside entry-header showing category and amount */
+}
+
+#date-filter .entry-footer {
+  /* Footer of the entry card showing title or description */
+}

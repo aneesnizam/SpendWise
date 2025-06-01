@@ -16,13 +16,16 @@
 
 }
 
-#menu .top {
+#menu .menu-container {
+}
+
+#menu .menu-container .menu-header  {
 width: 100%;
 text-align: left;
 
 }
 
-#menu .top button {
+#menu .menu-container .menu-header .menu-close-btn {
  
   padding: 6px 12px;
   background: #444;
@@ -34,22 +37,15 @@ display: inline-block;
 
 }
 
-#menu .bottom{
-    padding: 5px 20px;
-}
-
-#menu .bottom ul {
+#menu .menu-container .menu-list {
   list-style: none;
   padding-left: 0;
   margin-top: 20px;
 }
 
-#menu .bottom ul li {
+#menu .menu-container .menu-list .menu-item{
   padding: 8px 0;
   cursor: pointer;
 }
 
-#menu .bottom ul ul {
-  margin-left: 20px;
-  margin-top: 5px;
-}
+

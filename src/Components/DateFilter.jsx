@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./searchByDate.css";
+import "./DateFilter.css";
 import api from "../utilities/axios";
+import userlogindata from "./Authstore";
 
-export default function SearchByDate() {
+export default function DateFilter() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [fetchedData, setFetchedData] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
   const [highlightDates, setHighlightDates] = useState([]);
   const [dateString, setDateString] = useState('');
+  const { setCurrentView } = userlogindata();
 
   // Fetch highlight dates
   useEffect(() => {
@@ -29,27 +31,29 @@ export default function SearchByDate() {
   }, []);
 
   // Handle manual date input
-  const handleManualDateChange = (e) => {
-    const value = e.target.value;
-    setDateString(value);
+  // const handleManualDateChange = (e) => {
+  //   const value = e.target.value;
+  //   setDateString(value);
     
-    // Parse DD/MM/YYYY format
-    if (value.length === 10) {
-      const parts = value.split('/');
-      if (parts.length === 3) {
-        const day = parseInt(parts[0], 10);
-        const month = parseInt(parts[1], 10) - 1;
-        const year = parseInt(parts[2], 10);
+  //   // Parse DD/MM/YYYY format
+  //   if (value.length === 10) {
+  //     const parts = value.split('/');
+  //     if (parts.length === 3) {
+  //       const day = parseInt(parts[0], 10);
+  //       const month = parseInt(parts[1], 10) - 1;
+  //       const year = parseInt(parts[2], 10);
         
-        if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
-          const parsedDate = new Date(year, month, day);
-          if (!isNaN(parsedDate.getTime())) {
-            handleDateSelection(parsedDate);
-          }
-        }
-      }
-    }
-  };
+  //       if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+  //         const parsedDate = new Date(year, month, day);
+  //         if (!isNaN(parsedDate.getTime())) {
+  //           handleDateSelection(parsedDate);
+  //         }
+  //       }
+  //     }
+  //   }
+  // };
+
+
 
   // Handle date selection (from calendar or manual input)
   const handleDateSelection = (date) => {
@@ -94,11 +98,16 @@ export default function SearchByDate() {
   };
 
   return (
-    <section id="data-box">
+    <section id="date-filter">
       <div className="form-section">
+        <form className="selector">
+          <select onChange={(e) => setCurrentView(e.target.value)}>
+            <option value="filterByDate">Date Only Filter</option>
+            <option value="dateRange">Advanced Filter </option>
+          </select>
+        </form>
         <div className="form-left">
           <div className="date-input-container">
-          
             <DatePicker
               selected={selectedDate}
               onChange={handleDateSelection}

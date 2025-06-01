@@ -1,74 +1,80 @@
 import React, { useEffect, useState } from "react";
-import "./insert.css";
+import "./dataBox.css";
 import api from "../utilities/axios";
 import { toast } from "react-toastify";
 
 export default function DataBox() {
-  const [customcategory, setCustomCategory] = useState("");
-  const [categorycost, setCategorycost] = useState("");
+  const [customCategory, setCustomCategory] = useState("");
+  const [categoryCost, setCategoryCost] = useState("");
   const [history, setHistory] = useState([]);
   const [currency, setCurrency] = useState("₹");
-  const [discription, setDiscription] = useState("");
+  const [description, setDescription] = useState("");
   const [error, setError] = useState("");
-  const [totalcost, setTotalcost] = useState(0);
-  const [userlimit, setUserlimit] = useState(100);
+  const [totalCost, setTotalCost] = useState(0);
+  const [userLimit, setUserLimit] = useState(100);
 
-  const rate = 1 / 85.1;
-
-  const fetchhistory = async () => {
-    try {
-      const res = await api.get("api/expenses?today=true");
-      setHistory(res.data.expenses);
-      setTotalcost(res.data.totalAmount)
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
+  const exchangeRate = 1 / 85.1;
 
   useEffect(() => {
-    fetchhistory();
-  }, [categorycost]);
+    const fetchHistory = async () => {
+      try {
+        const res = await api.get("api/expenses?today=true");
+        setHistory(res.data.expenses);
+        setTotalCost(res.data.totalAmount);
+      } catch (err) {
+        console.error(err.message);
+      }
+    };
+
+    fetchHistory();
+  }, [categoryCost]);
+
+  const toINR = (value) => {
+    const num = parseFloat(value);
+    return currency === "$" ? num / exchangeRate : num;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const time = new Date().toLocaleTimeString();
-    const date = new Date().toLocaleDateString();
-    const toINR = (value) => {
-      const num = parseFloat(value);
-      return currency === "$" ? num / rate : num;
-    };
-
-    if (!categorycost.trim()) {
-      setError("Fill atleast one input");
+    if (!categoryCost.trim()) {
+      setError("Fill at least one input");
       return;
     }
 
-    const newcost = toINR(categorycost);
+    const cost = toINR(categoryCost);
 
     try {
       const res = await api.post("api/expenses/", {
-        title: discription,
-        amount: newcost,
-        category: customcategory || "other",
+        title: description,
+        amount: cost,
+        category: customCategory || "other",
       });
       toast.success(res.data.message);
     } catch (err) {
       toast.error(err.message);
     }
 
-    setCategorycost("");
-    setDiscription("");
     setCustomCategory("");
-
-    const updatedTotal = totalcost + newcost;
-    const updatedLimit = userlimit - newcost;
-    // setTotalcost(updatedTotal);
-    setUserlimit(updatedLimit);
+    setCategoryCost("");
+    setDescription("");
+    setUserLimit((prev) => prev - cost);
     setError("");
   };
 
-  const DateDisplay = (dateString) => {
+  const handleDelete = async (id) => {
+    try {
+      const res = await api.delete(`api/expenses/${id}`);
+      if (res.data.success) {
+        toast.success(res.data.message);
+        setHistory((prev) => prev.filter((entry) => entry._id !== id));
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const formatDateTime = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString("en-IN", {
       timeZone: "Asia/Kolkata",
@@ -77,161 +83,122 @@ export default function DataBox() {
     });
   };
 
-  const handleDelete = async (id) => {
-    try {
-      const res = await api.delete(`api/expenses/${id}`);
-      if (res.data.success) {
-        toast.success(res.data.message);
-        const newHistory = history.filter((data) => data._id !== id);
-        setHistory(newHistory);
-       
-      }
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
   return (
     <section id="data-box">
-      <div className="info-block1">
-        <form>
-          <select
-            name="currency"
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
-          >
-            <option value="₹">INR</option>
-            <option value="$">USD</option>
-          </select>
+      <form className="currency-selector">
+        <select
+          name="currency"
+          value={currency}
+          onChange={(e) => setCurrency(e.target.value)}
+        >
+          <option value="₹">INR</option>
+          <option value="$">USD</option>
+        </select>
+      </form>
+
+      <div className="form-container">
+        <form className="expense-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Category</label>
+            <input
+              list="categories"
+              type="text"
+              value={customCategory}
+              onChange={(e) => setCustomCategory(e.target.value)}
+            />
+            <datalist id="categories">
+              {[
+                "Food", "Travel", "Clothing", "Education", "Entertainment",
+                "Healthcare", "Utilities", "Rent", "Savings", "Gifts",
+                "Groceries", "Subscriptions", "Maintenance", "Insurance",
+                "Pet Care", "Electronics", "Personal Care", "Investment",
+                "Stationery", "Charity", "Phone & Internet", "Loan Payments"
+              ].map((option) => (
+                <option key={option} value={option} />
+              ))}
+            </datalist>
+          </div>
+
+          <div className="form-group">
+            <label>Cost</label>
+            <input
+              type="number"
+              value={categoryCost}
+              onChange={(e) => setCategoryCost(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <input
+              type="text"
+              id="description"
+              placeholder="Description (optional)"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
+          <button type="submit">Submit</button>
+          {error && <p className="error-message">{error}</p>}
         </form>
-      </div>
 
-      <div className="form-section">
-        <div className="form-left">
-          <form onSubmit={handleSubmit}>
-            <div className="input-group">
-              <label htmlFor="">Category</label>
-              <input
-                list="categories"
-                type="text"
-                value={customcategory}
-                onChange={(e) => setCustomCategory(e.target.value)}
-              />
-              <datalist id="categories">
-                <option value="Food" />
-                <option value="Travel" />
-                <option value="Clothing" />
-                <option value="Education" />
-                <option value="Entertainment" />
-                <option value="Healthcare" />
-                <option value="Utilities" />
-                <option value="Rent" />
-                <option value="Savings" />
-                <option value="Gifts" />
-                <option value="Groceries" />
-                <option value="Subscriptions" />
-                <option value="Maintenance" />
-                <option value="Insurance" />
-                <option value="Pet Care" />
-                <option value="Electronics" />
-                <option value="Personal Care" />
-                <option value="Investment" />
-                <option value="Stationery" />
-                <option value="Charity" />
-                <option value="Phone & Internet" />
-                <option value="Loan Payments" />
-              </datalist>
-            </div>
-
-            <div className="input-group">
-              <label htmlFor="">Cost</label>
-              <input
-                type="text"
-                value={categorycost}
-                onChange={(e) => setCategorycost(e.target.value)}
-              />
-            </div>
-
-            <div className="input-group">
-              <input
-                type="text"
-                id="description"
-                placeholder="Description (optional)"
-                value={discription}
-                onChange={(e) => setDiscription(e.target.value)}
-              />
-            </div>
-
-            <button type="submit">Submit</button>
-          </form>
-
-          {error && (
-            <h2
-              style={{
-                color: "red",
-                textAlign: "center",
-                fontSize: "10px",
-                marginTop: "15px",
-              }}
-            >
-              {error}
-            </h2>
-          )}
-        </div>
-
-        <div className="form-right">
-          <div className="info-block">
+        <aside className="summary-info">
+          <div className="summary-box">
             <h5>
-              <p style={{ color: Number(userlimit) > 0 ? "green" : "red" }}>
+              <span className={`limit-value ${userLimit > 0 ? "positive" : "negative"}`}>
                 {currency}
                 {currency === "$"
-                  ? (userlimit * rate).toFixed(2)
-                  : userlimit.toFixed(2)}
-              </p>
-              <p>remaining</p>
+                  ? (userLimit * exchangeRate).toFixed(2)
+                  : userLimit.toFixed(2)}
+              </span>
+              <span className="label">remaining</span>
             </h5>
           </div>
 
-          <div className="info-block">
+          <div className="summary-box">
             <h4>
               Total cost: {currency}
               {currency === "$"
-                ? (totalcost * rate).toFixed(2)
-                : totalcost.toFixed(2)}
+                ? (totalCost * exchangeRate).toFixed(2)
+                : totalCost.toFixed(2)}
             </h4>
           </div>
-        </div>
+        </aside>
       </div>
 
-      <div className="history-section">
+      <section className="expense-history">
         <ul>
-          {
-          [...history]
-          .sort((a, b) => new Date(b.date) - new Date(a.date))
-          .map((data) => (
-            <li key={data._id}>
-              <div className="entry-card">
-                <div className="entry-header">
-                  <div className="entry-row">
-                    <p>{data.category} : </p>
-                    <span>
-                      {currency}
-                      {currency === "$"
-                        ? (data.amount * rate).toFixed(2)
-                        : data.amount.toFixed(2)}
-                    </span>
-                  </div>
-                  <p>{DateDisplay(data.date)}</p>
-                  <button onClick={() => handleDelete(data._id)}>Delete</button>
+          {[...history]
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map((entry) => (
+              <li key={entry._id} className="history-item">
+                <div className="entry-card">
+                  <header className="entry-header">
+                    <div className="entry-details">
+                      <p>{entry.category}:</p>
+                      <span>
+                        {currency}
+                        {currency === "$"
+                          ? (entry.amount * exchangeRate).toFixed(2)
+                          : entry.amount.toFixed(2)}
+                      </span>
+                    </div>
+                    <p>{formatDateTime(entry.date)}</p>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(entry._id)}
+                    >
+                      Delete
+                    </button>
+                  </header>
+                  <footer className="entry-footer">
+                    <p>{entry.title}</p>
+                  </footer>
                 </div>
-                <div className="entry-footer">
-                  <p>{data.title}</p>
-                </div>
-              </div>
-            </li>
-          ))}
+              </li>
+            ))}
         </ul>
-      </div>
+      </section>
     </section>
   );
 }
