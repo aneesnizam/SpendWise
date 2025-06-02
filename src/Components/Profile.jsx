@@ -130,7 +130,7 @@ export default function Profile() {
 
         {/* Logout */}
         <div className="bottom">
-       <span>woww</span>
+       <span>wowttw</span>
         </div>
       </div>
     </section>
