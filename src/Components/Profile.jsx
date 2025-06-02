@@ -3,6 +3,7 @@ import "./profile.css";
 import userlogindata from "./Authstore";
 import { toast } from "react-toastify";
 import api from "../utilities/axios";
+import { MdEdit } from 'react-icons/md';
 
 export default function Profile() {
   const profileRef = useRef(null);
@@ -12,7 +13,8 @@ export default function Profile() {
   const [editLimit, setEditLimit] = useState(false);
   const [limit, setLimit] = useState(user.dailyLimit);
   const[entries,setEntries] = useState()
-
+const [newName, setNewName] = useState(user.name)
+const [editName,setEditName] = useState(false)
 
   useEffect(() => {
     api.get("api/expenses")
@@ -21,11 +23,24 @@ const expenses = (res.data.expenses).length
 setEntries(expenses)
     })
   })
+  const handleName = async () => {
+
+    try {
+      await api.post("api/user", { name : newName}).then((res) => {
+        toast.success(res.data.message);
+        setUser(res.data.user);
+       
+     
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleLimit = async () => {
 
     try {
-      await api.post("api/user", { dailyLimit: limit }).then((res) => {
+      await api.post("api/user", { dailyLimit: limit ,name : newName}).then((res) => {
         toast.success(res.data.message);
         setUser(res.data.user);
         setLimit(res.data.user.dailyLimit);
@@ -58,7 +73,24 @@ setEntries(expenses)
         </div>
         <div className="middle">
           <ul>
-            <li>{user.name}</li>
+            <li>   {editName ? (
+                <input
+                 
+                  type="text"
+                  onChange={(e) => setNewName(e.target.value)}
+                  onBlur={() => {
+                    handleName()
+                    setEditName(false)
+                  }}
+                  autoFocus
+                  value={newName}
+                />
+              ) : (
+                <>
+                  {newName || "user"}{" "}
+                  <button className="editButton" onClick={() => setEditName(true)}>< MdEdit/></button>
+                </>
+              )}</li>
             <li>{user.email}</li>
             <li>Total entries{entries}</li>
             <li>
@@ -77,7 +109,7 @@ setEntries(expenses)
               ) : (
                 <>
                   {limit || "0"}{" "}
-                  <button onClick={() => setEditLimit(true)}>edit</button>
+                  <button className="editButton" onClick={() => setEditLimit(true)}>< MdEdit/></button>
                 </>
               )}
             </li>

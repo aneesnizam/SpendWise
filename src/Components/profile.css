@@ -2,13 +2,15 @@
      position: fixed;
   top: 0;
  right: 0;
-  width: 25%;
+  width: 30%;
   height: 100vh;
-  background-color: #1e1e1e;
-  color: white;
+ background-color: #e0e5ec;
+  padding: 20px 60px;
+
+  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
+  color: rgb(0, 0, 0);
+  box-sizing: border-box;
   z-index: 1000;
-  padding: 20px;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
   transition: all 0.3s ease-in-out;
 }
@@ -20,6 +22,16 @@
 
 }
 #profileContainer .profilebox .top button{
+        background-color: #e0e5ec;
+  border: none;
+  outline: none;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
+  padding: 5px 10px;
+  text-align: center;
+  color: black;
+  border: 1px dotted black;
 
 }
 #profileContainer .profilebox .middle{
@@ -53,6 +65,21 @@ display: flex;
 width: 90%;
 margin: 0 auto;
 background: orangered;
+  box-shadow: 5px 5px 15px #c6b0a3, -5px -5px 15px #c6b0a3;
 border: none;
 padding: 10px 2px;
+}
+#profileContainer .editButton{
+        background-color: #e0e5ec;
+  border: none;
+  outline: none;
+  margin: 0 auto;
+  box-shadow: 5px 5px 20px #a3b1c6, -5px -5px 20px #fff;
+width: 30px;
+height: 30px;
+  text-align: center;
+  color: black;
+  border-radius: 50%;
+  margin-left: 10px;
+
 }
