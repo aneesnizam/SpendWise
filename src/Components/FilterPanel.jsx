@@ -130,6 +130,11 @@ const {
     }
   }, [categoryExpenses, sortedItems, groupByCategory]);
 
+
+const sortedCtegory = [...categoryExpenses].sort((a,b) => {
+  return sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount;
+})
+
   return (
     <section id="filter-panel">
       <form className="filter-form" onSubmit={(e) => e.preventDefault()}>
@@ -205,6 +210,7 @@ const {
           />
 
           <select
+          disabled={groupByCategory}
             className="categoryselector"
             value={sortField}
             onChange={(e) => setSortField(e.target.value)}
@@ -245,9 +251,9 @@ const {
         {loading ? (
           <p className="loading-text">Loading...</p>
         ) : groupByCategory ? (
-          categoryExpenses.length ? (
+          sortedCtegory.length ? (
             <ul className="category-list">
-              {categoryExpenses.map(({ category, amount, count }, index) => (
+              {sortedCtegory.map(({ category, amount, count }, index) => (
                 <li
                   key={index}
                   className={`category-item ${category.toLowerCase()}`}

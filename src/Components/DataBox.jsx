@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./dataBox.css";
 import api from "../utilities/axios";
 import { toast } from "react-toastify";
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash } from "react-icons/fa";
+import userlogindata from "./Authstore";
+import { use } from "react";
 export default function DataBox() {
+  const { user } = userlogindata();
   const [customCategory, setCustomCategory] = useState("");
   const [categoryCost, setCategoryCost] = useState("");
   const [history, setHistory] = useState([]);
@@ -11,21 +14,23 @@ export default function DataBox() {
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
   const [totalCost, setTotalCost] = useState(0);
-  const [userLimit, setUserLimit] = useState(100);
+  const [userLimit, setUserLimit] = useState(user.dailyLimit);
 
   const exchangeRate = 1 / 85.1;
 
-  useEffect(() => {
-    const fetchHistory = async () => {
-      try {
-        const res = await api.get("api/expenses?today=true");
-        setHistory(res.data.expenses);
-        setTotalCost(res.data.totalAmount);
-      } catch (err) {
-        console.error(err.message);
-      }
-    };
 
+  const fetchHistory = async () => {
+    try {
+      const res = await api.get("api/expenses?today=true");
+      setHistory(res.data.expenses);
+      setTotalCost(res.data.totalAmount);
+      setUserLimit(user.dailyLimit - res.data.totalAmount);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
     fetchHistory();
   }, [categoryCost]);
 
@@ -58,7 +63,7 @@ export default function DataBox() {
     setCustomCategory("");
     setCategoryCost("");
     setDescription("");
-    setUserLimit((prev) => prev - cost);
+    // setUserLimit((prev) => prev - cost);
     setError("");
   };
 
@@ -68,6 +73,7 @@ export default function DataBox() {
       if (res.data.success) {
         toast.success(res.data.message);
         setHistory((prev) => prev.filter((entry) => entry._id !== id));
+        fetchHistory();
       }
     } catch (err) {
       console.error(err.message);
@@ -82,7 +88,9 @@ export default function DataBox() {
       timeStyle: "short",
     });
   };
-
+  // useEffect(() => {
+  //   setUserLimit(user.dailyLimit)
+  // })
   return (
     <section id="data-box">
       <form className="currency-selector">
@@ -169,10 +177,11 @@ export default function DataBox() {
                   userLimit > 0 ? "positive" : "negative"
                 }`}
               >
+                {userLimit < 0 && "-"}
                 {currency}
                 {currency === "$"
-                  ? (userLimit * exchangeRate).toFixed(2)
-                  : userLimit.toFixed(2)}
+                  ? Math.abs((userLimit * exchangeRate).toFixed(2))
+                  : Math.abs(userLimit.toFixed(2))}
               </span>
             </h5>
           </div>
@@ -222,7 +231,7 @@ export default function DataBox() {
                       className="delete-btn"
                       onClick={() => handleDelete(entry._id)}
                     >
-                     < FaTrash/>
+                      <FaTrash />
                     </button>
                   </header>
                   <footer className="entry-footer">

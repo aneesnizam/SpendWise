@@ -29,7 +29,7 @@ export default function App() {
           />
         </Routes>
 
-        <ToastContainer />
+        <ToastContainer autoClose={1400} />
       </BrowserRouter>
     </div>
   );

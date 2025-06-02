@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 const userlogindata = create((set) => {
   const userData = JSON.parse(localStorage.getItem("user"));
   return {
- 
     viewProfile: false,
     setViewProfile: (value) => set({ viewProfile: value }),
     currentView: "home",
@@ -30,7 +29,6 @@ const userlogindata = create((set) => {
       try {
         api.post("api/auth/logout").then((res) => {
           toast.success(res.message);
-
         });
       } catch (err) {
         toast.error("something went wrong");

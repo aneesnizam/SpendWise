@@ -1,40 +1,54 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./profile.css";
 import userlogindata from "./Authstore";
+import { toast } from "react-toastify";
+import api from "../utilities/axios";
 
 export default function Profile() {
   const profileRef = useRef(null);
   const inputRef = useRef(null);
-  const { setViewProfile, user, logoutUser } = userlogindata();
+  const { setViewProfile, user, logoutUser, setUser } = userlogindata();
 
   const [editLimit, setEditLimit] = useState(false);
-  const [limit, setLimit] = useState("");
-// useEffect(() =>{
-// api.post("api/auth/update",)
+  const [limit, setLimit] = useState(user.dailyLimit);
+  const[entries,setEntries] = useState()
 
-// },[])
+
+  useEffect(() => {
+    api.get("api/expenses")
+    .then((res) => {
+const expenses = (res.data.expenses).length
+setEntries(expenses)
+    })
+  })
+
+  const handleLimit = async () => {
+
+    try {
+      await api.post("api/user", { dailyLimit: limit }).then((res) => {
+        toast.success(res.data.message);
+        setUser(res.data.user);
+        setLimit(res.data.user.dailyLimit);
+     
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setViewProfile(false);
       }
 
-      // If user clicks outside the input while editing, save and exit edit mode
-      if (
-        editLimit &&
-        inputRef.current &&
-        !inputRef.current.contains(event.target)
-      ) {
-        setEditLimit(false); // Exit edit mode
-      }
-    };
+     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [editLimit, setViewProfile]);
-
+  }, [ setViewProfile]);
 
   return (
     <section id="profileContainer">
@@ -46,14 +60,17 @@ export default function Profile() {
           <ul>
             <li>{user.name}</li>
             <li>{user.email}</li>
-            <li>Total entries</li>
+            <li>Total entries{entries}</li>
             <li>
               {editLimit ? (
                 <input
                   ref={inputRef}
                   type="text"
                   onChange={(e) => setLimit(e.target.value)}
-                  onBlur={() => setEditLimit(false)} 
+                  onBlur={() => {
+                    handleLimit()
+                    setEditLimit(false)
+                  }}
                   autoFocus
                   value={limit}
                 />
