@@ -12,7 +12,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
- --box-colour: rgb(173, 219, 230);
+ --box-colour: #e0e5ec;
+ --submit-btn:rgb(25, 192, 25);
  
 
 

@@ -99,13 +99,14 @@ export default function DateFilter() {
 
   return (
     <section id="date-filter">
-      <div className="form-section">
-        <form className="selector">
+         <form className="selector">
           <select onChange={(e) => setCurrentView(e.target.value)}>
             <option value="filterByDate">Date Only Filter</option>
             <option value="dateRange">Advanced Filter </option>
           </select>
         </form>
+      <div className="form-section">
+     
         <div className="form-left">
           <div className="date-input-container">
             <DatePicker
@@ -137,7 +138,7 @@ export default function DateFilter() {
 
         <div className="form-right">
           <div className="info-block">
-            <h4>Total cost: ₹ {totalCost}</h4>
+            <h4>Total cost: <span>₹ {totalCost}</span> </h4>
           </div>
         </div>
       </div>
@@ -147,12 +148,12 @@ export default function DateFilter() {
           {[...fetchedData]
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((data) => (
-              <li key={data._id}>
+              <li key={data._id} className={`history-item ${data.category.toLowerCase()}`}>
                 <div className="entry-card">
                   <div className="entry-header">
-                    <div className="entry-row">
-                      <p>{data.category}:</p>
-                      <span>{data.amount}</span>
+                    <div className="entry-details">
+                      <p className={`category-tag ${data.category.toLowerCase()}`}>{data.category}:</p>
+                      <span>₹{data.amount}</span>
                     </div>
                     <p>{DateDisplay(data.date)}</p>
                   </div>

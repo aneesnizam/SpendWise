@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./dataBox.css";
 import api from "../utilities/axios";
 import { toast } from "react-toastify";
-
+import { FaTrash } from 'react-icons/fa';
 export default function DataBox() {
   const [customCategory, setCustomCategory] = useState("");
   const [categoryCost, setCategoryCost] = useState("");
@@ -108,11 +108,28 @@ export default function DataBox() {
             />
             <datalist id="categories">
               {[
-                "Food", "Travel", "Clothing", "Education", "Entertainment",
-                "Healthcare", "Utilities", "Rent", "Savings", "Gifts",
-                "Groceries", "Subscriptions", "Maintenance", "Insurance",
-                "Pet Care", "Electronics", "Personal Care", "Investment",
-                "Stationery", "Charity", "Phone & Internet", "Loan Payments"
+                "Food",
+                "Travel",
+                "Clothing",
+                "Education",
+                "Entertainment",
+                "Healthcare",
+                "Utilities",
+                "Rent",
+                "Savings",
+                "Gifts",
+                "Groceries",
+                "Subscriptions",
+                "Maintenance",
+                "Insurance",
+                "Pet Care",
+                "Electronics",
+                "Personal Care",
+                "Investment",
+                "Stationery",
+                "Charity",
+                "Phone & Internet",
+                "Loan Payments",
               ].map((option) => (
                 <option key={option} value={option} />
               ))}
@@ -130,6 +147,7 @@ export default function DataBox() {
 
           <div className="form-group">
             <input
+              className="discription"
               type="text"
               id="description"
               placeholder="Description (optional)"
@@ -145,22 +163,29 @@ export default function DataBox() {
         <aside className="summary-info">
           <div className="summary-box">
             <h5>
-              <span className={`limit-value ${userLimit > 0 ? "positive" : "negative"}`}>
+              <span className="label">Remaining:</span>
+              <span
+                className={`limit-value ${
+                  userLimit > 0 ? "positive" : "negative"
+                }`}
+              >
                 {currency}
                 {currency === "$"
                   ? (userLimit * exchangeRate).toFixed(2)
                   : userLimit.toFixed(2)}
               </span>
-              <span className="label">remaining</span>
             </h5>
           </div>
 
           <div className="summary-box">
             <h4>
-              Total cost: {currency}
-              {currency === "$"
-                ? (totalCost * exchangeRate).toFixed(2)
-                : totalCost.toFixed(2)}
+              Total cost:{" "}
+              <span className="totalcost">
+                {currency}
+                {currency === "$"
+                  ? (totalCost * exchangeRate).toFixed(2)
+                  : totalCost.toFixed(2)}
+              </span>
             </h4>
           </div>
         </aside>
@@ -171,11 +196,20 @@ export default function DataBox() {
           {[...history]
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((entry) => (
-              <li key={entry._id} className="history-item">
+              <li
+                key={entry._id}
+                className={`history-item ${entry.category.toLowerCase()}`}
+              >
                 <div className="entry-card">
                   <header className="entry-header">
                     <div className="entry-details">
-                      <p>{entry.category}:</p>
+                      <p
+                        className={`category-tag ${entry.category.toLowerCase()}`}
+                      >
+                        {entry.category.charAt(0).toUpperCase() +
+                          entry.category.slice(1)}
+                        :
+                      </p>
                       <span>
                         {currency}
                         {currency === "$"
@@ -183,12 +217,12 @@ export default function DataBox() {
                           : entry.amount.toFixed(2)}
                       </span>
                     </div>
-                    <p>{formatDateTime(entry.date)}</p>
+                    <p className="date">{formatDateTime(entry.date)}</p>
                     <button
                       className="delete-btn"
                       onClick={() => handleDelete(entry._id)}
                     >
-                      Delete
+                     < FaTrash/>
                     </button>
                   </header>
                   <footer className="entry-footer">
