@@ -11,25 +11,21 @@ export default function Profile() {
 
   const [editLimit, setEditLimit] = useState(false);
   const [limit, setLimit] = useState(user.dailyLimit);
-  const[entries,setEntries] = useState()
-
+  const [entries, setEntries] = useState();
 
   useEffect(() => {
-    api.get("api/expenses")
-    .then((res) => {
-const expenses = (res.data.expenses).length
-setEntries(expenses)
-    })
-  })
+    api.get("api/expenses").then((res) => {
+      const expenses = res.data.expenses.length;
+      setEntries(expenses);
+    });
+  });
 
   const handleLimit = async () => {
-
     try {
       await api.post("api/user", { dailyLimit: limit }).then((res) => {
         toast.success(res.data.message);
         setUser(res.data.user);
         setLimit(res.data.user.dailyLimit);
-     
       });
     } catch (err) {
       console.log(err);
@@ -41,14 +37,13 @@ setEntries(expenses)
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setViewProfile(false);
       }
-
-     };
+    };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ setViewProfile]);
+  }, [setViewProfile]);
 
   return (
     <section id="profileContainer">
@@ -68,8 +63,8 @@ setEntries(expenses)
                   type="text"
                   onChange={(e) => setLimit(e.target.value)}
                   onBlur={() => {
-                    handleLimit()
-                    setEditLimit(false)
+                    handleLimit();
+                    setEditLimit(false);
                   }}
                   autoFocus
                   value={limit}

@@ -4,9 +4,10 @@ import api from "../utilities/axios";
 import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
 import userlogindata from "./Authstore";
-import { use } from "react";
+
+
 export default function DataBox() {
-  const { user } = userlogindata();
+  const { user, setUser } = userlogindata();
   const [customCategory, setCustomCategory] = useState("");
   const [categoryCost, setCategoryCost] = useState("");
   const [history, setHistory] = useState([]);
@@ -30,9 +31,19 @@ export default function DataBox() {
     }
   };
 
+  const getUser = async () => {
+    await api.get("api/user").then((res)=>{
+      setUser(res.data.user);
+    })
+  }
+
+  useEffect(()=>{
+    getUser();
+  },[])
+
   useEffect(() => {
     fetchHistory();
-  }, [categoryCost]);
+  }, [categoryCost, user]);
 
   const toINR = (value) => {
     const num = parseFloat(value);
