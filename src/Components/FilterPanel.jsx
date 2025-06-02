@@ -3,6 +3,7 @@ import "./FilterPanel.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import api from "../utilities/axios";
+import userlogindata from "./Authstore";
 
 export default function FilterPanel() {
   const [startDate, setStartDate] = useState("");
@@ -19,6 +20,10 @@ export default function FilterPanel() {
   const [loading, setLoading] = useState(false);
   const [groupByCategory, setGroupByCategory] = useState(true);
   const [categoryExpenses, setCategoryExpenses] = useState([]);
+
+const {
+   setCurrentView,currentView
+} = userlogindata()
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -107,12 +112,18 @@ export default function FilterPanel() {
   // Update total and count when data changes
   useEffect(() => {
     if (groupByCategory) {
-      const totalAmount = categoryExpenses.reduce((sum, item) => sum + item.amount, 0);
+      const totalAmount = categoryExpenses.reduce(
+        (sum, item) => sum + item.amount,
+        0
+      );
       const totalCount = categoryExpenses.length;
       setTotal(totalAmount);
       setCount(totalCount);
     } else {
-      const totalAmount = sortedItems.reduce((sum, item) => sum + item.amount, 0);
+      const totalAmount = sortedItems.reduce(
+        (sum, item) => sum + item.amount,
+        0
+      );
       const totalCount = sortedItems.length;
       setTotal(totalAmount);
       setCount(totalCount);
@@ -122,20 +133,39 @@ export default function FilterPanel() {
   return (
     <section id="filter-panel">
       <form className="filter-form" onSubmit={(e) => e.preventDefault()}>
-        <header className="summary">
-          <h2>Total: {total}</h2>
-          <h2>Count: {count}</h2>
-        </header>
+        <div className="top">
+           <form className="selector">
+          <select value={ currentView } onChange={(e) => setCurrentView(e.target.value)}>
+            <option value="filterByDate">Date Only Filter</option>
+            <option value="dateRange">Advanced Filter </option>
+          </select>
+        </form>
+          <h2 className="historyheading">Advanced Filter</h2>
+          <header className="summary">
+            <h3>
+              Total: <span> {total}</span>
+            </h3>
+            <h3>
+              Count: <span>{count}</span>
+            </h3>
+          </header>
+        </div>
 
         <div className="filters">
-          
-          <select className="categoryselector" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} aria-label="Select Category">
+          <select
+            className="categoryselector"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            aria-label="Select Category"
+          >
             <option value="">All categories</option>
-            {[...new Set(categories.map((item) => item.category))].map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
+            {[...new Set(categories.map((item) => item.category))].map(
+              (category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              )
+            )}
           </select>
 
           <DatePicker
@@ -160,7 +190,7 @@ export default function FilterPanel() {
             aria-label="End Date"
           />
 
-          <input 
+          <input
             type="number"
             placeholder="Min cost"
             onChange={(e) => setStartCost(e.target.value)}
@@ -174,12 +204,22 @@ export default function FilterPanel() {
             aria-label="Maximum Cost"
           />
 
-          <select className="categoryselector" value={sortField} onChange={(e) => setSortField(e.target.value)} aria-label="Sort Field">
+          <select
+            className="categoryselector"
+            value={sortField}
+            onChange={(e) => setSortField(e.target.value)}
+            aria-label="Sort Field"
+          >
             <option value="cost">Cost</option>
             <option value="date">Date</option>
           </select>
 
-          <select className="categoryselector" value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} aria-label="Sort Order">
+          <select
+            className="categoryselector"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            aria-label="Sort Order"
+          >
             <option value="asc">Ascending</option>
             <option value="desc">Descending</option>
           </select>
@@ -208,9 +248,14 @@ export default function FilterPanel() {
           categoryExpenses.length ? (
             <ul className="category-list">
               {categoryExpenses.map(({ category, amount, count }, index) => (
-                <li key={index} className={`category-item ${category.toLowerCase()}`}>
+                <li
+                  key={index}
+                  className={`category-item ${category.toLowerCase()}`}
+                >
                   <header className="category-header">
-                    <p className={`category-tag ${category.toLowerCase()}`}>Category: {category}</p>
+                    <p className={`category-tag ${category.toLowerCase()}`}>
+                      Category: {category}
+                    </p>
                     <p className="categoryTotal">Total: {amount}</p>
                   </header>
                   <footer className="category-footer">
@@ -220,32 +265,38 @@ export default function FilterPanel() {
               ))}
             </ul>
           ) : (
-            <p className="no-results">No results yet. Apply any filter and click submit.</p>
+            <p className="no-results">
+              No results yet. Apply any filter and click submit.
+            </p>
           )
         ) : sortedItems.length ? (
           <ul className="expense-list">
-         {sortedItems.map(({ _id, category, amount, date, title }) => (
-  <li key={_id} className={`history-item ${category.toLowerCase()}`}>
-    <div className="entry-card">
-      <header className="entry-header">
-        <div className="entry-details">
-          <p className={`category-tag ${category.toLowerCase()}`}>
-            {category.charAt(0).toUpperCase() + category.slice(1)}:
-          </p>
-          <span>{amount}</span>
-        </div>
-        <p className="date">{formatDate(date)}</p>
-      </header>
-      <footer className="entry-footer">
-        <p>{title}</p>
-      </footer>
-    </div>
-  </li>
-))}
-
+            {sortedItems.map(({ _id, category, amount, date, title }) => (
+              <li
+                key={_id}
+                className={`history-item ${category.toLowerCase()}`}
+              >
+                <div className="entry-card">
+                  <header className="entry-header">
+                    <div className="entry-details">
+                      <p className={`category-tag ${category.toLowerCase()}`}>
+                        {category.charAt(0).toUpperCase() + category.slice(1)}:
+                      </p>
+                      <span>{amount}</span>
+                    </div>
+                    <p className="date">{formatDate(date)}</p>
+                  </header>
+                  <footer className="entry-footer">
+                    <p>{title}</p>
+                  </footer>
+                </div>
+              </li>
+            ))}
           </ul>
         ) : (
-          <p className="no-results">No results yet. Apply any filter and click submit.</p>
+          <p className="no-results">
+            No results yet. Apply any filter and click submit.
+          </p>
         )}
       </main>
     </section>

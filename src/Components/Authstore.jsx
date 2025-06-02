@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 const userlogindata = create((set) => {
   const userData = JSON.parse(localStorage.getItem("user"));
   return {
+ 
     viewProfile: false,
     setViewProfile: (value) => set({ viewProfile: value }),
     currentView: "home",
