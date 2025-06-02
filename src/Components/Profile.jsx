@@ -130,7 +130,7 @@ export default function Profile() {
 
         {/* Logout */}
         <div className="bottom">
-          <button onClick={logoutUser}>Logout chey</button>
+       <span>woww</span>
         </div>
       </div>
     </section>
