@@ -3,7 +3,7 @@ import "./profile.css";
 import userlogindata from "./Authstore";
 import { toast } from "react-toastify";
 import api from "../utilities/axios";
-import { MdEdit } from 'react-icons/md';
+import { MdEdit } from "react-icons/md";
 
 export default function Profile() {
   const profileRef = useRef(null);
@@ -11,59 +11,59 @@ export default function Profile() {
   const { setViewProfile, user, logoutUser, setUser } = userlogindata();
 
   const [editLimit, setEditLimit] = useState(false);
-  const [limit, setLimit] = useState(user.dailyLimit);
-  const[entries,setEntries] = useState()
-const [newName, setNewName] = useState(user.name)
-const [editName,setEditName] = useState(false)
+  const [editName, setEditName] = useState(false);
 
+  const [limit, setLimit] = useState(user.dailyLimit || 0);
+  const [newName, setNewName] = useState(user.name || "user");
+  const [entries, setEntries] = useState(null);
+
+  // Fetch expense entries once when component mounts
   useEffect(() => {
     api.get("api/expenses")
-    .then((res) => {
-const expenses = (res.data.expenses).length
-setEntries(expenses)
-    })
-  })
-  const handleName = async () => {
-
-    try {
-      await api.post("api/user", { name : newName}).then((res) => {
-        toast.success(res.data.message);
-        setUser(res.data.user);
-       
-     
+      .then((res) => {
+        const expenses = res.data.expenses.length;
+        setEntries(expenses);
+      })
+      .catch((err) => {
+        console.error("Error fetching expenses:", err);
       });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  }, []);
 
-  const handleLimit = async () => {
-
-    try {
-      await api.post("api/user", { dailyLimit: limit ,name : newName}).then((res) => {
-        toast.success(res.data.message);
-        setUser(res.data.user);
-        setLimit(res.data.user.dailyLimit);
-     
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  // Close profile modal if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setViewProfile(false);
       }
-
-     };
-
+    };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ setViewProfile]);
+  }, [setViewProfile]);
+
+  // Update user's name
+  const handleName = async () => {
+    try {
+      const res = await api.post("api/user", { name: newName });
+      toast.success(res.data.message);
+      setUser(res.data.user);
+    } catch (err) {
+      console.error("Error updating name:", err);
+    }
+  };
+
+  // Update user's daily limit
+  const handleLimit = async () => {
+    try {
+      const res = await api.post("api/user", { dailyLimit: limit, name: newName });
+      toast.success(res.data.message);
+      setUser(res.data.user);
+      setLimit(res.data.user.dailyLimit);
+    } catch (err) {
+      console.error("Error updating limit:", err);
+    }
+  };
 
   return (
     <section id="profileContainer">
@@ -73,48 +73,62 @@ setEntries(expenses)
         </div>
         <div className="middle">
           <ul>
-            <li>   {editName ? (
+            {/* Editable Name */}
+            <li>
+              {editName ? (
                 <input
-                 
                   type="text"
+                  value={newName}
                   onChange={(e) => setNewName(e.target.value)}
                   onBlur={() => {
-                    handleName()
-                    setEditName(false)
+                    handleName();
+                    setEditName(false);
                   }}
                   autoFocus
-                  value={newName}
                 />
               ) : (
                 <>
-                  {newName || "user"}{" "}
-                  <button className="editButton" onClick={() => setEditName(true)}>< MdEdit/></button>
+                  {newName}{" "}
+                  <button className="editButton" onClick={() => setEditName(true)}>
+                    <MdEdit />
+                  </button>
                 </>
-              )}</li>
+              )}
+            </li>
+
+            {/* Email */}
             <li>{user.email}</li>
-            <li>Total entries{entries}</li>
+
+            {/* Total Entries */}
+            <li>Total entries: {entries !== null ? entries : "Loading..."}</li>
+
+            {/* Editable Daily Limit */}
             <li>
               {editLimit ? (
                 <input
                   ref={inputRef}
-                  type="text"
+                  type="number"
+                  value={limit}
                   onChange={(e) => setLimit(e.target.value)}
                   onBlur={() => {
-                    handleLimit()
-                    setEditLimit(false)
+                    handleLimit();
+                    setEditLimit(false);
                   }}
                   autoFocus
-                  value={limit}
                 />
               ) : (
                 <>
-                  {limit || "0"}{" "}
-                  <button className="editButton" onClick={() => setEditLimit(true)}>< MdEdit/></button>
+                  {limit}{" "}
+                  <button className="editButton" onClick={() => setEditLimit(true)}>
+                    <MdEdit />
+                  </button>
                 </>
               )}
             </li>
           </ul>
         </div>
+
+        {/* Logout */}
         <div className="bottom">
           <button onClick={logoutUser}>Logout</button>
         </div>
