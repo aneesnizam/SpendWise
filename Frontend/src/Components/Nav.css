@@ -14,6 +14,16 @@ margin-top: 10px;
 
 }
 #nav .left{
+display: flex;
+align-items: center;
+justify-content: center;
+
+}
+#nav .middle img{
+display: block;
+width: 100px;
+margin-left: 40px;
+scale: 1.1;
 
 }
 #nav .left button{

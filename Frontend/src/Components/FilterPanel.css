@@ -51,9 +51,12 @@
     text-shadow: 2px 2px 2px #8f97a3, -2px -2px 4px #4b4b4bcc;
   font-size: 25px;
   color: #dde9fa;
+  display: flex;
+  align-items: center;
+  
 }
 #filter-panel .summary h3 span{
-
+margin-left: 10px;
   color: #4154fc;
    text-shadow: 2px 2px 2px #a3b1c6, -2px -2px 4px #ffffffcc;
 }

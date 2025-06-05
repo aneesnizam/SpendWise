@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import api from "../utilities/axios";
 import userlogindata from "./Authstore";
+import Target from "../utilities/Target";
 
 export default function FilterPanel() {
   const [startDate, setStartDate] = useState("");
@@ -139,16 +140,16 @@ const sortedCtegory = [...categoryExpenses].sort((a,b) => {
     <section id="filter-panel">
       <form className="filter-form" onSubmit={(e) => e.preventDefault()}>
         <div className="top">
-           <form className="selector">
+           <div className="selector">
           <select value={ currentView } onChange={(e) => setCurrentView(e.target.value)}>
             <option value="filterByDate">Date Only Filter</option>
             <option value="dateRange">Advanced Filter </option>
           </select>
-        </form>
+        </div>
           <h2 className="historyheading">Advanced Filter</h2>
           <header className="summary">
             <h3>
-              Total: <span> {total}</span>
+              Total: <span> <Target target={total}/></span>
             </h3>
             <h3>
               Count: <span>{count}</span>

@@ -26,6 +26,7 @@ export default function DataBox() {
       setHistory(res.data.expenses);
       setTotalCost(res.data.totalAmount);
       setUserLimit(user.dailyLimit - res.data.totalAmount);
+      
     } catch (err) {
       console.error(err.message);
     }
@@ -76,6 +77,8 @@ export default function DataBox() {
     setDescription("");
     // setUserLimit((prev) => prev - cost);
     setError("");
+
+
   };
 
   const handleDelete = async (id) => {
@@ -99,9 +102,13 @@ export default function DataBox() {
       timeStyle: "short",
     });
   };
-  // useEffect(() => {
-  //   setUserLimit(user.dailyLimit)
-  // })
+ useEffect(() => {
+  if (userLimit <= 0) {
+    toast.warn("Your daily limit exceeded", {
+  autoClose: 4000
+});
+  }
+}, [userLimit]);
   return (
     <section id="data-box">
       <form className="currency-selector">

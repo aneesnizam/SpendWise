@@ -117,18 +117,18 @@ justify-content: center;
 .summary-box {
 }
 .summary-box  h4{
- font-size: 20px;
+ font-size: 23px;
     margin-right: 10px;
     color: black;
 }
 .limit-value {
-       font-size: 18px;
+       font-size: 20px;
        font-weight: 700;
-     text-shadow: 1px 1px 6px rgba(94, 94, 94, 0.767);
+      text-shadow: 2px 2px 2px #a3b1c6, -2px -2px 4px #ffffffcc;
 
 }
 .limit-value.positive {
-    color: green;
+    color: rgb(18, 185, 18);
  
 }
 .limit-value.negative {
@@ -141,7 +141,8 @@ justify-content: center;
 }
 span.totalcost{
     color: rgb(0, 140, 255);
-       text-shadow: 1px 1px 6px rgba(94, 94, 94, 0.664);
+     text-shadow: 2px 2px 2px #a3b1c6, -2px -2px 4px #ffffffcc;
+     font-size: 25px;
 }
 /* History Section */
 .expense-history {

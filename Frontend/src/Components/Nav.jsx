@@ -6,6 +6,7 @@ import dp from "../assets/dp.jpg";
 import userlogindata from "./Authstore";
 import Menu from "./Menu";
 import Profile from "./Profile";
+import Logo from "../assets/sw4.png"
 export default function Nav() {
   const { showMenu, setShowMenu, setViewProfile, viewProfile } =
     userlogindata();
@@ -23,6 +24,7 @@ export default function Nav() {
     <>
       <section id="nav">
         <div className="left">
+        
           <button onClick={() => setShowMenu(true)}>
             <GiHamburgerMenu />
           </button>
@@ -30,7 +32,7 @@ export default function Nav() {
         </div>
         <div className="middle">
           {" "}
-          <h3>SpendWise</h3>
+          <img src={Logo} alt="" />
         </div>
         <div className="right">
           <button onClick={() => handleToggle()}>

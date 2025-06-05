@@ -10,16 +10,17 @@ export default function Profile() {
   const inputRef = useRef(null);
   const { setViewProfile, user, logoutUser, setUser } = userlogindata();
 
-  const [editLimit, setEditLimit] = useState(false);
-  const [editName, setEditName] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const [limit, setLimit] = useState(user.dailyLimit || 0);
   const [newName, setNewName] = useState(user.name || "user");
   const [entries, setEntries] = useState(null);
+  const [isSlider, setIsSlider] = useState(false);
 
   // Fetch expense entries once when component mounts
   useEffect(() => {
-    api.get("api/expenses")
+    api
+      .get("api/expenses")
       .then((res) => {
         const expenses = res.data.expenses.length;
         setEntries(expenses);
@@ -46,7 +47,7 @@ export default function Profile() {
   const handleName = async () => {
     try {
       const res = await api.post("api/user", { name: newName });
-      toast.success(res.data.message);
+
       setUser(res.data.user);
     } catch (err) {
       console.error("Error updating name:", err);
@@ -56,81 +57,107 @@ export default function Profile() {
   // Update user's daily limit
   const handleLimit = async () => {
     try {
-      const res = await api.post("api/user", { dailyLimit: limit, name: newName });
-      toast.success(res.data.message);
+      const res = await api.post("api/user", {
+        dailyLimit: limit,
+        name: newName,
+      });
+
       setUser(res.data.user);
       setLimit(res.data.user.dailyLimit);
+      return res.data.message;
     } catch (err) {
       console.error("Error updating limit:", err);
     }
   };
+  const handleSlider = () => {
+    setIsSlider((prev) => !prev);
+  };
+  const handleSave = async () => {
+    setEdit(false);
 
+    handleName();
+    const msg = await handleLimit();
+    toast.success(msg);
+  };
   return (
     <section id="profileContainer">
       <div className="profilebox" ref={profileRef}>
         <div className="top">
-          <button onClick={() => setViewProfile(false)}>Back</button>
+          <button onClick={() => setViewProfile(false)}   >Back</button>
+          {!edit ? (
+            <button className="editButton" onClick={() => setEdit(true)}>
+              <MdEdit />
+            </button>
+          ) : (
+            <button className="editButton" style={{background:"rgb(25, 192, 25)",color:"white"}} onClick={handleSave}>
+              Save
+            </button>
+          )}
         </div>
-        <div className="middle">
+        <div className="middle" style={  edit ? {marginTop:"80px"}: {}} >
           <ul>
-            {/* Editable Name */}
             <li>
-              {editName ? (
+              {edit && <p>Change name :</p>}
+              {edit ? (
                 <input
                   type="text"
                   value={newName}
                   onChange={(e) => setNewName(e.target.value)}
-                  onBlur={() => {
-                    handleName();
-                    setEditName(false);
-                  }}
-                  autoFocus
                 />
               ) : (
-                <>
-                  {newName}{" "}
-                  <button className="editButton" onClick={() => setEditName(true)}>
-                    <MdEdit />
-                  </button>
-                </>
+                <><strong style={{fontSize:"28px"}}>{newName}</strong> </>
               )}
             </li>
+            { !edit && (
+              <>
+                <li>{user.email}</li>
 
-            {/* Email */}
-            <li>{user.email}</li>
-
-            {/* Total Entries */}
-            <li>Total entries: {entries !== null ? entries : "Loading..."}</li>
+                <li>
+                  Total entries: {entries !== null ? entries : "Counting..."}
+                </li>
+              </>
+            )}
 
             {/* Editable Daily Limit */}
             <li>
-              {editLimit ? (
+              <p> {!edit ? "Daily Spending Limit :" : "Set Daily Limit :"}</p>
+              {edit ? (
                 <input
                   ref={inputRef}
                   type="number"
                   value={limit}
                   onChange={(e) => setLimit(e.target.value)}
-                  onBlur={() => {
-                    handleLimit();
-                    setEditLimit(false);
-                  }}
-                  autoFocus
                 />
               ) : (
-                <>
-                  {limit}{" "}
-                  <button className="editButton" onClick={() => setEditLimit(true)}>
-                    <MdEdit />
-                  </button>
-                </>
+                <>₹{limit} </>
               )}
+            </li>
+            <li>
+              <p>
+                Weekly Summary:{" "}
+                {edit && (
+                  <p style={{ fontSize: "12px", marginBottom: "0px" }}>
+                    Receive a weekly email with your expense summary
+                  </p>
+                )}
+              </p>
+              <label className="sliderlabel">
+                <input
+                  disabled={!edit}
+                  type="checkbox"
+                  checked={isSlider}
+                  onChange={handleSlider}
+                />
+                <span className="slider"></span>
+              </label>
             </li>
           </ul>
         </div>
 
         {/* Logout */}
         <div className="bottom">
-          <button onClick={logoutUser}>Logout</button>
+          {!edit && <button onClick={logoutUser}>Logout</button>}
+          
         </div>
       </div>
     </section>

@@ -6,11 +6,16 @@
   left: 0;
   width: 25%;
   height: 100vh;
-  background-color: #1e1e1e;
-  color: white;
+
+
   z-index: 1000;
   padding: 20px;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+background-color: #e0e5ec;
+  padding: 20px 10px;
+
+  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #a3b1c6;
+  color: rgb(0, 0, 0);
+  box-sizing: border-box;
   overflow-y: auto;
   transition: all 0.3s ease-in-out;
 
@@ -41,11 +46,19 @@ display: inline-block;
   list-style: none;
   padding-left: 0;
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 60px;
 }
 
 #menu .menu-container .menu-list .menu-item{
   padding: 8px 0;
   cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 
