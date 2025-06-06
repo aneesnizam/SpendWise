@@ -110,7 +110,7 @@ export default function DataBox() {
   }
 }, [userLimit]);
   return (
-    <section id="data-box">
+    <section id="data-box" >
       <form className="currency-selector">
         <select
           name="currency"
@@ -188,7 +188,7 @@ export default function DataBox() {
 
         <aside className="summary-info">
           <div className="summary-box">
-            <h5>
+            <h5 style={{marginBottom:'30px'}}>
               <span className="label">Remaining:</span>
               <span
                 className={`limit-value ${
@@ -205,7 +205,7 @@ export default function DataBox() {
           </div>
 
           <div className="summary-box">
-            <h4>
+            <h3>
               Total cost:{" "}
               <span className="totalcost">
                 {currency}
@@ -213,7 +213,7 @@ export default function DataBox() {
                   ? (totalCost * exchangeRate).toFixed(2)
                   : totalCost.toFixed(2)}
               </span>
-            </h4>
+            </h3>
           </div>
         </aside>
       </div>

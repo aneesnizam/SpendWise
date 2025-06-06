@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Nav.css";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { FiDownload } from "react-icons/fi";
 import dp from "../assets/dp.jpg";
 import userlogindata from "./Authstore";
 import Menu from "./Menu";
@@ -12,14 +12,7 @@ export default function Nav() {
     userlogindata();
 
   const [toggle, setToggle] = useState(true);
-  const handleToggle = () => {
-    if (toggle == true) {
-      setToggle(false);
-    }
-    if (toggle == false) {
-      setToggle(true);
-    }
-  };
+
   return (
     <>
       <section id="nav">
@@ -35,13 +28,8 @@ export default function Nav() {
           <img src={Logo} alt="" />
         </div>
         <div className="right">
-          <button onClick={() => handleToggle()}>
-            {" "}
-            {toggle ? (
-              <FaMoon style={{ color: "grey" }} />
-            ) : (
-              <FaSun style={{ color: "gold" }} />
-            )}
+          <button >
+         < FiDownload  />
           </button>
           <span
             onClick={() => {

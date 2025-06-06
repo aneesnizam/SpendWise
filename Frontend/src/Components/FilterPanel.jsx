@@ -149,7 +149,7 @@ const sortedCtegory = [...categoryExpenses].sort((a,b) => {
           <h2 className="historyheading">Advanced Filter</h2>
           <header className="summary">
             <h3>
-              Total: <span> <Target target={total}/></span>
+              Total: <span> <Target  target={total}/></span>
             </h3>
             <h3>
               Count: <span>{count}</span>
@@ -263,7 +263,7 @@ const sortedCtegory = [...categoryExpenses].sort((a,b) => {
                     <p className={`category-tag ${category.toLowerCase()}`}>
                       Category: {category}
                     </p>
-                    <p className="categoryTotal">Total: {amount}</p>
+                    <p className="categoryTotal">Total: ₹{amount}</p>
                   </header>
                   <footer className="category-footer">
                     <p>No. of entries: {count}</p>
@@ -283,19 +283,18 @@ const sortedCtegory = [...categoryExpenses].sort((a,b) => {
                 key={_id}
                 className={`history-item ${category.toLowerCase()}`}
               >
-                <div className="entry-card">
-                  <header className="entry-header">
+                <div className="entry-cards">
+                  <header className="entry-headers">
                     <div className="entry-details">
                       <p className={`category-tag ${category.toLowerCase()}`}>
                         {category.charAt(0).toUpperCase() + category.slice(1)}:
                       </p>
-                      <span>{amount}</span>
+                      <span>₹{amount}</span>
                     </div>
+                    <p>{title}</p>
                     <p className="date">{formatDate(date)}</p>
                   </header>
-                  <footer className="entry-footer">
-                    <p>{title}</p>
-                  </footer>
+                  
                 </div>
               </li>
             ))}

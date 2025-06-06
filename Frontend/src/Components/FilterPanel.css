@@ -1,4 +1,3 @@
-/* Main section */
 #filter-panel {
 }
 
@@ -14,6 +13,24 @@
  margin-bottom: 20px;
 
 
+}
+.entry-headers{
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr;
+}
+.entry-cards {
+  
+   padding: 0;
+   margin: 0;
+ 
+  
+       
+}
+.entry-cards span{
+  color: 					#2492db;
+}
+.entry-cards .date{
+  color: #061b558b;
 }
 .filter-form .top .selector select{
     background-color: #e0e5ec;
@@ -178,6 +195,7 @@ box-sizing: border-box;
 }
 
 #filter-panel .category-header {
+  
 }
 
 #filter-panel .category-header p {
@@ -266,3 +284,4 @@ box-sizing: border-box;
 .category-item.childcare { background: #fefce8; }
 .category-item.taxes { background: #fef2f2; }
 .category-item.other { background: #f9fafb; }
+
