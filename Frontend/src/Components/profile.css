@@ -1,148 +1,280 @@
-#profileContainer{
-     position: fixed;
+#profileContainer {
+  position: fixed;
   top: 0;
- right: 0;
+  right: 0;
   width: 35%;
   height: 100vh;
- background-color: #e0e5ec;
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
   padding: 20px 0px;
-
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #a3b1c6;
-  color: rgb(0, 0, 0);
+  box-shadow: 
+    20px 20px 60px #b8c4d9, 
+    -20px -20px 60px #b4b4b4;
+  color: #2d3748;
   box-sizing: border-box;
   z-index: 1000;
   overflow-y: auto;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  transform: translateX(0);
 }
-#profileContainer .profilebox{
-    position: relative;
-    height: 90%;
+
+#profileContainer.closed {
+  transform: translateX(100%);
+  box-shadow: none;
 }
-#profileContainer .profilebox .top{
+
+#profileContainer .profilebox {
+  position: relative;
+  height: 90%;
+  padding: 20px;
+}
+
+#profileContainer .profilebox .top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 20px;
-
+  padding: 0px 20px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-#profileContainer .profilebox .top button{
-        background-color: #e0e5ec;
+
+#profileContainer .profilebox .top button {
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
   border: none;
   outline: none;
-width: fit-content;
-  border-radius: 10px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
-  padding: 5px 10px;
-margin: 0;
-  color: black;
-  border: 1px dotted black;
+  width: fit-content;
+  border-radius: 12px;
+  box-shadow: 
+    8px 8px 16px #c3cfdd, 
+    -8px -8px 16px #fdffff;
+  padding: 8px 16px;
+  margin: 0;
+  color: #4a5568;
+  font-weight: 600;
   cursor: pointer;
- transition: 1s ease-in;
-   
-}
-#profileContainer .profilebox .middle{
-    display:flex ;
-    align-items: center;
-    justify-content:center ;
-    padding: 0;
-    margin: 0 auto;
-    margin-top: 5%;
-    text-align: center;
-
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-#profileContainer .profilebox .middle ul{
-padding: 0;
-margin: 0 auto
+#profileContainer .profilebox .top button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    10px 10px 20px #b8c4d9, 
+    -10px -10px 20px #ffffff;
 }
-#profileContainer .profilebox .middle li{
-margin-bottom: 10px;
-font-size: 20px;
-display: flex;
-align-items: center;
-gap: 10px;
-justify-content: center;
-max-height: max-content;
-  min-height: 60px;
+
+#profileContainer .profilebox .top button:active {
+  transform: translateY(0);
+  box-shadow: 
+    5px 5px 10px #c3cfdd, 
+    -5px -5px 10px #fdffff;
 }
-#profileContainer .profilebox .middle li input{
-  background-color: #e0e5ec;
-  color: black;
-  padding: 10px 10px;
-  margin-left: 10px;
-  box-sizing: border-box;
+
+#profileContainer .profilebox .middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+padding-top: 30px;
+  margin: 0 auto;
   text-align: center;
-  border: none;
-  border-radius: 20px;
-   box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
-   
 }
-#profileContainer .profilebox .bottom{
-width: 100%;
 
-left: 0;
-display: flex;
+#profileContainer .profilebox .middle ul {
+  padding: 0;
+  margin: 0 auto;
+  width: 80%;
 }
-#profileContainer .profilebox .bottom button{
-width: 80%;
-margin: 0 auto;
-background: orangered;
-  box-shadow: 5px 5px 15px #c6b0a3, -5px -5px 15px #c6b0a3;
-border: none;
-padding: 10px 2px;
-margin-top: 40px;
+
+#profileContainer .profilebox .middle li {
+  margin-bottom: 20px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: space-between;
+  min-height: 60px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
+  box-shadow: 
+    5px 5px 10px #c3cfdd, 
+    -5px -5px 10px #fdffff;
+  transition: all 0.3s ease;
 }
-#profileContainer .editButton{
-        background-color: #e0e5ec;
+
+#profileContainer .profilebox .middle li:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    8px 8px 16px #b8c4d9, 
+    -8px -8px 16px #ffffff;
+}
+
+#profileContainer .profilebox .middle li input {
+  background: linear-gradient(145deg, #f0f5fc, #e0e5ec);
+  color: #2d3748;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 
+    inset 3px 3px 6px #c3cfdd, 
+    inset -3px -3px 6px #fdffff;
+  font-size: 16px;
+  width: 60%;
+  transition: all 0.3s ease;
+}
+
+#profileContainer .profilebox .middle li input:focus {
+  outline: none;
+  box-shadow: 
+    inset 5px 5px 10px #b8c4d9, 
+    inset -5px -5px 10px #ffffff;
+}
+
+#profileContainer .profilebox .bottom {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+#profileContainer .profilebox .bottom button {
+  width: 60%;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  box-shadow: 
+    8px 8px 16px #d9c3c3, 
+    -8px -8px 16px #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+#profileContainer .profilebox .bottom button:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    10px 10px 20px #d9c3c3, 
+    -10px -10px 20px #ffffff;
+    background: orangered;
+}
+
+#profileContainer .profilebox .bottom button:active {
+  transform: translateY(0);
+}
+
+#profileContainer .editButton {
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
   border: none;
   outline: none;
-  margin: 0 auto;
-  box-shadow: 5px 5px 20px #a3b1c6, -5px -5px 20px #fff;
-width: 30px;
-height: 30px;
-  text-align: center;
-  color: black;
+  box-shadow: 
+    5px 5px 10px #c3cfdd, 
+    -5px -5px 10px #fdffff;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4a5568;
   border-radius: 50%;
-  margin-left: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
+#profileContainer .editButton:hover {
+  transform: rotate(15deg) scale(1.1);
+  color: #2d3748;
 }
-.sliderlabel{
-position: relative;
-display: inline-block;
-width: 50px;
-height: 28px;
-margin-top: 5px;
+
+.sliderlabel {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-top: 5px;
 }
-.sliderlabel input{
+
+.sliderlabel input {
   opacity: 0;
-width: 0;
-height: 0;
+  width: 0;
+  height: 0;
 }
-.sliderlabel .slider{
-background-color:  #ccc;
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-border-radius: 28px;
-cursor: pointer;
-transition: 0.4s;
+
+.sliderlabel .slider {
+  background-color: #ccc;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: 0.4s;
+  box-shadow: 
+    inset 3px 3px 5px rgba(0, 0, 0, 0.1), 
+    inset -3px -3px 5px rgba(255, 255, 255, 0.5);
 }
-.sliderlabel .slider:before{
+
+.sliderlabel .slider:before {
   content: " ";
   position: absolute;
-  width:22px ;
-  height:22px ;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background-color: white;
-  bottom: 3px;
-  left: 3px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  bottom: 4px;
+  left: 4px;
   transition: 0.4s;
+  box-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.1);
 }
-input:checked + .slider{
-  background-color: #4ade80;
+
+input:checked + .slider {
+  background: linear-gradient(145deg, #3ac76d, #4ade80);
 }
-input:checked + .slider:before{
-transform: translateX(22px);
+
+input:checked + .slider:before {
+  transform: translateX(15px);
+}
+
+/* Add some animation for the panel */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+#profileContainer {
+  animation: slideIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #profileContainer {
+    width: 85%;
+  }
+  
+  #profileContainer .profilebox .middle li {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+  
+  #profileContainer .profilebox .middle li input {
+    width: 100%;
+    margin-top: 10px;
+  }
 }

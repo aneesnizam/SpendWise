@@ -16,12 +16,41 @@ export default function InSight() {
   const [count, setCount] = useState(0);
   const [categoryCount, setCategoryCount] = useState(0);
   const[daysCount,setDaysCount] = useState(0)
+  const[data,setData] = useState()
 
 
 
+  const fetchDataa = async () => {
 
+    try {
+      const res = await api.get("api/borrowlend");
+      setData(res.data.transactions || []);
+      console.log(res.data.transactions)
+    } catch (err) {
+      toast.error("Failed to fetch entries");
+      console.error(err);
+    } 
+  };
 
+  useEffect(() => {
+    fetchDataa();
+  }, []);
 
+ const totals = {
+    lend: { pending: 0, settled: 0 },
+    borrow: { pending: 0, settled: 0 },
+  };
+ (data || []).forEach((entry) => {
+  const type = entry.type?.toLowerCase(); // "lend" or "borrow"
+    const status = entry.status?.toLowerCase(); // "pending" or "settled"
+    const amount = Number(entry.amount) || 0;
+
+    if(totals[type] && totals[type][status] !== undefined){
+      totals[type][status] += amount
+    }
+
+    
+ })
   const getWeekRange = () => {
     const now = new Date();
     const day = now.getDay(); // Sunday = 0
@@ -226,59 +255,62 @@ setDaysCount(spendDays.size)
       <div className="insight__bottom">
         <div className="insight__chart ">
           <div className="chartbar">
-            <Bar
-              data={{
-                labels: categoryInsight.map((item) => item.category),
-                datasets: [
-                  {
-                    label: "Category Spend",
-                    data: categoryInsight.map((item) => item.amount),
-                    backgroundColor: chartColors,
-                    borderRadius: 5,
-                    barThickness: 20, // thinner bars (adjust as needed)
-                    maxBarThickness: 30, // maximum thickness if auto
-                  },
-                ],
-              }}
-              options={{
-                layout: {
-                  padding: 0, // reduce space around chart
-                },
-                scales: {
-                  x: {
-                    grid: {
-                      display: true,
-                      drawBorder: false,
-                      lineWidth: 0.5, // thin grid lines
-                    },
-                    ticks: {
-                      maxRotation: 45,
-                      minRotation: 0,
-                    },
-                    barPercentage: 0.5, // space between bars
-                    categoryPercentage: 0.5, // space between categories
-                  },
-                  y: {
-                    grid: {
-                      display: true,
-                      drawBorder: false,
-                      lineWidth: 0.5,
-                    },
-                    ticks: {
-                      stepSize: 40,
-                      beginAtZero: true,
-                    },
-                  },
-                },
-              }}
-            />
+<Bar
+  data={{
+    labels: ["Lend", "Borrow"],
+    datasets: [
+      {
+        label: "Pending Amount",
+        data: [totals.lend.pending, totals.borrow.pending],
+        backgroundColor: "#e57373",
+      },
+      {
+        label: "Settled Amount",
+        data: [totals.lend.settled, totals.borrow.settled],
+        backgroundColor: "#81c784",
+      },
+    ],
+  }}
+  options={{
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            return `₹ ${context.parsed.y.toLocaleString("en-IN")}`;
+          },
+        },
+      },
+      title: {
+        display: true,
+        text: "Lend vs Borrow Summary",
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: function (value) {
+            return `₹${value}`;
+          },
+        },
+      },
+    },
+  }}
+/>
+
           </div>
         </div>
 
         <div className="insight__chart">
           <div className="chartround">
             {" "}
-            <Doughnut
+            
+            <Doughnut      
+ 
               data={{
                 labels: categoryInsight.map((item) => item.category),
                 datasets: [
@@ -289,7 +321,22 @@ setDaysCount(spendDays.size)
                     borderColor: chartColors,
                   },
                 ],
-              }}
+                
+              }
+            
+            }
+                options={{
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "bottom",
+          },
+          title: {
+            display: true,
+            text: "Spending by Category",
+          },
+        },
+      }}
             />
           </div>
         </div>

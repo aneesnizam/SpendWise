@@ -1,95 +1,105 @@
-#insight {
-width: 100%;
-padding: 10px 5px;
-padding-bottom: 50px;
-
+:root {
+  --primary-shadow-light: #a3b1c6;
+  --primary-shadow-dark: #d8d8d8;
+  --text-shadow-dark: #4b4b4bcc;
+  --color-primary-bg: #e0e5ec;
+  --text-color-light: #e0e5ec;
+  --text-color-dark: black;
 }
-#insight h1{
+
+#insight {
+  width: 100%;
+  padding: 10px 5px;
+  padding-bottom: 50px;
+  background: url(../assets/img9.png);
+  background-repeat: no-repeat;
+  background-size: 150px 100px;
+  background-position: top 10px left 80px;
+  color:rgb(74, 255, 74) ;
+}
+
+#insight h1 {
   text-align: center;
-    text-shadow: 2px 2px 2px #a3b1c6, -2px -2px 4px #4b4b4bcc;
+  text-shadow: 2px 2px 2px var(--primary-shadow-light), -2px -2px 4px var(--text-shadow-dark);
   font-size: 30px;
-  color: #e0e5ec;
+  color: var(--text-color-light);
   margin-bottom: 50px;
 }
 
 #insight .insight__top {
-display: flex;
-align-items: center;
-justify-content: space-around;
-color: black;
-margin-bottom: 50px;
-
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: var(--text-color-dark);
+  margin-bottom: 50px;
 }
 
 #insight .insight__box {
-
   height: 150px;
-    width:150px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-       border-radius: 10px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #d8d8d8;
+  width: 150px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px var(--primary-shadow-light), -10px -10px 20px var(--primary-shadow-dark);
   box-sizing: border-box;
-  
-
-
 }
 
 #insight .insight__box h3 {
- margin: 0;
- margin-bottom: 10px;
+  margin: 0;
+  margin-bottom: 10px;
 }
 
 #insight .insight__box p {
-margin: 0;
+  margin: 0;
 }
 
 #insight .insight__middle {
-width: 90%;
-margin: 0 auto;
-margin-top: 30px;
-     border-radius: 10px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #d8d8d8;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 30px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px var(--primary-shadow-light), -10px -10px 20px var(--primary-shadow-dark);
   box-sizing: border-box;
   padding: 20px 10px;
-
 }
-#insight .insight__middle .linechart{
-display:flex ;
-align-items: center;
-justify-content: center;
 
+#insight .insight__middle .linechart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 #insight .insight__bottom {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-   
-    margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 50px;
   /* Container for Bar and Doughnut charts */
 }
 
 #insight .insight__chart {
-     border-radius: 10px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #d8d8d8;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px var(--primary-shadow-light), -10px -10px 20px var(--primary-shadow-dark);
   box-sizing: border-box;
-width: 43%;
-height: 400px;
-padding: 20px;
-margin: 0 auto;
+  width: 43%;
+  height: 400px;
+  padding: 20px;
+  margin: 0 auto;
 }
-.chartbar, .chartround{
-height: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.chartbar,
+.chartround {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.chartround{
-    width: 80%;
-    margin: 0 auto;
- 
+
+.chartround {
+  width: 80%;
+  margin: 0 auto;
 }

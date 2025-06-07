@@ -85,7 +85,7 @@ export default function Profile() {
         <div className="top">
           <button onClick={() => setViewProfile(false)}   >Back</button>
           {!edit ? (
-            <button className="editButton" onClick={() => setEdit(true)}>
+            <button className="editButton" style={{background:"#ff7e5f",color:"white"}} onClick={() => setEdit(true)}>
               <MdEdit />
             </button>
           ) : (
@@ -94,7 +94,7 @@ export default function Profile() {
             </button>
           )}
         </div>
-        <div className="middle" style={  edit ? {marginTop:"80px"}: {}} >
+        <div className="middle" style={  edit ? {marginTop:"10px"}: {}} >
           <ul>
             <li>
               {edit && <p>Change name :</p>}

@@ -1,125 +1,132 @@
+:root {
+  --primary-bg: #ffffff; /* repeated many times */
+  --primary-shadow-dark: #a3b1c6; /* repeated many times */
+  --primary-shadow-light: #fff; /* repeated many times */
+  --text-black: black; /* repeated many times */
+  --blue-accent: #2492db; /* repeated */
+  --date-color: #061b558b; /* repeated */
+  --heading-shadow-1: #a3b1c6;
+  --heading-shadow-2: #4b4b4bcc;
+  --summary-shadow: #8f97a3;
+}
+
+/* -------- CSS with variables for repeating colors -------- */
+
 #filter-panel {
+
 }
 
 #filter-panel form.filter-form {
   padding-bottom: 50px;
 }
 
-.filter-form .top{
- color: black;
- display: flex;
- align-items: center;
- justify-content: space-between;
- margin-bottom: 20px;
-
-
+.filter-form .top {
+  color: var(--text-black);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
-.entry-headers{
+
+.entry-headers {
   display: grid;
   grid-template-columns: 2fr 3fr 2fr;
 }
+
 .entry-cards {
-  
-   padding: 0;
-   margin: 0;
- 
-  
-       
+  padding: 0;
+  margin: 0;
 }
-.entry-cards span{
-  color: 					#2492db;
+
+.entry-cards span {
+  color: var(--blue-accent);
 }
-.entry-cards .date{
-  color: #061b558b;
+
+.entry-cards .date {
+  color: var(--date-color);
 }
-.filter-form .top .selector select{
-    background-color: #e0e5ec;
+
+.filter-form .top .selector select {
+  background-color: var(--primary-bg);
   border: none;
   outline: none;
   margin: 0 auto;
   border-radius: 10px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
+  box-shadow: 10px 10px 20px var(--primary-shadow-dark), -10px -10px 20px var(--primary-shadow-light);
   padding: 10px 10px;
   text-align: center;
-  color: black;
-  border: 1px dotted black;
-
-
+  color: var(--text-black);
+  border: 1px dotted var(--text-black);
 }
-.filter-form .top h2{
-  text-shadow: 2px 2px 2px #a3b1c6, -2px -2px 4px #4b4b4bcc;
+
+.filter-form .top h2 {
+  text-shadow: 2px 2px 2px var(--heading-shadow-1), -2px -2px 4px var(--heading-shadow-2);
   font-size: 30px;
-  color: #e0e5ec;
-
-
-}
-#filter-panel .summary {
-
- 
+  color: #e0e5ec; /* unique, keep literal */
 }
 
-
-
-
-
+#filter-panel .summary {}
 
 #filter-panel .summary h3 {
-
-    text-shadow: 2px 2px 2px #8f97a3, -2px -2px 4px #4b4b4bcc;
-  font-size: 25px;
-  color: #dde9fa;
+ 
+  font-size: 24px;
+  color: #000000; /* unique */
   display: flex;
   align-items: center;
-  
 }
-#filter-panel .summary h3 span{
-margin-left: 10px;
-  color: #4154fc;
-   text-shadow: 2px 2px 2px #a3b1c6, -2px -2px 4px #ffffffcc;
+
+#filter-panel .summary h3 span {
+  margin-left: 10px;
+  color: #4154fc; /* unique */
+  text-shadow: 2px 2px 2px var(--primary-shadow-dark), -2px -2px 4px #ffffffcc;
 }
+
 /* Filter inputs container */
 #filter-panel .filters {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 #filter-panel .categoryselector,
 #filter-panel .filters input[type="number"],
 #filter-panel .filters .react-datepicker__input-container input {
-  background-color: #e0e5ec;
+  background-color: var(--primary-bg);
   border: none;
   outline: none;
   border-radius: 10px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
+  box-shadow: 10px 10px 20px var(--primary-shadow-dark), -10px -10px 20px var(--primary-shadow-light);
   padding: 10px 12px;
   text-align: center;
-  color: black;
-  border: 1px dotted black;
-/* prevents them from getting too small */
+  color: var(--text-black);
+  border: 1px dotted var(--text-black);
 }
-.react-datepicker  select{
-  background-color: #e0e5ec;
-  color: black;
+
+.react-datepicker select {
+  background-color: var(--primary-bg);
+  color: var(--text-black);
   border-radius: 5px;
   font-size: 12px;
 }
+
 #filter-panel .filters .react-datepicker-wrapper {
- width: auto;
+  width: auto;
 }
-#filter-panel .filters input[type="number"]{
-  width: 100px; 
+
+#filter-panel .filters input[type="number"] {
+  width: 100px;
 }
+
 #filter-panel .filters .react-datepicker__input-container input {
   box-sizing: border-box;
-  min-width: 120px; 
+  min-width: 120px;
+  margin: 0;
 }
 
 /* Sort selects */
-#filter-panel .filters select[aria-label="Sort Field"] {
-}
+#filter-panel .filters select[aria-label="Sort Field"] {}
 
-#filter-panel .filters select[aria-label="Sort Order"] {
-}
+#filter-panel .filters select[aria-label="Sort Order"] {}
 
 /* Action buttons and checkboxes */
 #filter-panel .actions {
@@ -131,120 +138,101 @@ margin-left: 10px;
   width: fit-content;
   margin-top: 10px;
   margin-bottom: 20px;
-  color: rgba(0, 0, 0, 0.61);
-
+  color: rgba(0, 0, 0, 0.61); /* unique */
 }
 
-#filter-panel .actions input[type="checkbox"] {
-
-
-}
+#filter-panel .actions input[type="checkbox"] {}
 
 #filter-panel .actions button {
-     width: 90%;
-    margin: 0 auto;
-    padding: 10px 10px;
-    background-color: var( --submit-btn);
-    border: none;
-    border-radius: 25px;
-      box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
+  width: 90%;
+  margin: 0 auto;
   padding: 10px 10px;
-display: flex;
-font-size: 18px;
-
-justify-content: center;
+  background-color: var(--submit-btn, #2ecc71); /* keep default fallback */
+  border: none;
+  border-radius: 25px;
+  box-shadow: 10px 10px 20px var(--primary-shadow-dark), -10px -10px 20px var(--primary-shadow-light);
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
 }
-#filter-panel .actions button:hover{
-  background-color:rgb(38, 224, 32); /* darker green on hover */
-  box-shadow: 0 4px 10px rgb(183, 216, 182); /* outer shadow */
+
+#filter-panel .actions button:hover {
+  background-color: rgb(38, 224, 32); /* unique */
+  box-shadow: 0 4px 10px rgb(183, 216, 182); /* unique */
   transform: scale(1.03);
   font-size: 19px;
-
-
 }
+
 /* Loading text */
 #filter-panel .loading-text {
   display: none;
 }
 
 /* Results section */
-#filter-panel .results {
-}
+#filter-panel .results {}
 
 /* Grouped by category */
 #filter-panel .category-list {
-display: flex;
-flex-wrap: wrap;
-align-items: center;
-justify-content: center;
-gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 #filter-panel .category-item {
-  color: black;
+  color: var(--text-black);
   width: 30%;
   margin-right: 20px;
-
   margin-bottom: 20px;
   text-align: center;
-box-sizing: border-box;
-
+  box-sizing: border-box;
   border-radius: 20px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
+  box-shadow: 10px 10px 20px var(--primary-shadow-dark), -10px -10px 20px var(--primary-shadow-light);
   padding: 10px 10px;
 }
 
-#filter-panel .category-header {
-  
-}
+#filter-panel .category-header {}
 
-#filter-panel .category-header p {
-}
+#filter-panel .category-header p {}
 
-#filter-panel .category-footer {
-}
+#filter-panel .category-footer {}
 
-#filter-panel .category-footer p {
-}
+#filter-panel .category-footer p {}
 
 /* Flat list (not grouped) */
-#filter-panel .expense-list {
-}
+#filter-panel .expense-list {}
 
 #filter-panel .expense-item {
-     padding: 0;
-   margin: 0;
-   display: flex;
-   flex-wrap: wrap; 
-   justify-content: center
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-.categoryTotal{
-  background: linear-gradient(to right, #061b55, #9ac5fd);
+
+.categoryTotal {
+  background: linear-gradient(to right, #061b55, #9ac5fd); /* unique */
   background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: bold;
   font-size: 16px;
 }
-#filter-panel .expense-header {
 
+#filter-panel .expense-header {}
 
-}
+#filter-panel .expense-header p {}
 
-#filter-panel .expense-header p {
-}
+#filter-panel .expense-footer {}
 
-#filter-panel .expense-footer {
-}
-
-#filter-panel .expense-footer p {
-}
+#filter-panel .expense-footer p {}
 
 /* No results message */
 #filter-panel .no-results {
-  color: black;
-
+  color: var(--text-black);
   text-align: center;
 }
+
 .category-item.food { background: #f0fdf4; }
 .category-item.transport { background: #eff6ff; }
 .category-item.shopping { background: #fef2f2; }

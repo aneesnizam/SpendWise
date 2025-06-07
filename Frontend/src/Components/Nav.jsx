@@ -6,7 +6,7 @@ import dp from "../assets/dp.jpg";
 import userlogindata from "./Authstore";
 import Menu from "./Menu";
 import Profile from "./Profile";
-import Logo from "../assets/sw4.png"
+import Logo from "../assets/sw5.png"
 export default function Nav() {
   const { showMenu, setShowMenu, setViewProfile, viewProfile } =
     userlogindata();

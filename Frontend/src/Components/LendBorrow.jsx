@@ -256,7 +256,7 @@ export default function LendBorrow() {
                     </button>
                     <button
                       type="button"
-                      className="delete-btn"
+                      className="deletee-btn"
                       onClick={() => handleDelete(item._id)}
                     >
                       Delete

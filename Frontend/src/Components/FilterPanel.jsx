@@ -175,6 +175,7 @@ const sortedCtegory = [...categoryExpenses].sort((a,b) => {
           </select>
 
           <DatePicker
+         
             selected={startDate ? new Date(startDate) : null}
             onChange={handleStartDate}
             dateFormat="dd/MM/yyyy"

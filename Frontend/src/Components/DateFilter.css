@@ -1,142 +1,131 @@
+
+:root {
+  --highlight-green: #4caf50;
+  --datepicker-bg: #ffffff;
+  --datepicker-shadow-dark: #a3b1c6;
+  --datepicker-shadow-light: #fff;
+  --datepicker-header-bg: #f5f5f5;
+  --border-black: black;
+  --text-black: black;
+  --highlight-text-green: #3bac3f;
+  --border-gray: rgba(82, 82, 82, 0.267);
+}
+#date-filter{
+
+background: url(../assets/img1.png);
+  background-repeat: no-repeat;
+  background-size: 90px 80px;
+  background-position: top 10px left 30px;
+}
 /* Highlighted dates in DatePicker */
-.custom-highlight {
-  background-color: #4CAF50 !important;
-  color: white !important;
-  border-radius: 50% !important;
-}
-
-/* Alternatively, if react-datepicker default highlighted day class is used */
+.custom-highlight,
 .react-datepicker__day--highlighted {
-  background-color: #4CAF50 !important;
+  background-color: var(--highlight-green) !important;
   color: white !important;
   border-radius: 50% !important;
 }
-.date-input-container select{
-      background-color: #c6cbd3;
-  border: none;
-  outline: none;
-    border-radius: 10px;
 
+/* Dropdown inside date-input-container */
+.date-input-container select {
+  background-color: #c6cbd3;
+  border: 1px solid var(--border-black);
+  border-radius: 10px;
   font-weight: 500;
-  color: black;
-  border: 1px solid black;
+  color: var(--text-black);
+  outline: none;
 }
-/* DatePicker input style */
+
+/* DatePicker input */
 .react-datepicker__input-container input {
   width: 100%;
-  color: black;
+  color: var(--text-black);
   margin-bottom: 10px;
-    background-color: #e0e5ec;
+  background-color: var(--datepicker-bg);
   border: none;
   outline: none;
-  margin: 0 auto;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px 5px #a3b1c6;
+  box-shadow: 0px 0px 10px 5px var(--datepicker-shadow-dark);
   padding: 10px 10px;
   text-align: center;
 }
 
-/* DatePicker popup container */
+/* DatePicker popup */
 .react-datepicker {
   font-family: inherit;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 10px rgba(248, 119, 119, 0.1);
-   background-color: #e0e5ec;
   border: none;
   outline: none;
   margin: 0 auto;
+  background-color: var(--datepicker-bg);
   border-radius: 20px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #e6e2e2;
-
+  box-shadow: 10px 10px 20px var(--datepicker-shadow-dark), -10px -10px 20px var(--datepicker-shadow-light);
   text-align: center;
 }
 
-/* DatePicker header style */
+/* DatePicker header */
 .react-datepicker__header {
-  background-color: #f5f5f5;
-  border: 1px solid rgba(82, 82, 82, 0.267);
+  background-color: var(--datepicker-header-bg);
+  border: 1px solid var(--border-gray);
   border-bottom: none;
 }
 
-/* Hide the month-year title in calendar header */
+/* Hide current month title */
 h2.react-datepicker__current-month {
   display: none;
 }
 
-/* Container sections */
-#date-filter{
-width: 100%;
-padding: 20px 40px;
-box-sizing: border-box;
+/* Container for Date Filter */
+#date-filter {
+  width: 100%;
+  padding: 20px 40px;
+  box-sizing: border-box;
 }
 
 #date-filter .form-section {
-display: flex;
-align-items: center;
-justify-content: space-around;
-margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 50px;
 }
 
 #date-filter .selector {
-text-align: right;
-
+  text-align: right;
 }
-#date-filter .selector select{
-    background-color: #e0e5ec;
-  border: none;
+
+#date-filter .selector select {
+  background-color: var(--datepicker-bg);
+  border: 1px dotted var(--border-black);
   outline: none;
   margin: 0 auto;
   border-radius: 10px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
   padding: 10px 10px;
   text-align: center;
-  color: black;
-  border: 1px dotted black;
-}
-#date-filter .form-left {
-  /* Left side container (for date picker) */
+  color: var(--text-black);
+  box-shadow: 10px 10px 20px var(--datepicker-shadow-dark), -10px -10px 20px var(--datepicker-shadow-light);
 }
 
-#date-filter .date-input-container {
-  /* Container around the DatePicker input */
-}
-
-#date-filter .form-right {
-  /* Right side container (for total cost display) */
-}
+/* Layout containers (optional use) */
+#date-filter .form-left { }
+#date-filter .date-input-container { }
+#date-filter .form-right { }
 
 #date-filter .info-block {
-  color: black;
+  color: var(--text-black);
   font-size: 20px;
 }
-#date-filter .info-block h4 span{
+
+#date-filter .info-block h4 span {
   font-size: 21px;
-  color: #3bac3f;
+  color: var(--highlight-text-green);
 }
+
+/* History section layout */
 #date-filter .history-section {
- margin-top: 80px;
+  margin-top: 80px;
 }
 
-#date-filter .history-section ul {
-  /* The unordered list wrapping expense items */
-}
-
-#date-filter .history-section li {
-  /* Each list item (expense entry) */
-}
-
-#date-filter .entry-card {
-  /* The card wrapping each expense entry */
-}
-
-#date-filter .entry-header {
-  /* Header section of the entry card */
-}
-
-#date-filter .entry-row {
-  /* Row inside entry-header showing category and amount */
-}
-
-#date-filter .entry-footer {
-  /* Footer of the entry card showing title or description */
-}
+#date-filter .history-section ul { }
+#date-filter .history-section li { }
+#date-filter .entry-card { }
+#date-filter .entry-header { }
+#date-filter .entry-row { }
+#date-filter .entry-footer { }

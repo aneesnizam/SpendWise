@@ -1,9 +1,45 @@
-/* ===== Base Layout: Already in Your Code ===== */
 #lend-borrow-section {
+
+
+  /* 🧱 Base background and shadows */
+  --lb-bg-main: #e0e5ec;                    /* Main background color */
+  --lb-shadow-dark: #a3b1c6;                /* Dark shadow for neumorphism */
+  --lb-shadow-light: #d8d8d8;               /* Light shadow for neumorphism */
+  --lb-shadow-inset-dark: #a3b1c6;          /* Inner shadow (dark) */
+  --lb-shadow-inset-light: #ffffff;         /* Inner shadow (light) */
+
+  /* 🔘 Button colors */
+  --lb-btn-primary: #4a6bff;                /* Primary (submit) button */
+  --lb-btn-edit: #ffc107;                   /* Edit button */
+  --lb-btn-delete: #f44336;                 /* Delete button */
+
+  /* 💸 Lend entry colors */
+  --lb-lend-bg: #e8f5e9;                    /* Background for lend summary/entry */
+  --lb-lend-border: #4caf50;                /* Left border for lend entry */
+  --lb-lend-text: #2e7d32;                  /* Text color for lend badge */
+
+  /* 💰 Borrow entry colors */
+  --lb-borrow-bg: #ffebee;                  /* Background for borrow summary/entry */
+  --lb-borrow-border: #f44336;              /* Left border for borrow entry */
+  --lb-borrow-text: #c62828;                /* Text color for borrow badge */
+
+  /* ✅ Settled status */
+  --lb-status-green: #20c997;               /* Green text for settled */
+  --lb-status-green-bg: #e6f7f58c;          /* Light green background */
+
+  /* ⏳ Pending status */
+  --lb-status-orange: #fd7e14;              /* Orange text for pending */
+  --lb-status-orange-bg: #fff3e080;         /* Light orange background */
+
+  /* 🔢 Input field background */
+  --lb-input-bg: #b7f2ff29;                 /* Light blue semi-transparent background */
+
+
   margin: 0;
   padding: 10px 30px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
 
 /* Form & Summary Section */
 #lend-borrow-section .form-summary-wrapper {
@@ -11,9 +47,13 @@
   justify-content: space-around;
   align-items: center;
   border-radius: 10px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #d8d8d8;
+  box-shadow: 10px 10px 20px var(--lb-shadow-dark), -10px -10px 20px var(--lb-shadow-light);
   padding: 20px 30px;
-  background-color: #e0e5ec;
+  background-color: var(--lb-bg-main);
+    background: url(../assets/img10.png),url(../assets/img7.png);
+  background-repeat: no-repeat,no-repeat;
+  background-size: 90px 80px, 70px 60px;
+  background-position: top 30px left 330px,bottom 20px right 30px;
 }
 
 #lend-borrow-section .form-container {
@@ -38,26 +78,26 @@
   margin-left: 10px;
   border-radius: 10px;
   padding: 5px 10px;
-  background-color: #b7f2ff29;
+  background-color: var(--lb-input-bg);
   color: black;
   border: 1px dotted black;
-  box-shadow: inset 3px 3px 5px #a3b1c6, inset -3px -3px 5px #fff;
+  box-shadow: inset 3px 3px 5px var(--lb-shadow-inset-dark), inset -3px -3px 5px var(--lb-shadow-inset-light);
   font-size: 15px;
 }
 
 #lend-borrow-section .form-container button {
   padding: 10px 10px;
-  background-color: #4a6bff;
+  background-color: var(--lb-btn-primary);
   color: white;
   border: none;
   border-radius: 25px;
   font-weight: 600;
-  box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #fff;
+  box-shadow: 5px 5px 10px var(--lb-shadow-dark), -5px -5px 10px var(--lb-shadow-inset-light);
   cursor: pointer;
 }
 
 #lend-borrow-section .form-container button:hover {
-  box-shadow: 2px 2px 5px #a3b1c6, -2px -2px 5px #fff;
+  box-shadow: 2px 2px 5px var(--lb-shadow-dark), -2px -2px 5px var(--lb-shadow-inset-light);
 }
 
 /* Summary Boxes */
@@ -72,19 +112,19 @@
 #lend-borrow-section .summary-box {
   padding: 15px;
   border-radius: 15px;
-  box-shadow: 5px 5px 10px #a3b1c6, -5px -5px 10px #fff;
+  box-shadow: 5px 5px 10px var(--lb-shadow-dark), -5px -5px 10px var(--lb-shadow-inset-light);
   flex: 1;
   max-width: 200px;
 }
 
 .lend-summary {
-  background-color: #e8f5e9;
-  border: 1px solid #4caf50;
+  background-color: var(--lb-lend-bg);
+  border: 1px solid var(--lb-lend-border);
 }
 
 .borrow-summary {
-  background-color: #ffebee;
-  border: 1px solid #f44336;
+  background-color: var(--lb-borrow-bg);
+  border: 1px solid var(--lb-borrow-border);
 }
 
 .summary-box h4 {
@@ -93,7 +133,7 @@
   color: #333;
 }
 
-.summary-boxe h5 {
+.summary-box h5 {
   margin: 5px 0;
   font-size: 16px;
   font-weight: 500;
@@ -103,23 +143,24 @@
 /* Entry List Section */
 .entry-list-section {
   border-radius: 10px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #d8d8d8;
+  box-shadow: 10px 10px 20px var(--lb-shadow-dark), -10px -10px 20px var(--lb-shadow-light);
   padding: 20px 10px;
   margin-top: 60px;
-  background-color: #e0e5ec;
+  background-color: var(--lb-bg-main);
 }
 
 .filters-container {
   text-align: right;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .filters-container select {
-  background-color: #e0e5ec;
+  background-color: #fff;
   border: none;
   outline: none;
   border-radius: 10px;
-  box-shadow: 6px 6px 20px #a3b1c6, -5px -5px 20px #fff;
+  box-shadow: 6px 6px 20px var(--lb-shadow-dark), -5px -5px 20px var(--lb-shadow-inset-light);
   padding: 10px 10px;
   color: black;
   border: 1px dotted black;
@@ -127,57 +168,54 @@
   font-size: 14px;
 }
 
-.entry-list {
-  margin-top: 30px;
-  list-style: none;
-  padding: 0 20px;
+.search-wrapper {
+  position: absolute;
+  left: 30px;
 }
-.filters-container{
-  position: relative;
-}
-.search-wrapper{
- position: absolute;
-  left:30px;
 
-}
-.search-wrapper .search-icon
-{
+.search-wrapper .search-icon {
   position: absolute;
   left: 20px;
-  top:10px;
+  top: 10px;
   color: #00000063;
-    pointer-events: none;
+  pointer-events: none;
 }
+
 .filters-container input {
- 
-  
-  background-color: #e0e5ec;
+  background-color: #fff;
   border: none;
   outline: none;
   width: 220px;
   margin: 0 auto;
   border-radius: 20px;
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
+  box-shadow: 5px 5px 20px var(--lb-shadow-dark), -5px -5px 20px #c4c4c4;
   padding: 10px 10px;
   text-align: center;
   margin-bottom: 20px;
   color: black;
   box-sizing: border-box;
 }
+
+.entry-list {
+  margin-top: 30px;
+  list-style: none;
+  padding: 0 20px;
+}
+
 .entry-item {
-  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #d8d8d8;
+  box-shadow: 10px 10px 20px var(--lb-shadow-dark), -10px -10px 20px var(--lb-shadow-light);
   border-radius: 20px;
   padding: 15px 30px;
   margin-bottom: 20px;
-  background-color: #e0e5ec;
+  background-color: #ffffffac;
 }
 
 .entry-item.lend-item {
-  border-left: 5px solid #4caf50;
+  border-left: 5px solid var(--lb-lend-border);
 }
 
 .entry-item.borrow-item {
-  border-left: 5px solid #f44336;
+  border-left: 5px solid var(--lb-borrow-border);
 }
 
 .entry-item.borrow-item.settled {
@@ -188,7 +226,6 @@
   border-left: 5px solid #4caf4f49;
 }
 
-/* ✅ Table-Like Row Formatting */
 .entry-row {
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 1fr 1fr 2fr;
@@ -196,32 +233,28 @@
   gap: 10px;
   padding: 10px 0;
 }
-.entry-person {
-  font-weight: 700;
-  font-size: 16px;
-}
+
+.entry-person,
 .entry-amount {
   font-weight: 700;
   font-size: 16px;
 }
+
 .entry-date {
   font-size: 13px;
   color: #000000a1;
 }
+
 .entry-cell {
   padding: 5px;
-
   word-break: break-word;
 }
-.entry-status select{
 
+.entry-status select {
   border-radius: 5px;
   padding: 2px 5px;
- }
+}
 
-
-
-/* Type Badges */
 .entry-type-badge {
   margin: 0;
   padding: 6px 12px;
@@ -229,23 +262,22 @@
   font-size: 14px;
   font-weight: 600;
   text-transform: capitalize;
-  box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #fff;
+  box-shadow: 3px 3px 6px var(--lb-shadow-dark), -3px -3px 6px var(--lb-shadow-inset-light);
 }
 
 .entry-type-badge.lend {
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  background-color: var(--lb-lend-bg);
+  color: var(--lb-lend-text);
 }
 
 .entry-type-badge.borrow {
-  background-color: #ffebee;
-  color: #c62828;
+  background-color: var(--lb-borrow-bg);
+  color: var(--lb-borrow-text);
 }
 
-/* Status Colors */
 .itemGreen {
-  color: #20c997;
-  background-color: #e6f7f58c;
+  color: var(--lb-status-green);
+  background-color: var(--lb-status-green-bg);
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 13px;
@@ -254,43 +286,39 @@
 }
 
 .itemRed {
-  color: #fd7e14;
-  background-color: #fff3e080;
+  color: var(--lb-status-orange);
+  background-color: var(--lb-status-orange-bg);
   padding: 8px 15px;
   border-radius: 20px;
   font-size: 13px;
   font-weight: 600;
 }
 
-/* Buttons */
 .edit-btn,
-.delete-btn {
+.deletee-btn {
   padding: 6px 12px;
   border: none;
   border-radius: 15px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  box-shadow: 3px 3px 6px #a3b1c6, -3px -3px 6px #fff;
+  box-shadow: 3px 3px 6px var(--lb-shadow-dark), -3px -3px 6px var(--lb-shadow-inset-light);
 }
 
 .edit-btn {
-  background-color: #ffc107;
+  background-color: var(--lb-btn-edit);
   color: #000;
 }
 
-.edit-btn:hover {
-  box-shadow: 1px 1px 3px #a3b1c6, -1px -1px 3px #fff;
+.edit-btn:hover,
+.deletee-btn:hover {
+  box-shadow: 1px 1px 3px var(--lb-shadow-dark), -1px -1px 3px var(--lb-shadow-inset-light);
 }
 
-.delete-btn {
-  background-color: #f44336;
+.deletee-btn {
+  background-color: var(--lb-btn-delete);
   color: white;
   margin-left: 20px;
-}
-
-.delete-btn:hover {
-  box-shadow: 1px 1px 3px #a3b1c6, -1px -1px 3px #fff;
 }
 
 .entry-actions {
@@ -298,11 +326,10 @@
   gap: 8px;
 }
 
-/* Notes */
 .entry-note {
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px dashed #a3b1c6;
+  border-top: 1px dashed var(--lb-shadow-dark);
 }
 
 .entry-note p {
