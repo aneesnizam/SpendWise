@@ -31,3 +31,9 @@
   box-sizing: border-box;
    background-color: var(--box-colour);
 }
+
+@media  (max-width:520px){
+  #home-page .content-area{
+  padding: 20px 10px;
+  }
+}

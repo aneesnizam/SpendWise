@@ -292,8 +292,9 @@ const sortedCtegory = [...categoryExpenses].sort((a,b) => {
                       </p>
                       <span>₹{amount}</span>
                     </div>
-                    <p>{title}</p>
+                  
                     <p className="date">{formatDate(date)}</p>
+                      <p className="second">{title}</p>
                   </header>
                   
                 </div>

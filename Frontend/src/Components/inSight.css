@@ -18,6 +18,12 @@
   color:rgb(74, 255, 74) ;
 }
 
+.chartbar {
+  position: relative;
+  height: 300px;
+  min-height: 300px;
+}
+
 #insight h1 {
   text-align: center;
   text-shadow: 2px 2px 2px var(--primary-shadow-light), -2px -2px 4px var(--text-shadow-dark);
@@ -102,4 +108,169 @@
 .chartround {
   width: 80%;
   margin: 0 auto;
+}
+/* Base styles remain the same */
+
+/* 980px Breakpoint */
+@media (max-width: 980px) {
+  #insight {
+    background-size: 120px 80px;
+    background-position: top 10px left 40px;
+  }
+
+  #insight h1 {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  #insight .insight__top {
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  #insight .insight__box {
+    height: 140px;
+    width: 140px;
+  }
+
+  #insight .insight__bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  #insight .insight__chart {
+    width: 80%;
+ 
+  }
+}
+
+/* 768px Breakpoint */
+@media (max-width: 768px) {
+  #insight {
+    background-size: 100px 60px;
+    background-position: top 10px left 20px;
+    padding-bottom: 40px;
+  }
+
+  #insight h1 {
+    font-size: 26px;
+    margin-bottom: 30px;
+  }
+
+  #insight .insight__box {
+    height: 130px;
+    width: 130px;
+    font-size: 14px;
+  }
+
+  #insight .insight__middle {
+    width: 95%;
+    padding: 15px 8px;
+  }
+
+  #insight .insight__chart {
+    width: 85%;
+  
+    padding: 15px;
+  }
+}
+
+/* 640px Breakpoint */
+@media (max-width: 640px) {
+  #insight {
+    background-image: none;
+    padding: 10px 0 30px;
+  }
+
+  #insight h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+
+  #insight .insight__top {
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  #insight .insight__box {
+    height: 120px;
+    width: 120px;
+    padding: 10px;
+  }
+
+  #insight .insight__chart {
+    width: 90%;
+    
+  }
+
+  .chartround {
+    width: 90%;
+  }
+}
+
+/* 520px Breakpoint */
+@media (max-width: 520px) {
+  #insight h1 {
+    font-size: 22px;
+  }
+
+  #insight .insight__top {
+   display: flex;
+   flex-wrap: wrap;
+  }
+
+  #insight .insight__box {
+   width: 45%;
+    font-size: 13px;
+  }
+
+  #insight .insight__middle {
+    padding: 10px 5px;
+  }
+
+  #insight .insight__chart {
+   
+    padding: 10px;
+  }
+}
+
+/* 480px Breakpoint */
+@media (max-width: 480px) {
+    .chartbar {
+    height: 250px;
+    min-height: 250px;
+  }
+  #insight h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  #insight .insight__top {
+   display: flex;
+   flex-wrap: wrap;
+  }
+
+  #insight .insight__box {
+   width: 45%;
+    font-size: 13px;
+    max-width: 180px;
+    margin: 0 auto;
+    padding: 5px;
+  }
+  
+
+  #insight .insight__middle {
+    margin-top: 20px;
+  }
+
+  #insight .insight__bottom {
+    margin-top: 30px;
+  }
+
+  #insight .insight__chart {
+    width: 95%;
+  
+  }
 }

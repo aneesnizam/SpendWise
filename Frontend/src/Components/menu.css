@@ -72,3 +72,37 @@ display: inline-block;
   box-shadow: 2px 2px 6px #a3b1c6, -2px -2px 6px #ffffff;
   transform: translateY(-2px);
 }
+@media (max-width: 1024px) {
+  #menu {
+    width: 30%;
+  }
+}
+
+@media (max-width: 768px) {
+  #menu {
+    width: 60%;
+    padding: 16px 8px;
+  }
+
+  .menu-item {
+    font-size: 15px;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  #menu {
+    width: 80%;
+    padding: 12px 6px;
+  }
+
+  .menu-item {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+
+  .menu-close-btn {
+    padding: 4px 10px;
+    font-size: 14px;
+  }
+}

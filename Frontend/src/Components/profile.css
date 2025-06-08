@@ -262,19 +262,225 @@ input:checked + .slider:before {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 980px) {
   #profileContainer {
+    width: 45%;
+    padding: 18px 0;
+  }
+  
+  #profileContainer .profilebox {
+    padding: 18px;
+  }
+  
+  #profileContainer .profilebox .middle ul {
     width: 85%;
   }
   
   #profileContainer .profilebox .middle li {
-    flex-direction: column;
-    align-items: flex-start;
+    font-size: 17px;
+    padding: 10px 18px;
+    min-height: 55px;
+  }
+  
+  #profileContainer .profilebox .middle li input {
+    padding: 11px 14px;
+    font-size: 15px;
+  }
+  
+  #profileContainer .profilebox .bottom button {
+    width: 65%;
+    padding: 13px;
+    font-size: 15px;
+  }
+}
+
+/* 768px Breakpoint */
+@media (max-width: 768px) {
+  #profileContainer {
+    width: 60%;
+    padding: 15px 0;
+  }
+  
+  #profileContainer .profilebox {
     padding: 15px;
+  }
+  
+  #profileContainer .profilebox .top {
+    padding: 0 15px 15px;
+  }
+  
+  #profileContainer .profilebox .middle {
+    padding-top: 25px;
+  }
+  
+  #profileContainer .profilebox .middle ul {
+    width: 90%;
+  }
+  
+  #profileContainer .profilebox .middle li {
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    margin-bottom: 15px;
   }
   
   #profileContainer .profilebox .middle li input {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 5px;
   }
+  
+  #profileContainer .profilebox .bottom button {
+    width: 75%;
+    padding: 12px;
+  }
+  
+  .sliderlabel {
+    width: 55px;
+    height: 30px;
+  }
+  
+  .sliderlabel .slider:before {
+    width: 24px;
+    height: 24px;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(14px);
+  }
+}
+
+/* 640px Breakpoint */
+@media (max-width: 640px) {
+  #profileContainer {
+    width: 75%;
+  }
+  
+  #profileContainer .profilebox .middle li {
+    font-size: 16px;
+    padding: 12px 15px;
+    min-height: 50px;
+  }
+  
+  #profileContainer .profilebox .middle li input {
+    padding: 9px 12px;
+    font-size: 14px;
+  }
+  
+  #profileContainer .profilebox .bottom button {
+    width: 85%;
+    padding: 11px;
+    font-size: 14px;
+  }
+  
+  #profileContainer .editButton {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+}
+
+/* 480px Breakpoint */
+@media (max-width: 480px) {
+  #profileContainer {
+    width: 90%;
+    padding: 12px 0;
+    border-left: none;
+  }
+  
+  #profileContainer .profilebox {
+    padding: 12px;
+  }
+  
+  #profileContainer .profilebox .top {
+    padding: 0 12px 12px;
+  }
+  
+  #profileContainer .profilebox .top button {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  
+  #profileContainer .profilebox .middle {
+    padding-top: 20px;
+  }
+  
+  #profileContainer .profilebox .middle ul {
+    width: 95%;
+  }
+  
+  #profileContainer .profilebox .middle li {
+    font-size: 15px;
+    padding: 10px 12px;
+    min-height: 45px;
+    margin-bottom: 12px;
+  }
+  
+  #profileContainer .profilebox .middle li input {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  
+  #profileContainer .profilebox .bottom button {
+    width: 90%;
+    padding: 10px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  
+  .sliderlabel {
+    width: 50px;
+    height: 28px;
+    margin-top: 3px;
+  }
+  
+  .sliderlabel .slider:before {
+    width: 22px;
+    height: 22px;
+    bottom: 3px;
+    left: 3px;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(12px);
+  }
+}
+
+/* Mobile Landscape Orientation */
+@media (max-height: 500px) and (orientation: landscape) {
+  #profileContainer {
+    overflow-y: scroll;
+    padding-bottom: 20px;
+  }
+  
+  #profileContainer .profilebox .middle li {
+    min-height: 40px;
+    padding: 8px 15px;
+    margin-bottom: 10px;
+  }
+  
+  #profileContainer .profilebox .middle li input {
+    padding: 6px 10px;
+  }
+}
+
+/* Closed state remains unchanged */
+#profileContainer.closed {
+  transform: translateX(100%);
+  box-shadow: none;
+}
+
+/* Animation remains unchanged */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+#profileContainer {
+  animation: slideIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }

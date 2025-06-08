@@ -220,6 +220,8 @@ export default function LendBorrow() {
                     {new Date(item.date).toLocaleString()}
                   </div>
                   <div className="entry-cell entry-amount">₹{item.amount}</div>
+
+                  <div className="newitem">
                   <div className="entry-cell entry-type">
                     <span className={`entry-type-badge ${item.type}`}>
                       {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
@@ -247,6 +249,7 @@ export default function LendBorrow() {
                     )}
                   </div>
                   <div className="entry-cell entry-actions">
+                    
                     <button
                       type="button"
                       className="edit-btn"
@@ -254,6 +257,7 @@ export default function LendBorrow() {
                     >
                       {editId === item._id ? "Editing" : "Edit"}
                     </button>
+                    
                     <button
                       type="button"
                       className="deletee-btn"
@@ -261,6 +265,7 @@ export default function LendBorrow() {
                     >
                       Delete
                     </button>
+                  </div>
                   </div>
                 </div>
                 <div className="entry-note">

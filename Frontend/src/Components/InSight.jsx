@@ -221,8 +221,8 @@ setDaysCount(spendDays.size)
         </div>
       </div>
 
-      <div className="insight__middle">
-        <div className="linechart">
+      <div className="insight__middle" style={{height:"auto",padding:"5px"}}>
+        <div className="linechart"  >
           {" "}
           {chartData && (
          <Line
@@ -253,60 +253,61 @@ setDaysCount(spendDays.size)
       </div>
 
       <div className="insight__bottom">
-        <div className="insight__chart ">
-          <div className="chartbar">
-<Bar
-  data={{
-    labels: ["Lend", "Borrow"],
-    datasets: [
-      {
-        label: "Pending Amount",
-        data: [totals.lend.pending, totals.borrow.pending],
-        backgroundColor: "#e57373",
+        <div className="insight__chart " style={{height:"auto",padding:"20px"}}>
+          <div className="chartbar" style={{ position: 'relative', height: '300px' }}>
+  <Bar
+    data={{
+      labels: ["Lend", "Borrow"],
+      datasets: [
+        {
+          label: "Pending Amount",
+          data: [totals.lend.pending, totals.borrow.pending],
+          backgroundColor: "#e57373",
+        },
+        {
+          label: "Settled Amount",
+          data: [totals.lend.settled, totals.borrow.settled],
+          backgroundColor: "#81c784",
+        },
+      ],
+    }}
+    options={{
+      responsive: true,
+      maintainAspectRatio: false, // Add this line
+      plugins: {
+        legend: {
+          position: "top",
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `₹ ${context.parsed.y.toLocaleString("en-IN")}`;
+            },
+          },
+        },
+        title: {
+          display: true,
+          text: "Lend vs Borrow Summary",
+        },
       },
-      {
-        label: "Settled Amount",
-        data: [totals.lend.settled, totals.borrow.settled],
-        backgroundColor: "#81c784",
-      },
-    ],
-  }}
-  options={{
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            return `₹ ${context.parsed.y.toLocaleString("en-IN")}`;
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            callback: function (value) {
+              return `₹${value}`;
+            },
           },
         },
       },
-      title: {
-        display: true,
-        text: "Lend vs Borrow Summary",
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        ticks: {
-          callback: function (value) {
-            return `₹${value}`;
-          },
-        },
-      },
-    },
-  }}
-/>
+    }}
+  />
 
           </div>
         </div>
 
-        <div className="insight__chart">
-          <div className="chartround">
+        <div className="insight__chart" style={{height:"auto"}}>
+          <div className="chartround" style={{ position: 'relative', height: '300px' }}>
             {" "}
             
             <Doughnut      

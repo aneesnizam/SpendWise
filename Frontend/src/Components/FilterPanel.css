@@ -221,7 +221,9 @@
 
 #filter-panel .expense-header {}
 
-#filter-panel .expense-header p {}
+#filter-panel .expense-header{ }
+
+
 
 #filter-panel .expense-footer {}
 
@@ -273,3 +275,231 @@
 .category-item.taxes { background: #fef2f2; }
 .category-item.other { background: #f9fafb; }
 
+
+/* Existing CSS remains the same until the media queries */
+
+/* 980px Breakpoint */
+@media (max-width: 980px) {
+  .filter-form .top {
+flex-wrap: wrap;
+position: relative;
+flex-direction: column;
+padding-top: 30px;
+  }
+  .filter-form .top .summary{
+    display: flex; 
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    
+  }
+.filter-form .top .selector{
+  position: absolute;
+  right: 0;
+  top:0 ;
+}
+  .filter-form .top h2 {
+    font-size: 26px;
+    order: -1; /* Move heading to top */
+  }
+
+  #filter-panel .filters {
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+  }
+
+  #filter-panel .categoryselector,
+  #filter-panel .filters input[type="number"],
+  #filter-panel .filters .react-datepicker__input-container input {
+    width: 160px;
+    padding: 8px 10px;
+  }
+
+  #filter-panel .category-list {
+    gap: 15px;
+  }
+
+  #filter-panel .category-item {
+    width: 45%;
+    margin-right: 0;
+  }
+
+  .entry-headers {
+    grid-template-columns: 1.5fr 2fr 1.5fr;
+    font-size: 14px;
+  }
+}
+
+/* 768px Breakpoint */
+@media (max-width: 768px) {
+  .filter-form .top h2 {
+    font-size: 24px;
+  }
+.filters input,
+.filters select,
+.filters .react-datepicker-wrapper {
+  flex: 1 1 calc(50% - 0.5rem); /* Two items per row with gap */
+  min-width: 140px;
+}
+  #filter-panel .summary h3 {
+    font-size: 20px;
+  }
+
+  #filter-panel .categoryselector,
+  #filter-panel .filters input[type="number"],
+  #filter-panel .filters .react-datepicker__input-container input {
+    width: 140px;
+    padding: 7px 8px;
+    font-size: 14px;
+  }
+
+  #filter-panel .actions button {
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  #filter-panel .category-item {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .categoryTotal {
+    font-size: 15px;
+  }
+}
+
+/* 640px Breakpoint */
+@media (max-width: 640px) {
+  .filter-form .top h2 {
+    font-size: 22px;
+  }
+#filter-panel ul{
+  padding: 0;
+}
+#filter-panel .filters {
+  display: flex;
+  align-items: center; /* Centers items horizontally */
+  gap: 10px; /* Optional: Adds spacing between items */
+}
+
+ .filters input,
+  .filters select,
+  .filters .react-datepicker-wrapper {
+    flex: 1 1 calc(33.33% - 0.66rem);
+  }
+
+  .filters .categoryselector:first-child {
+    flex: 1 1 100%;
+  }
+  #filter-panel .categoryselector {
+    width: 37%;
+    margin-bottom: 10px;
+  }
+  .filter-form .top .selector select{
+padding: 4px 6px;
+}
+  
+  #filter-panel .filters .react-datepicker__input-container input{
+  width: 100%;
+  }
+   #filter-panel .filters input[type="number"]{
+    width: 34%;
+   }
+
+  #filter-panel .actions button {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .entry-headers {
+    grid-template-columns: 1fr 2fr 1fr;
+    font-size: 13px;
+  }
+
+  .entry-cards .date {
+    font-size: 13px;
+  }
+}
+
+/* 520px Breakpoint */
+@media (max-width: 520px) {
+  .filter-form .top h2 {
+    font-size: 20px;
+  }
+  #filter-panel .selector select option{
+    font-size: 12px;
+  }
+  
+  #filter-panel .summary h3 {
+    font-size: 18px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #filter-panel .summary h3 span {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+
+  #filter-panel .actions button {
+    font-size: 15px;
+    padding: 8px;
+  }
+
+  .categoryTotal {
+    font-size: 14px;
+  }
+
+  .entry-headers {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    font-size: 13px;
+    align-items: center;
+    justify-content: space-around;
+  
+  }
+
+
+  .entry-headers .second {
+    width: 100%;
+    justify-content: center;
+  }
+
+}
+
+/* 480px Breakpoint */
+@media (max-width: 480px) {
+  .filter-form .top h2 {
+    font-size: 18px;
+  }
+
+  #filter-panel .filters input{
+    width: 90%;
+  }
+
+  #filter-panel .actions button {
+    font-size: 14px;
+    padding: 7px;
+  }
+
+  #filter-panel .actions button:hover {
+    font-size: 15px;
+  }
+
+  .entry-headers {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+      "col1 col2"
+      "col3 col3";
+  }
+
+  .entry-headers > div:nth-child(1) { grid-area: col1; }
+  .entry-headers > div:nth-child(2) { grid-area: col2; }
+  .entry-headers > div:nth-child(3) { grid-area: col3; text-align: center; margin-top: 5px; }
+
+  .entry-cards .date {
+    font-size: 12px;
+  }
+}

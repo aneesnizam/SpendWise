@@ -144,13 +144,13 @@ export default function DateFilter() {
       </div>
 
       <div className="history-section">
-        <ul>
+        <ul style={{padding:"0px"}}>
           {[...fetchedData]
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((data) => (
               <li key={data._id} className={`history-item ${data.category.toLowerCase()}`}>
                 <div className="entry-card">
-                  <div className="entry-header">
+                  <div className="entry-header" style={{gridTemplateColumns:"2fr 3fr"}}>
                     <div className="entry-details">
                       <p className={`category-tag ${data.category.toLowerCase()}`}>{data.category}:</p>
                       <span>₹{data.amount}</span>
