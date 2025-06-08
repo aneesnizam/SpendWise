@@ -229,7 +229,7 @@
 
 .entry-row {
   display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1fr 1fr 2fr;
+  grid-template-columns: 2fr 2fr 1fr 4fr;
   align-items: center;
   gap: 10px;
   padding: 10px 0;
@@ -310,7 +310,12 @@
   background-color: var(--lb-btn-edit);
   color: #000;
 }
-
+.newitem{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+}
 .edit-btn:hover,
 .deletee-btn:hover {
   box-shadow: 1px 1px 3px var(--lb-shadow-dark), -1px -1px 3px var(--lb-shadow-inset-light);

@@ -37,6 +37,9 @@ export default function Menu() {
           <li className="menu-item" onClick={() => handleNavigation("filterByDate")}>Filter</li>
             <li className="menu-item" onClick={() => handleNavigation("lend/borrow")}>Lend/Borrow</li>
               <li className="menu-item" onClick={() => handleNavigation("insight")}>In Sight</li>
+                    <li className="menu-item" onClick={() => handleNavigation("home")}>Friends</li>
+                          <li className="menu-item" onClick={() => handleNavigation("home")}>Shared</li>
+                                <li className="menu-item" onClick={() => handleNavigation("aboutUs")}>About Us</li>
         </ul>
       </div>
     </nav>

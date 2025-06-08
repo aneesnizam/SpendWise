@@ -2,7 +2,16 @@ import { create } from "zustand";
 import api from "../utilities/axios";
 import { toast } from "react-toastify";
 const userlogindata = create((set) => {
-  const userData = JSON.parse(localStorage.getItem("user")) || null;
+  const userData = (() => {
+  try {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  } catch (e) {
+    console.error("Invalid JSON in localStorage:", e);
+    return null;
+  }
+})();
+
   return {
     viewProfile: false,
     setViewProfile: (value) => set({ viewProfile: value }),

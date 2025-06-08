@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Nav.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FiDownload } from "react-icons/fi";
@@ -10,9 +10,37 @@ import Logo from "../assets/sw5.png"
 export default function Nav() {
   const { showMenu, setShowMenu, setViewProfile, viewProfile } =
     userlogindata();
+ const [deferredPrompt, setDeferredPrompt] = useState(null);
 
-  const [toggle, setToggle] = useState(true);
+ useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
 
+    window.addEventListener("beforeinstallprompt", handler);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+    };
+  }, []);
+
+  const handleDownloadClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
+        } else {
+          console.log("User dismissed the install prompt");
+        }
+        setDeferredPrompt(null);
+      });
+    } else {
+      alert("App is not installable yet.");
+    }
+  };
   return (
     <>
       <section id="nav">
@@ -28,9 +56,10 @@ export default function Nav() {
           <img src={Logo} alt="" />
         </div>
         <div className="right">
-          <button >
+          {deferredPrompt &&  <button onClick={handleDownloadClick}>
          < FiDownload  />
-          </button>
+          </button>}
+          
           <span
             onClick={() => {
               setViewProfile(true);

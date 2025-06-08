@@ -1,0 +1,226 @@
+/* aboutUs.css */
+
+/* Base Styles */
+.about {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2d3748;
+  line-height: 1.6;
+  background: linear-gradient(145deg, #d1d5db, #f0f5fc);
+  border-radius: 20px;
+  box-shadow: 
+    10px 10px 50px #9ba6b9, 
+    -10px -10px 50px #b6b6b6;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.about h1 {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about h2 {
+    background: linear-gradient(to right, #fbc297, #e1431b);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.8rem;
+  margin: 2rem 0 1rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+/* Feedback Section */
+.feedback-section {
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
+  border-radius: 15px;
+  padding: 2rem;
+  margin-top: 2rem;
+  box-shadow: 
+    8px 8px 16px #c3cfdd, 
+    -8px -8px 16px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.feedback-form textarea {
+  width: 95%;
+  padding: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  transition: all 0.3s ease;
+  background: linear-gradient(145deg, #f0f5fc, #e0e5ec);
+  box-shadow: 
+    inset 5px 5px 10px #c3cfdd, 
+    inset -5px -5px 10px #ffffff;
+  color: #2d3748;
+}
+
+.feedback-form textarea:focus {
+  outline: none;
+  box-shadow: 
+    inset 7px 7px 14px #b8c4d9, 
+    inset -7px -7px 14px #ffffff;
+}
+
+.submit-button {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+  border: none;
+  padding: 0.9rem 1.8rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-self: flex-start;
+  box-shadow: 
+    8px 8px 16px #d9c3c3, 
+    -8px -8px 16px #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.submit-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    10px 10px 20px #d9c3c3, 
+    -10px -10px 20px #ffffff;
+  background: linear-gradient(to right, #feb47b, #ff7e5f);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+.status-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: 
+    5px 5px 10px #c3cfdd, 
+    -5px -5px 10px #ffffff;
+}
+
+/* Success state */
+.status-message {
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
+  color: #2f855a;
+  border: 1px solid rgba(46, 213, 115, 0.3);
+}
+
+/* Error state */
+.status-message.error {
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
+  color: #c53030;
+  border: 1px solid rgba(255, 71, 87, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about {
+    padding: 1.5rem;
+    margin: 1.5rem;
+    border-radius: 15px;
+  }
+
+  .about h1 {
+    font-size: 2rem;
+  }
+
+  .about h2 {
+    font-size: 1.5rem;
+  }
+
+  .feedback-section {
+    padding: 1.5rem;
+  }
+
+  .submit-button {
+    width: 100%;
+    align-self: auto;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 1.2rem;
+    margin: 1rem;
+    border-radius: 12px;
+  }
+ .feedback-section {
+    padding: 1.1rem;
+  }
+  .about h1 {
+    font-size: 1.8rem;
+  }
+
+  .about p {
+    font-size: 1rem;
+  }
+ .feedback-section h2{
+    margin: 0;
+    margin-bottom: 10px;
+ }
+  .feedback-form textarea {
+    padding: 1rem;
+    width: 90%;
+  }
+}
+
+/* Animation for status message */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.status-message {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Floating effect for the container */
+@keyframes floatIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+.about {
+  animation: floatIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}

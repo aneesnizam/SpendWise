@@ -7,6 +7,7 @@ import FilterPanel from "./FilterPanel";
 import userlogindata from "./Authstore";
 import InSight from "./InSight";
 import LendBorrow from "./LendBorrow";
+import AboutUs from "./AboutUs";
 
 export default function Home() {
   const { currentView } = userlogindata();
@@ -21,6 +22,8 @@ export default function Home() {
         return <InSight />
       case "lend/borrow":
         return <LendBorrow />
+        case "aboutUs":
+        return <AboutUs />
       case "home":
         return <DataBox />;
       default:

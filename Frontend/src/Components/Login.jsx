@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./login.css";
 import Register from "./Register";
 import Forgetpass from "./Forgetpass";
@@ -12,6 +12,7 @@ export default function Login() {
   const [success, setSuccess] = useState(" ");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const {
@@ -22,32 +23,53 @@ export default function Login() {
     setUser,
   } = userlogindata();
 
+  // Check for saved credentials on component mount
+  useEffect(() => {
+    const savedCredentials = localStorage.getItem("rememberedCredentials");
+    if (savedCredentials) {
+      const { email: savedEmail, password: savedPassword } = JSON.parse(savedCredentials);
+      setEmail(savedEmail);
+      setPassword(savedPassword);
+      setRememberMe(true);
+    }
+  }, []);
+
   const handleSignin = async () => {
     if (!email || !email.includes("@")) {
-      setError("please eneter a valid email");
+      setError("please enter a valid email");
       setSuccess("");
       return;
     }
     if (!password) {
       setError("please enter the password");
       setSuccess("");
-
-      
       return;
     }
+
     try {
       setLoading(true);
-      await api.post("api/auth/login", { email, password }).then((res) => {
-        setUser(res.data.user);
-        localStorage.setItem("user", JSON.stringify(res.data.user)); //id ,name ,email
+      const response = await api.post("api/auth/login", { email, password });
+      
+      setUser(response.data.user);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
-        if (res.data.success) {
-          toast.success(res.data.message);
-          navigate("/home");
-        } else {
-          toast.error(res.data.message);
-        }
-      });
+      // Store credentials if "Remember me" is checked
+      if (rememberMe) {
+        localStorage.setItem(
+          "rememberedCredentials",
+          JSON.stringify({ email, password })
+        );
+      } else {
+        // Clear saved credentials if "Remember me" is unchecked
+        localStorage.removeItem("rememberedCredentials");
+      }
+
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate("/home");
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -62,13 +84,14 @@ export default function Login() {
         {forgetPassword ? (
           <Forgetpass />
         ) : !showRegister ? (
-          <div div className="login_container">
+          <div className="login_container">
             <h1>Login</h1>
             <form action="" onSubmit={(e) => e.preventDefault()}>
               <div className="input_field">
                 <input
                   type="email"
                   placeholder="Enter email"
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -76,12 +99,18 @@ export default function Login() {
                 <input
                   type="password"
                   placeholder="Enter password"
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="remeber_container">
                 <div className="remeber_me">
-                  <input type="checkbox" id="checkbox" />
+                  <input 
+                    type="checkbox" 
+                    id="checkbox" 
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
                   <label htmlFor="checkbox">Remember me</label>
                 </div>
                 <a href="#" onClick={() => setForgetPassword(true)}>
@@ -91,7 +120,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                onClick={() => handleSignin()}
+                onClick={handleSignin}
               >
                 {loading ? <span className="load"></span> : " Sign In"}
               </button>
