@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./home.css";
 import Nav from "./Nav";
 import DataBox from "./DataBox";
@@ -11,7 +11,7 @@ import AboutUs from "./AboutUs";
 import Friends from "./Friends"
 import  Shared from "./Shared"
 export default function Home() {
-  const { currentView } = userlogindata();
+  const { currentView, fetchFriendsData } = userlogindata();
 
   const renderView = () => {
     switch (currentView) {
@@ -35,6 +35,10 @@ export default function Home() {
         return <DataBox />;
     }
   };
+
+  useEffect(()=>{
+    fetchFriendsData();
+  },[])
 
   return (
     <main id="home-page">
