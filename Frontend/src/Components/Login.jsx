@@ -21,6 +21,7 @@ export default function Login() {
     setForgetPassword,
     setShowRegister,
     setUser,
+    setToken
   } = userlogindata();
 
   // Check for saved credentials on component mount
@@ -51,6 +52,7 @@ export default function Login() {
       const response = await api.post("api/auth/login", { email, password });
       
       setUser(response.data.user);
+      setToken(response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       // Store credentials if "Remember me" is checked

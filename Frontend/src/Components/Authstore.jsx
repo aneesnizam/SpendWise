@@ -3,18 +3,20 @@ import api from "../utilities/axios";
 import { toast } from "react-toastify";
 const userlogindata = create((set) => {
   const userData = (() => {
-  try {
-    const stored = localStorage.getItem("user");
-    return stored ? JSON.parse(stored) : null;
-  } catch (e) {
-    console.error("Invalid JSON in localStorage:", e);
-    return null;
-  }
-})();
+    try {
+      const stored = localStorage.getItem("user");
+      return stored ? JSON.parse(stored) : null;
+    } catch (e) {
+      console.error("Invalid JSON in localStorage:", e);
+      return null;
+    }
+  })();
+  const userToken = JSON.parse(localStorage.getItem("token"));
 
   return {
     friends: null,
     pendingRequests: null,
+    token: userToken,
     fetchFriendsData: async () => {
       try {
         const res = await api.get("api/friend/me");
@@ -23,6 +25,10 @@ const userlogindata = create((set) => {
       } catch (err) {
         toast.error("Failed to load friend data");
       }
+    },
+    setToken: (token) => {
+      set({ token: token });
+      localStorage.setItem("token", JSON.stringify(token));
     },
     inbox: null,
     setInbox: async () => {
@@ -67,3 +73,5 @@ const userlogindata = create((set) => {
 });
 
 export default userlogindata;
+
+export const store = userlogindata;

@@ -42,6 +42,7 @@ export default function Nav() {
       alert("App is not installable yet.");
     }
   };
+  
   return (
     <>
       <section id="nav">
