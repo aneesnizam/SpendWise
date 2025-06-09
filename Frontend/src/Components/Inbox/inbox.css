@@ -1,6 +1,6 @@
 .inbox-icon {
   position: relative;
-  background: var(--primary-color);
+  background: rgba(53, 179, 252, 0.836);
   width: 32px;
   display: flex;
   justify-content: center;
@@ -10,52 +10,65 @@
   cursor: pointer;
   user-select: none;
   margin-right: 1rem;
+  padding: 2px;
+  color: white;
 }
 .inbox-icon .mail {
   color: var(--white);
 }
 .inbox-icon .dot {
   position: absolute;
-  top: -0.2rem;
-  right: -0.2rem;
-  height: 0.8rem;
+  width: 10px;
+  height: 10px;
+  top: -0.1rem;
+  right: -0.1rem;
+ 
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  background: var(--danger-color);
+  background: red;
 }
 
 .inbox-icon .payment-requests {
   position: absolute;
   z-index: 100;
-  top: 3.4rem;
+  top: 2.9rem;
   right: 0;
+  border-radius: 15px;
   max-width: 500px;
   min-width: 350px;
   height: auto;
-  background: var(--primary-color);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  background: rgb(194, 233, 255);
+  color: black;
+  box-shadow: 
+    5px 5px 10px #c3cfdd, 
+    -5px -5px 10px #fdffff;
   padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+ justify-content: center;
+  align-items: center;
 }
 
 .payment-requests p {
   text-align: center;
   font-size: 0.9rem;
-  color: var(--white);
+  color: black;
   opacity: 0.8;
 }
 
 .payment-requests .payment-list {
+  width: 100%;
   margin: 0.1rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   background: var(--primary-color);
   border-radius: var(--radius);
   padding: 0.3rem;
 }
 .payment-list p {
-  color: var(--white);
+  color: black;
+  font-weight: 500;
   text-transform: capitalize;
 }
 .payment-list .btns {
@@ -64,13 +77,55 @@
 }
 
 .payment-list button {
-  background: red;
+
   padding: 0.3rem;
   margin-top: 0;
+  background: none;
+  border: none;
+  box-shadow: 2px 2px 5px #9c9c9c;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .payment-list button.yes {
-  background: var(--success-color);
+  background: green;
+  
 }
 .payment-list button.no {
-  background: var(--danger-color);
+  background-color: red;
+}
+
+@media (max-width: 480px) {
+  .inbox-icon {
+    width: 28px;
+    margin-right: 0.5rem;
+  }
+
+  .inbox-icon .payment-requests {
+    top: 2.9rem;
+  right: 0;
+  border-radius: 15px;
+  max-width: 400px;
+  min-width: 300px;
+  
+  }
+
+  .payment-list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .payment-list p {
+    width: 100%;
+  }
+
+  .payment-list .btns {
+    justify-content: flex-start;
+  }
 }

@@ -14,7 +14,7 @@ export default function DataBox() {
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
   const [totalCost, setTotalCost] = useState(0);
-  const [userLimit, setUserLimit] = useState(user.dailyLimit);
+  const [userLimit, setUserLimit] = useState(0);
   const [sharedWith, setSharedWith] = useState([]);
   const [shared, setShared] = useState(false);
 
@@ -25,7 +25,9 @@ export default function DataBox() {
       const res = await api.get("api/expenses?today=true");
       setHistory(res.data.expenses);
       setTotalCost(res.data.totalAmount);
-      setUserLimit(user.dailyLimit - res.data.totalAmount);
+      if (user?.dailyLimit) {
+        setUserLimit(user.dailyLimit - res.data.totalAmount);
+      }
     } catch (err) {
       console.error(err.message);
     }
@@ -40,9 +42,12 @@ export default function DataBox() {
   };
 
   const getUser = async () => {
-    await api.get("api/user").then((res) => {
+    try {
+      const res = await api.get("api/user");
       setUser(res.data.user);
-    });
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   useEffect(() => {
@@ -50,8 +55,10 @@ export default function DataBox() {
   }, []);
 
   useEffect(() => {
-    fetchHistory();
-  }, [categoryCost, user]);
+    if (user && user.dailyLimit !== undefined) {
+      fetchHistory();
+    }
+  }, [user]);
 
   const toINR = (value) => {
     const num = parseFloat(value);
@@ -67,8 +74,12 @@ export default function DataBox() {
     }
 
     const cost = toINR(categoryCost);
+    if (isNaN(cost) || cost <= 0) {
+      setError("Enter a valid amount");
+      return;
+    }
 
-    const totalAmount = parseFloat(amount);
+    const totalAmount = parseFloat(categoryCost);
     const splitAmount =
       sharedWith.length > 0
         ? totalAmount / (sharedWith.length + 1)
@@ -84,17 +95,19 @@ export default function DataBox() {
         title: description,
         amount: cost,
         category: customCategory || "other",
-        sharedWith: sharedWithData,
+        sharedWith: shared ? sharedWithData : [],
       });
       toast.success(res.data.message);
+      fetchHistory(); // Refresh history
     } catch (err) {
-      toast.error(err.message);
+      toast.error(err?.response?.data?.message || err.message);
     }
 
     setCustomCategory("");
     setCategoryCost("");
     setDescription("");
-    // setUserLimit((prev) => prev - cost);
+    setShared(false);
+    setSharedWith([]);
     setError("");
   };
 
@@ -103,7 +116,6 @@ export default function DataBox() {
       const res = await api.delete(`api/expenses/${id}`);
       if (res.data.success) {
         toast.success(res.data.message);
-        setHistory((prev) => prev.filter((entry) => entry._id !== id));
         fetchHistory();
       }
     } catch (err) {
@@ -119,6 +131,7 @@ export default function DataBox() {
       timeStyle: "short",
     });
   };
+
   useEffect(() => {
     if (userLimit <= 0) {
       toast.warn("Your daily limit exceeded", {
@@ -126,6 +139,7 @@ export default function DataBox() {
       });
     }
   }, [userLimit]);
+
   return (
     <section id="data-box">
       <form className="currency-selector">
@@ -199,8 +213,7 @@ export default function DataBox() {
             />
           </div>
 
-          {/* Added Extra by Sreerag      */}
-          <div className="share-toggle-container">
+          <div className="share-toggle-containerr">
             <label htmlFor="sharetofriend" className="share-toggle-label">
               Share with friends
             </label>
@@ -217,12 +230,13 @@ export default function DataBox() {
               className="slide"
             ></span>
           </div>
+
           {shared && (
-            <div className="friend-split-container">
+            <div className="friend-split-containerr">
               <label className="friend-split-title">Split with Friends</label>
               <div className="friend-split-list">
                 {friends?.length > 0 ? (
-                  friends?.map((friend) => (
+                  friends.map((friend) => (
                     <label key={friend._id} className="friend-split-option">
                       <input
                         type="checkbox"
@@ -246,7 +260,6 @@ export default function DataBox() {
               </div>
             </div>
           )}
-          {/* End */}
 
           <button type="submit">Submit</button>
           {error && <p className="error-message">{error}</p>}
