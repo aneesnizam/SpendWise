@@ -21,23 +21,29 @@ export default function InSight() {
   const [loading, setLoading] = useState({
     expenses: true,
     categories: true,
-    borrowLend: true
+    borrowLend: true,
   });
 
-  // Calculate totals for borrow/lend data
-  const totals = borrowLendData.reduce((acc, entry) => {
-    const type = entry.type?.toLowerCase();
-    const status = entry.status?.toLowerCase();
-    const amount = Number(entry.amount) || 0;
+  // Defensive totals calculation to avoid crashes
+  const totals = React.useMemo(() => {
+    return borrowLendData.reduce(
+      (acc, entry) => {
+        if (!entry) return acc;
+        const type = entry.type?.toLowerCase();
+        const status = entry.status?.toLowerCase();
+        const amount = Number(entry.amount) || 0;
 
-    if (acc[type] && acc[type][status] !== undefined) {
-      acc[type][status] += amount;
-    }
-    return acc;
-  }, {
-    lend: { pending: 0, settled: 0 },
-    borrow: { pending: 0, settled: 0 }
-  });
+        if (type && acc[type] && status && acc[type][status] !== undefined) {
+          acc[type][status] += amount;
+        }
+        return acc;
+      },
+      {
+        lend: { pending: 0, settled: 0 },
+        borrow: { pending: 0, settled: 0 },
+      }
+    );
+  }, [borrowLendData]);
 
   const chartColors = [
     "rgba(22, 163, 74, 0.8)",
@@ -59,6 +65,7 @@ export default function InSight() {
     "rgba(75, 85, 99, 0.8)",
   ];
 
+  // Helper: Get start and end of the current week (Monday to Sunday)
   const getWeekRange = () => {
     const now = new Date();
     const day = now.getDay(); // Sunday = 0
@@ -72,60 +79,52 @@ export default function InSight() {
     sunday.setDate(monday.getDate() + 6);
     sunday.setHours(23, 59, 59, 999);
 
-    return {
-      monday: new Date(
-        monday.getFullYear(),
-        monday.getMonth(),
-        monday.getDate()
-      ),
-      sunday: new Date(
-        sunday.getFullYear(),
-        sunday.getMonth(),
-        sunday.getDate()
-      ),
-    };
+    return { monday, sunday };
   };
 
-  // Fetch all data
+  // Fetch expenses and prepare weekly chart
   useEffect(() => {
-    const fetchData = async () => {
+    let isMounted = true; // cleanup flag to avoid state updates on unmounted component
+    async function fetchExpenses() {
       try {
-        // Fetch expenses data
+        setLoading((prev) => ({ ...prev, expenses: true }));
+
         const expensesRes = await api.get("api/expenses/");
-        const rawExpenses = expensesRes.data.expenses || [];
-        
-        // Calculate totals
+        const rawExpenses = Array.isArray(expensesRes.data.expenses)
+          ? expensesRes.data.expenses
+          : [];
+
+        if (!isMounted) return;
+
         let amount = 0;
         let count = 0;
         const dates = [];
-        
+
         rawExpenses.forEach((item) => {
-          amount += item.amount;
+          if (!item) return;
+          amount += Number(item.amount) || 0;
           count += 1;
-          dates.push(item.date.split("T")[0]);
+          if (item.date) {
+            dates.push(item.date.split("T")[0]);
+          }
         });
 
-        const spendDays = new Set(dates);
-        setDaysCount(spendDays.size);
+        setDaysCount(new Set(dates).size);
         setTotal(Math.round(amount));
         setCount(count);
 
-        // Prepare weekly chart data
         const { monday, sunday } = getWeekRange();
-        const totalsByDay = Array(7).fill(0);
+        const totalsByDay = new Array(7).fill(0);
 
         rawExpenses.forEach((item) => {
+          if (!item?.date) return;
           const date = new Date(item.date);
-          const utcDate = new Date(
-            date.getUTCFullYear(),
-            date.getUTCMonth(),
-            date.getUTCDate()
-          );
-
-          if (utcDate >= monday && utcDate <= sunday) {
-            let jsDay = utcDate.getDay();
+          // Convert to local date ignoring time for safer comparison
+          const localDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+          if (localDate >= monday && localDate <= sunday) {
+            let jsDay = localDate.getDay();
             let index = jsDay === 0 ? 6 : jsDay - 1;
-            totalsByDay[index] += item.amount;
+            totalsByDay[index] += Number(item.amount) || 0;
           }
         });
 
@@ -147,106 +146,135 @@ export default function InSight() {
             },
           ],
         });
-
-        setLoading(prev => ({ ...prev, expenses: false }));
-      } catch (err) {
-        console.error("Error fetching expenses data:", err);
-        toast.error("Failed to load expenses data");
-        setLoading(prev => ({ ...prev, expenses: false }));
+      } catch (error) {
+        if (isMounted) {
+          console.error("Error fetching expenses:", error);
+          toast.error("Failed to load expenses data");
+        }
+      } finally {
+        if (isMounted) {
+          setLoading((prev) => ({ ...prev, expenses: false }));
+        }
       }
-    };
+    }
+    fetchExpenses();
 
-    fetchData();
+    return () => {
+      isMounted = false;
+    };
   }, [limit]);
 
   // Fetch category data
   useEffect(() => {
-    const fetchCategoryInsight = async () => {
+    let isMounted = true;
+    async function fetchCategoryInsight() {
       try {
+        setLoading((prev) => ({ ...prev, categories: true }));
         const res = await api.get("api/expenses/filter?groupByCategory=true");
-        const grouped = (res.data.expenses || []).reduce((acc, item) => {
-          const { category, amount } = item;
-          if (!acc[category]) {
-            acc[category] = { category, amount: 0, count: 0 };
-          }
-          acc[category].amount += amount;
-          acc[category].count += 1;
+        const expenses = Array.isArray(res.data.expenses) ? res.data.expenses : [];
+
+        if (!isMounted) return;
+
+        const grouped = expenses.reduce((acc, item) => {
+          if (!item) return acc;
+          const cat = item.category || "Uncategorized";
+          if (!acc[cat]) acc[cat] = { category: cat, amount: 0, count: 0 };
+          acc[cat].amount += Number(item.amount) || 0;
+          acc[cat].count += 1;
           return acc;
         }, {});
 
         const categoryData = Object.values(grouped);
         setCategoryInsight(categoryData);
         setCategoryCount(categoryData.length);
-        setLoading(prev => ({ ...prev, categories: false }));
-      } catch (err) {
-        console.error("Error fetching category insight:", err);
-        toast.error("Failed to load category data");
-        setLoading(prev => ({ ...prev, categories: false }));
+      } catch (error) {
+        if (isMounted) {
+          console.error("Error fetching category insight:", error);
+          toast.error("Failed to load category data");
+        }
+      } finally {
+        if (isMounted) {
+          setLoading((prev) => ({ ...prev, categories: false }));
+        }
       }
-    };
+    }
 
     fetchCategoryInsight();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Fetch borrow/lend data
   useEffect(() => {
-    const fetchBorrowLendData = async () => {
+    let isMounted = true;
+    async function fetchBorrowLendData() {
       try {
+        setLoading((prev) => ({ ...prev, borrowLend: true }));
         const res = await api.get("api/borrowlend");
-        setBorrowLendData(res.data.transactions || []);
-        setLoading(prev => ({ ...prev, borrowLend: false }));
-      } catch (err) {
-        console.error("Failed to fetch borrow/lend entries", err);
-        toast.error("Failed to load borrow/lend data");
-        setLoading(prev => ({ ...prev, borrowLend: false }));
+        if (!isMounted) return;
+        setBorrowLendData(Array.isArray(res.data.transactions) ? res.data.transactions : []);
+      } catch (error) {
+        if (isMounted) {
+          console.error("Failed to fetch borrow/lend entries:", error);
+          toast.error("Failed to load borrow/lend data");
+        }
+      } finally {
+        if (isMounted) {
+          setLoading((prev) => ({ ...prev, borrowLend: false }));
+        }
       }
-    };
+    }
 
     fetchBorrowLendData();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  // Set limit when user data changes
+  // Update limit when user changes
   useEffect(() => {
-    if (user?.dailyLimit) {
-      setLimit(user.dailyLimit);
+    if (user?.dailyLimit && !isNaN(user.dailyLimit)) {
+      setLimit(Number(user.dailyLimit));
     }
   }, [user]);
 
   return (
-    <section id="insight">
+    <section id="insight" style={{ padding: "10px" }}>
       <h1>Dashboard Insights</h1>
-      
-      <div className="insight__top">
-        <div className="insight__box">
+
+      <div className="insight__top" style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+        <div className="insight__box" style={{ flex: "1 1 120px", minWidth: "120px" }}>
           <h3><Target target={total} /></h3>
           <p>Total Spend</p>
         </div>
-        <div className="insight__box">
+        <div className="insight__box" style={{ flex: "1 1 120px", minWidth: "120px" }}>
           <h3><Target target={count} /></h3>
           <p>Transactions</p>
         </div>
-        <div className="insight__box">
+        <div className="insight__box" style={{ flex: "1 1 120px", minWidth: "120px" }}>
           <h3><Target target={categoryCount} /></h3>
           <p>Categories</p>
         </div>
-        <div className="insight__box">
+        <div className="insight__box" style={{ flex: "1 1 120px", minWidth: "120px" }}>
           <h3><Target target={daysCount} /></h3>
           <p>Days Tracked</p>
         </div>
       </div>
 
-      <div className="insight__middle" style={{ height: "auto", padding: "5px" }}>
-        <div className="linechart">
+      <div className="insight__middle" style={{ marginTop: "30px" }}>
+        <div className="linechart" style={{ maxWidth: "100%", height: "300px" }}>
           {loading.expenses ? (
             <div className="loading-message">Loading expense data...</div>
-          ) : (
+          ) : chartData ? (
             <Line
               data={chartData}
               options={{
                 responsive: true,
+                maintainAspectRatio: false,
                 animation: {
-                  duration: 2000,
-                  easing: 'easeInOutQuad',
+                  duration: 1000,
+                  easing: "easeInOutQuad",
                   animateRotate: true,
                   animateScale: true,
                 },
@@ -255,113 +283,97 @@ export default function InSight() {
                   title: { display: true, text: "Expenses by Weekdays" },
                 },
                 scales: {
+                  y: { beginAtZero: true },
+                },
+              }}
+            />
+          ) : (
+            <div>No data available</div>
+          )}
+        </div>
+      </div>
+
+      <div className="insight__bottom" style={{ marginTop: "40px", display: "flex", flexWrap: "wrap" }}>
+        <div className="insight__chart" >
+          {loading.borrowLend ? (
+            <div className="loading-message">Loading borrow/lend data...</div>
+          ) : borrowLendData.length > 0 ? (
+            <Bar
+              data={{
+                labels: ["Lend", "Borrow"],
+                datasets: [
+                  {
+                    label: "Pending Amount",
+                    data: [totals.lend.pending, totals.borrow.pending],
+                    backgroundColor: "#e57373",
+                  },
+                  {
+                    label: "Settled Amount",
+                    data: [totals.lend.settled, totals.borrow.settled],
+                    backgroundColor: "#81c784",
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { position: "top" },
+                  tooltip: {
+                    callbacks: {
+                      label: (context) =>
+                        `₹ ${context.parsed.y.toLocaleString("en-IN")}`,
+                    },
+                  },
+                  title: { display: true, text: "Lend vs Borrow Summary" },
+                },
+                scales: {
                   y: {
                     beginAtZero: true,
+                    ticks: {
+                      callback: (value) => `₹${value}`,
+                    },
                   },
                 },
               }}
             />
-          ) }
-        </div>
-      </div>
-
-      <div className="insight__bottom">
-        <div className="insight__chart" style={{ height: "auto", padding: "20px" }}>
-          <div className="chartbar" style={{ position: 'relative', height: '300px' }}>
-            {loading.borrowLend ? (
-              <div className="loading-message">Loading borrow/lend data...</div>
-            ) : borrowLendData.length > 0 ? (
-              <Bar
-                data={{
-                  labels: ["Lend", "Borrow"],
-                  datasets: [
-                    {
-                      label: "Pending Amount",
-                      data: [totals.lend.pending, totals.borrow.pending],
-                      backgroundColor: "#e57373",
-                    },
-                    {
-                      label: "Settled Amount",
-                      data: [totals.lend.settled, totals.borrow.settled],
-                      backgroundColor: "#81c784",
-                    },
-                  ],
-                }}
-                options={{
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    legend: {
-                      position: "top",
-                    },
-                    tooltip: {
-                      callbacks: {
-                        label: function (context) {
-                          return `₹ ${context.parsed.y.toLocaleString("en-IN")}`;
-                        },
-                      },
-                    },
-                    title: {
-                      display: true,
-                      text: "Lend vs Borrow Summary",
-                    },
-                  },
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      ticks: {
-                        callback: function (value) {
-                          return `₹${value}`;
-                        },
-                      },
-                    },
-                  },
-                }}
-              />
-            ) : (
-              <div className="no-data-message">
-                <p>No lend/borrow data available</p>
-              </div>
-            )}
-          </div>
+          ) : (
+            <div className="no-data-message">
+              <p>No lend/borrow data available</p>
+            </div>
+          )}
         </div>
 
-        <div className="insight__chart" style={{ height: "auto" }}>
-          <div className="chartround" style={{ position: 'relative', height: '300px' }}>
-            {loading.categories ? (
-              <div className="loading-message">Loading category data...</div>
-            ) : categoryInsight.length > 0 ? (
-              <Doughnut
-                data={{
-                  labels: categoryInsight.map((item) => item.category),
-                  datasets: [
-                    {
-                      label: "Category Distribution",
-                      data: categoryInsight.map((item) => item.amount),
-                      backgroundColor: chartColors,
-                      borderColor: chartColors,
-                    },
-                  ],
-                }}
-                options={{
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      position: "bottom",
-                    },
-                    title: {
-                      display: true,
-                      text: "Spending by Category",
-                    },
+        <div className="insight__chart" >
+          {loading.categories ? (
+            <div className="loading-message">Loading category data...</div>
+          ) : categoryInsight.length > 0 ? (
+            <Doughnut
+              data={{
+                labels: categoryInsight.map((item) => item.category),
+                datasets: [
+                  {
+                    label: "Category Distribution",
+                    data: categoryInsight.map((item) => item.amount),
+                    backgroundColor: chartColors,
+                    borderColor: chartColors,
                   },
-                }}
-              />
-            ) : (
-              <div className="no-data-message">
-                <p>No category data available</p>
-              </div>
-            )}
-          </div>
+                ],
+              }}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { position: "bottom" },
+                  title: { display: true, text: "Spending by Category" },
+                },
+              }}
+            />
+          ) : (
+            <div className="no-data-message">
+              <p>No category data available</p>
+            </div>
+          )}
         </div>
       </div>
     </section>

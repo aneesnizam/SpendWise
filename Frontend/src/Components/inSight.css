@@ -35,6 +35,7 @@
   background-size: 150px 100px;
   background-position: top 10px left 80px;
   color:rgb(74, 255, 74) ;
+  box-sizing: border-box;
 }
 
 .chartbar {
@@ -52,9 +53,10 @@
 }
 
 #insight .insight__top {
-  
+  width: 90%;
   display: flex;
   align-items: center;
+  justify-self: center;
   justify-content: space-around;
   color: var(--text-color-dark);
   margin-bottom: 50px;
@@ -101,19 +103,23 @@
 #insight .insight__bottom {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-top: 50px;
-  /* Container for Bar and Doughnut charts */
+  width: 90%;
+  justify-self: center;
+
 }
 
 #insight .insight__chart {
   border-radius: 10px;
   box-shadow: 10px 10px 20px var(--primary-shadow-light), -10px -10px 20px var(--primary-shadow-dark);
   box-sizing: border-box;
-  width: 43%;
+  width: 45%;
   height: 400px;
   padding: 20px;
-  margin: 0 auto;
+  margin: 0 ;
+   min-width: 300px;
+   height: 300px
 }
 
 .chartbar,
@@ -128,6 +134,7 @@
   width: 80%;
   margin: 0 auto;
 }
+   
 /* Base styles remain the same */
 
 /* 980px Breakpoint */
@@ -161,7 +168,7 @@
   }
 
   #insight .insight__chart {
-    width: 80%;
+
  
   }
 }
@@ -186,14 +193,12 @@
   }
 
   #insight .insight__middle {
-    width: 95%;
+    width: 90%;
     padding: 15px 8px;
   }
 
   #insight .insight__chart {
-    width: 85%;
-  
-    padding: 15px;
+ width: 100%;
   }
 }
 
@@ -221,7 +226,7 @@
   }
 
   #insight .insight__chart {
-    width: 90%;
+   
     
   }
 
@@ -248,8 +253,11 @@
 
   #insight .insight__middle {
     padding: 10px 5px;
+       width: 95%;
   }
-
+  #insight .insight__bottom {
+    width: 95%;
+  }
   #insight .insight__chart {
    
     padding: 10px;
@@ -289,7 +297,7 @@
   }
 
   #insight .insight__chart {
-    width: 95%;
+
   
   }
 }

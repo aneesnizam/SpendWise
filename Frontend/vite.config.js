@@ -1,8 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { VitePWA } from 'vite-plugin-pwa'; 
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
@@ -15,7 +14,10 @@ export default defineConfig({
         start_url: '/',
         display: 'standalone',
         background_color: '#2EC6FE',
-        theme_color: '#8936FF',
+        theme_color: '#B19CD9',
+        orientation: 'any',
+        dir: 'auto',
+        lang: 'en-US',
         icons: [
           {
             src: 'icon512_maskable.png',
@@ -29,8 +31,22 @@ export default defineConfig({
             type: 'image/png',
             purpose: 'any'
           }
+        ],
+        screenshots: [
+          {
+            src: '/screenshots/Screenshot2.png',
+            type: 'image/png',
+            sizes: '1280x800',
+            form_factor: 'wide'
+          },
+          {
+            src: '/screenshots/Screenshot1.png',
+            type: 'image/png',
+            sizes: '375x667',
+            form_factor: 'narrow'
+          }
         ]
       }
     })
   ]
-})
+});
