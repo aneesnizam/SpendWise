@@ -513,3 +513,160 @@ span.totalcost {
   
 }
 }
+
+
+
+
+
+
+/* Extra added by Sreerag */
+
+/* Friend */
+.share-toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  transition: all 0.2s ease;
+}
+
+.share-toggle-container:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.share-toggle-label {
+  font-weight: 500;
+  color: var(--text-color);
+  cursor: pointer;
+  user-select: none;
+  flex-grow: 1;
+}
+
+.share-toggle-input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.share-toggle-container .slide {
+  position: relative;
+  cursor: pointer;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+  height: 20px;
+  width: 34px;
+}
+
+.share-toggle-container .slide:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: var(--white);
+  transition: .4s;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+#sharetofriend:checked + .slide {
+  background-color: var(--primary-color);
+}
+
+#sharetofriend:checked + .slide:before {
+  transform: translateX(14px);
+}
+
+/* Friend */
+.friend-split-container {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  animation: fadeIn 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.friend-split-title {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+/* Friend list */
+.friend-split-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+/* Scrollbar styling */
+.friend-split-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.friend-split-list::-webkit-scrollbar-track {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.friend-split-list::-webkit-scrollbar-thumb {
+  background: var(--text-light);
+  border-radius: 3px;
+}
+
+/* Friend option */
+.friend-split-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: calc(var(--radius) - 4px);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.friend-split-option:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+}
+
+.friend-split-checkbox {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.friend-split-info {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.friend-split-email {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+/* Empty state */
+.friend-split-empty {
+  color: var(--text-light);
+  font-style: italic;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+}

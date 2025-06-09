@@ -13,6 +13,26 @@ const userlogindata = create((set) => {
 })();
 
   return {
+    friends: null,
+    pendingRequests: null,
+    fetchFriendsData: async () => {
+      try {
+        const res = await api.get("api/friend/me");
+        set({ pendingRequests: res.data.friendRequests });
+        set({ friends: res.data.friends });
+      } catch (err) {
+        toast.error("Failed to load friend data");
+      }
+    },
+    inbox: null,
+    setInbox: async () => {
+      try {
+        const res = await api.get(`api/friend/inbox/get`);
+        set({ inbox: res.data.inbox });
+      } catch (err) {
+        console.log(err.message);
+      }
+    },
     viewProfile: false,
     setViewProfile: (value) => set({ viewProfile: value }),
     currentView: "home",

@@ -1,0 +1,232 @@
+:root {
+  --primary-color: #4361ee;
+  --primary-color-hover: #3a56d4;
+  --danger-color: #ef4444;
+  --danger-hover: #dc2828;
+  --success-color: #10b981;
+  --success-hover: #059669;
+  --warning-color: #f59e0b;
+  --warning-hover: #d97706;
+  --info-color: #3b82f6;
+  --info-hover: #2563eb;
+  
+  --background: #f8fafc;
+  --border-color: #e2e8f0;
+  --input-border: #cbd5e1;
+  --link-color: #4361ee;
+  --text-color: #1e293b;
+  --text-light: #64748b;
+  --white: #ffffff;
+
+  --radius: 12px;
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.friend-request-page {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.request-form {
+  margin-bottom: 2rem;
+}
+
+.request-form .form-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.request-form input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.request-form button {
+  padding: 1rem 1.5rem;
+  background-color: var(--success-color);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.request-form button:hover {
+  background-color: var(--success-hover);
+}
+
+.request-form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.requests-container {
+  display: grid;
+  gap: 2rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  color: var(--white);
+  font-size: 1.25rem;
+}
+
+.badge {
+  background-color: var(--white);
+  color: var(--primary-color);
+  border-radius: 50%;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.cards-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.request-card, .friend-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.request-card:hover, .friend-card:hover {
+  transform: translateY(-2px);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar, .avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+}
+
+.avatar-placeholder {
+  background-color: var(--primary-color);
+}
+
+.avatar {
+  background-color: var(--success-color);
+}
+
+.user-email {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.accept-btn, .reject-btn, .remove-btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.accept-btn {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.accept-btn:hover {
+  background-color: var(--success-hover);
+}
+
+.reject-btn {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  border: 1px solid var(--border-color);
+}
+
+.reject-btn:hover {
+  background-color: var(--border-color);
+}
+
+.remove-btn {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.remove-btn:hover {
+  background-color: var(--danger-hover);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.empty-state svg {
+  stroke-width: 1.5;
+  color: var(--border-color);
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  margin: 0;
+  color: var(--text-light);
+}
+
+@media (max-width: 568px) {
+  .request-form .form-group {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .request-form button {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .request-card, .friend-card {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

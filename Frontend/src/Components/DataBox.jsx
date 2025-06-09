@@ -5,9 +5,8 @@ import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
 import userlogindata from "./Authstore";
 
-
 export default function DataBox() {
-  const { user, setUser } = userlogindata();
+  const { user, friends, setUser } = userlogindata();
   const [customCategory, setCustomCategory] = useState("");
   const [categoryCost, setCategoryCost] = useState("");
   const [history, setHistory] = useState([]);
@@ -16,9 +15,10 @@ export default function DataBox() {
   const [error, setError] = useState("");
   const [totalCost, setTotalCost] = useState(0);
   const [userLimit, setUserLimit] = useState(user.dailyLimit);
+  const [sharedWith, setSharedWith] = useState([]);
+  const [shared, setShared] = useState(false);
 
   const exchangeRate = 1 / 85.1;
-
 
   const fetchHistory = async () => {
     try {
@@ -26,21 +26,28 @@ export default function DataBox() {
       setHistory(res.data.expenses);
       setTotalCost(res.data.totalAmount);
       setUserLimit(user.dailyLimit - res.data.totalAmount);
-      
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  const getUser = async () => {
-    await api.get("api/user").then((res)=>{
-      setUser(res.data.user);
-    })
-  }
+  const handleCheckboxChange = (friendId) => {
+    setSharedWith((prev) =>
+      prev.includes(friendId)
+        ? prev.filter((id) => id !== friendId)
+        : [...prev, friendId]
+    );
+  };
 
-  useEffect(()=>{
+  const getUser = async () => {
+    await api.get("api/user").then((res) => {
+      setUser(res.data.user);
+    });
+  };
+
+  useEffect(() => {
     getUser();
-  },[])
+  }, []);
 
   useEffect(() => {
     fetchHistory();
@@ -61,11 +68,23 @@ export default function DataBox() {
 
     const cost = toINR(categoryCost);
 
+    const totalAmount = parseFloat(amount);
+    const splitAmount =
+      sharedWith.length > 0
+        ? totalAmount / (sharedWith.length + 1)
+        : totalAmount;
+
+    const sharedWithData = sharedWith.map((friendId) => ({
+      friend: friendId,
+      amount: Math.ceil(splitAmount),
+    }));
+
     try {
       const res = await api.post("api/expenses/", {
         title: description,
         amount: cost,
         category: customCategory || "other",
+        sharedWith: sharedWithData,
       });
       toast.success(res.data.message);
     } catch (err) {
@@ -77,8 +96,6 @@ export default function DataBox() {
     setDescription("");
     // setUserLimit((prev) => prev - cost);
     setError("");
-
-
   };
 
   const handleDelete = async (id) => {
@@ -102,15 +119,15 @@ export default function DataBox() {
       timeStyle: "short",
     });
   };
- useEffect(() => {
-  if (userLimit <= 0) {
-    toast.warn("Your daily limit exceeded", {
-  autoClose: 4000
-});
-  }
-}, [userLimit]);
+  useEffect(() => {
+    if (userLimit <= 0) {
+      toast.warn("Your daily limit exceeded", {
+        autoClose: 4000,
+      });
+    }
+  }, [userLimit]);
   return (
-    <section id="data-box" >
+    <section id="data-box">
       <form className="currency-selector">
         <select
           name="currency"
@@ -182,13 +199,62 @@ export default function DataBox() {
             />
           </div>
 
+          {/* Added Extra by Sreerag      */}
+          <div className="share-toggle-container">
+            <label htmlFor="sharetofriend" className="share-toggle-label">
+              Share with friends
+            </label>
+            <input
+              id="sharetofriend"
+              type="checkbox"
+              className="share-toggle-input"
+              onChange={() => setShared((prev) => !prev)}
+              checked={shared}
+              hidden
+            />
+            <span
+              onClick={() => setShared((prev) => !prev)}
+              className="slide"
+            ></span>
+          </div>
+          {shared && (
+            <div className="friend-split-container">
+              <label className="friend-split-title">Split with Friends</label>
+              <div className="friend-split-list">
+                {friends?.length > 0 ? (
+                  friends?.map((friend) => (
+                    <label key={friend._id} className="friend-split-option">
+                      <input
+                        type="checkbox"
+                        className="friend-split-checkbox"
+                        checked={sharedWith.includes(friend._id)}
+                        onChange={() => handleCheckboxChange(friend._id)}
+                      />
+                      <span className="friend-split-info">
+                        {friend.name}{" "}
+                        <span className="friend-split-email">
+                          ({friend.email})
+                        </span>
+                      </span>
+                    </label>
+                  ))
+                ) : (
+                  <p className="friend-split-empty">
+                    No friends available to split with.
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+          {/* End */}
+
           <button type="submit">Submit</button>
           {error && <p className="error-message">{error}</p>}
         </form>
 
         <aside className="summary-info">
           <div className="summary-box">
-            <h5 style={{marginBottom:'30px'}}>
+            <h5 style={{ marginBottom: "30px" }}>
               <span className="label">Remaining:</span>
               <span
                 className={`limit-value ${

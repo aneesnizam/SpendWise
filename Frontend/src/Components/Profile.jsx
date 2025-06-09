@@ -15,8 +15,8 @@ export default function Profile() {
   const [limit, setLimit] = useState(user.dailyLimit || 0);
   const [newName, setNewName] = useState(user.name || "user");
   const [entries, setEntries] = useState(null);
-  const [isSlider, setIsSlider] = useState(false);
-const [upiId,setUpiId] = useState()
+  const [isSlider, setIsSlider] = useState(user?.getSummary);
+  const [upiId, setUpiId] = useState(user?.upiId);
   // Fetch expense entries once when component mounts
   useEffect(() => {
     api
@@ -46,7 +46,7 @@ const [upiId,setUpiId] = useState()
   // Update user's name
   const handleName = async () => {
     try {
-      const res = await api.post("api/user", { name: newName });
+      const res = await api.post("api/user", { name: newName, upiId, getSummary: isSlider });
 
       setUser(res.data.user);
     } catch (err) {
@@ -83,18 +83,26 @@ const [upiId,setUpiId] = useState()
     <section id="profileContainer">
       <div className="profilebox" ref={profileRef}>
         <div className="top">
-          <button onClick={() => setViewProfile(false)}   >Back</button>
+          <button onClick={() => setViewProfile(false)}>Back</button>
           {!edit ? (
-            <button className="editButton" style={{background:"#ff7e5f",color:"white"}} onClick={() => setEdit(true)}>
+            <button
+              className="editButton"
+              style={{ background: "#ff7e5f", color: "white" }}
+              onClick={() => setEdit(true)}
+            >
               <MdEdit />
             </button>
           ) : (
-            <button className="editButton" style={{background:"rgb(25, 192, 25)",color:"white"}} onClick={handleSave}>
+            <button
+              className="editButton"
+              style={{ background: "rgb(25, 192, 25)", color: "white" }}
+              onClick={handleSave}
+            >
               Save
             </button>
           )}
         </div>
-        <div className="middle" style={  edit ? {marginTop:"10px"}: {}} >
+        <div className="middle" style={edit ? { marginTop: "10px" } : {}}>
           <ul>
             <li>
               {edit && <p>Change name :</p>}
@@ -105,10 +113,12 @@ const [upiId,setUpiId] = useState()
                   onChange={(e) => setNewName(e.target.value)}
                 />
               ) : (
-                <><strong style={{fontSize:"28px"}}>{newName}</strong> </>
+                <>
+                  <strong style={{ fontSize: "28px" }}>{newName}</strong>{" "}
+                </>
               )}
             </li>
-            { !edit && (
+            {!edit && (
               <>
                 <li>{user.email}</li>
 
@@ -123,7 +133,7 @@ const [upiId,setUpiId] = useState()
               <p> {!edit ? "Daily Spending Limit :" : "Set Daily Limit :"}</p>
               {edit ? (
                 <input
-                   ref={inputRef}
+                  ref={inputRef}
                   type="number"
                   value={limit}
                   onChange={(e) => setLimit(e.target.value)}
@@ -132,18 +142,18 @@ const [upiId,setUpiId] = useState()
                 <>₹{limit} </>
               )}
             </li>
-       <li>
-  <p>UPI ID:{" "}</p>
-  {edit ? (
-    <input
-      type="text"
-      value={upiId}
-      onChange={(e) => setUpiId(e.target.value)}
-    />
-  ) : (
-    <>{upiId ? upiId : "Not set"}</>
-  )}
-</li>
+            <li>
+              <p>UPI ID: </p>
+              {edit ? (
+                <input
+                  type="text"
+                  value={upiId}
+                  onChange={(e) => setUpiId(e.target.value)}
+                />
+              ) : (
+                <>{upiId ? upiId : "Not set"}</>
+              )}
+            </li>
 
             <li>
               <p>
@@ -170,7 +180,6 @@ const [upiId,setUpiId] = useState()
         {/* Logout */}
         <div className="bottom">
           {!edit && <button onClick={logoutUser}>Logout</button>}
-          
         </div>
       </div>
     </section>
