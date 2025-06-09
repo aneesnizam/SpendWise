@@ -1,21 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import "./lendBorrow.css";
 import api from "../utilities/axios";
 import { toast } from "react-toastify";
 import { FiSearch } from "react-icons/fi";
 
 export default function LendBorrow() {
+  // Form Inputs
   const [type, setType] = useState("lend");
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
+
+  // Filters
   const [allType, setAllType] = useState("all");
   const [allStatus, setAllStatus] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+
+  // Data
   const [data, setData] = useState([]);
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Fetch Data
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await api.get("api/borrowlend");
+      setData(res.data.transactions || []);
+    } catch (err) {
+      console.error("Fetch error:", err);
+      toast.error("Failed to fetch entries");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // Submit Entry
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -37,50 +61,38 @@ export default function LendBorrow() {
     }
   };
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const res = await api.get("api/borrowlend");
-      setData(res.data.transactions || []);
-    } catch (err) {
-      toast.error("Failed to fetch entries");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+  // Change Status
   const handleStatusChange = async (id, newStatus) => {
     try {
       await api.put(`/api/borrowlend/${id}`, { status: newStatus });
       toast.success("Status updated");
-      setData((prevData) =>
-        prevData.map((item) =>
+      setData((prev) =>
+        prev.map((item) =>
           item._id === id ? { ...item, status: newStatus } : item
         )
       );
       setEditId(null);
     } catch (err) {
+      console.error("Status update error:", err);
       toast.error("Failed to update status");
     }
   };
 
+  // Delete Entry
   const handleDelete = async (id) => {
     try {
       await api.delete(`/api/borrowlend/${id}`);
       toast.success("Entry deleted");
-      setData((prevData) => prevData.filter((item) => item._id !== id));
+      setData((prev) => prev.filter((item) => item._id !== id));
     } catch (err) {
+      console.error("Delete error:", err);
       toast.error("Failed to delete entry");
     }
   };
 
-  const filteredData = data
-    .filter((item) => {
+  // Filtered Data
+  const filteredData = useMemo(() => {
+    return data.filter((item) => {
       const typeMatch = allType === "all" || item.type === allType;
       const statusMatch = allStatus === "all" || item.status === allStatus;
       const nameMatch = item.person
@@ -88,22 +100,24 @@ export default function LendBorrow() {
         .includes(searchTerm.toLowerCase());
       return typeMatch && statusMatch && nameMatch;
     });
+  }, [data, allType, allStatus, searchTerm]);
 
-  const calculateTotal = (type) => {
-    return data
-      .filter((d) => d.type === type)
-      .reduce((acc, curr) => acc + curr.amount, 0);
-  };
+  const calculateTotal = useCallback(
+    (t) => data.filter((d) => d.type === t).reduce((acc, curr) => acc + curr.amount, 0),
+    [data]
+  );
 
-  const countEntries = (type) => {
-    return data.filter((d) => d.type === type).length;
-  };
+  const countEntries = useCallback(
+    (t) => data.filter((d) => d.type === t).length,
+    [data]
+  );
 
   const shouldShowLendSummary = allType === "all" || allType === "lend";
   const shouldShowBorrowSummary = allType === "all" || allType === "borrow";
 
   return (
     <section id="lend-borrow-section">
+      {/* Form + Summary */}
       <div className="form-summary-wrapper">
         <div className="form-container">
           <form onSubmit={handleSubmit}>
@@ -169,18 +183,19 @@ export default function LendBorrow() {
         </div>
       </div>
 
+      {/* Filter + Entries */}
       <div className="entry-list-section">
         <div className="filters-container">
           <div className="search-wrapper">
-      <FiSearch className="search-icon" />
-      <input
-        type="text"
-        className="search-input"
-        placeholder="Search by name"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-    </div>
+            <FiSearch className="search-icon" />
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search by name"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
 
           <select value={allType} onChange={(e) => setAllType(e.target.value)}>
             <option value="all">All Types</option>
@@ -188,10 +203,7 @@ export default function LendBorrow() {
             <option value="borrow">Borrow</option>
           </select>
 
-          <select
-            value={allStatus}
-            onChange={(e) => setAllStatus(e.target.value)}
-          >
+          <select value={allStatus} onChange={(e) => setAllStatus(e.target.value)}>
             <option value="all">All Status</option>
             <option value="pending">Pending</option>
             <option value="settled">Settled</option>
@@ -206,15 +218,14 @@ export default function LendBorrow() {
           <ul className="entry-list">
             {filteredData.map((item) => (
               <li
-                className={`entry-item ${
-                  item.type === "borrow" ? "borrow-item" : "lend-item"
-                } ${item.status === "settled" ? "settled" : ""}`}
                 key={item._id}
+                className={`entry-item ${item.type === "borrow" ? "borrow-item" : "lend-item"} ${
+                  item.status === "settled" ? "settled" : ""
+                }`}
               >
                 <div className="entry-row">
                   <div className="entry-cell entry-person">
-                    {item.type === "borrow" ? "Borrowed from" : "Lent to"}{" "}
-                    {item.person}
+                    {item.type === "borrow" ? "Borrowed from" : "Lent to"} {item.person}
                   </div>
                   <div className="entry-cell entry-date">
                     {new Date(item.date).toLocaleString()}
@@ -222,50 +233,42 @@ export default function LendBorrow() {
                   <div className="entry-cell entry-amount">₹{item.amount}</div>
 
                   <div className="newitem">
-                  <div className="entry-cell entry-type">
-                    <span className={`entry-type-badge ${item.type}`}>
-                      {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
-                    </span>
-                  </div>
-                  <div className="entry-cell entry-status">
-                    {editId === item._id ? (
-                      <select
-                        value={item.status}
-                        onChange={(e) =>
-                          handleStatusChange(item._id, e.target.value)
-                        }
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="settled">Settled</option>
-                      </select>
-                    ) : (
-                      <span
-                        className={
-                          item.status === "settled" ? "itemGreen" : "itemRed"
-                        }
-                      >
-                        {item.status}
+                    <div className="entry-cell entry-type">
+                      <span className={`entry-type-badge ${item.type}`}>
+                        {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
                       </span>
-                    )}
-                  </div>
-                  <div className="entry-cell entry-actions">
-                    
-                    <button
-                      type="button"
-                      className="edit-btn"
-                      onClick={() => setEditId(item._id)}
-                    >
-                      {editId === item._id ? "Editing" : "Edit"}
-                    </button>
-                    
-                    <button
-                      type="button"
-                      className="deletee-btn"
-                      onClick={() => handleDelete(item._id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
+                    </div>
+                    <div className="entry-cell entry-status">
+                      {editId === item._id ? (
+                        <select
+                          value={item.status}
+                          onChange={(e) => handleStatusChange(item._id, e.target.value)}
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="settled">Settled</option>
+                        </select>
+                      ) : (
+                        <span className={item.status === "settled" ? "itemGreen" : "itemRed"}>
+                          {item.status}
+                        </span>
+                      )}
+                    </div>
+                    <div className="entry-cell entry-actions">
+                      <button
+                        type="button"
+                        className="edit-btn"
+                        onClick={() => setEditId(item._id)}
+                      >
+                        {editId === item._id ? "Editing" : "Edit"}
+                      </button>
+                      <button
+                        type="button"
+                        className="deletee-btn"
+                        onClick={() => handleDelete(item._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div className="entry-note">

@@ -26,15 +26,29 @@
 
 #menu .menu-container .menu-header .menu-close-btn {
  
-  padding: 6px 12px;
-  background: #444;
-  color: white;
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
   border: none;
+  outline: none;
+  width: fit-content;
+  border-radius: 12px;
+  box-shadow: 
+    8px 8px 16px #c3cfdd, 
+    -8px -8px 16px #cccccc;
+  padding: 5px 12px;
+  margin: 0;
+  font-size: 15px;
+  color: #4a5568;
+  font-weight: 600;
   cursor: pointer;
-  border-radius: 4px;
-display: inline-block;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 10px;
 
-
+}
+#menu .menu-container .menu-header .menu-close-btn:hover{
+  scale: 1.2;
 }
 .menu-close-btn:hover {
   background: #3b57d6;

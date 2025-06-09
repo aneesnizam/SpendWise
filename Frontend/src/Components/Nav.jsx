@@ -57,13 +57,13 @@ export default function Nav() {
         </div>
         <div className="right">
           {deferredPrompt && (
-            <button onClick={handleDownloadClick}>
+            <button className="dwnld-btn" onClick={handleDownloadClick}>
               <FiDownload />
             </button>
           )}
 
           <Inbox />
-          <span
+          <span className="DpImage"
             onClick={() => {
               setViewProfile(true);
             }}

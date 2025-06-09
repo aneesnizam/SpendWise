@@ -6,15 +6,18 @@
   --text-color-light: #e0e5ec;
   --text-color-dark: black;
 }
-.loading-message, .no-data-message {
+
+/* ================= General Messages ================= */
+.loading-message,
+.no-data-message {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #666;
   font-size: 1.2rem;
   text-align: center;
   padding: 20px;
+  color: #666;
 }
 
 .loading-message {
@@ -25,73 +28,65 @@
   color: #313131b0;
 }
 
-
+/* =================== Insight Section =================== */
 #insight {
   width: 100%;
-  padding: 10px 5px;
-  padding-bottom: 50px;
-  background: url(../assets/img9.png);
-  background-repeat: no-repeat;
-  background-size: 150px 100px;
-  background-position: top 10px left 80px;
-  color:rgb(74, 255, 74) ;
+  padding: 10px 5px 50px;
   box-sizing: border-box;
-}
-
-.chartbar {
-  position: relative;
-  height: 300px;
-  min-height: 300px;
+  background: url(../assets/img9.png) no-repeat top 10px left 80px;
+  background-size: 150px 100px;
+  color: rgb(74, 255, 74);
 }
 
 #insight h1 {
   text-align: center;
-  text-shadow: 2px 2px 2px var(--primary-shadow-light), -2px -2px 4px var(--text-shadow-dark);
   font-size: 30px;
   color: var(--text-color-light);
+  text-shadow: 2px 2px 2px var(--primary-shadow-light), -2px -2px 4px var(--text-shadow-dark);
   margin-bottom: 50px;
 }
 
+/* =================== Top Section =================== */
 #insight .insight__top {
   width: 90%;
   display: flex;
   align-items: center;
-  justify-self: center;
   justify-content: space-around;
-  color: var(--text-color-dark);
   margin-bottom: 50px;
+  color: var(--text-color-dark);
+    justify-self: center;
 }
 
 #insight .insight__box {
-  height: 150px;
   width: 150px;
-  text-align: center;
+  height: 150px;
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
+  text-align: center;
   border-radius: 10px;
   box-shadow: 10px 10px 20px var(--primary-shadow-light), -10px -10px 20px var(--primary-shadow-dark);
   box-sizing: border-box;
 }
 
-#insight .insight__box h3 {
-  margin: 0;
-  margin-bottom: 10px;
-}
-
+#insight .insight__box h3,
 #insight .insight__box p {
   margin: 0;
 }
 
+#insight .insight__box h3 {
+  margin-bottom: 10px;
+}
+
+/* =================== Middle Section =================== */
 #insight .insight__middle {
   width: 90%;
-  margin: 0 auto;
-  margin-top: 30px;
+  margin: 30px auto 0;
+  padding: 20px 10px;
   border-radius: 10px;
   box-shadow: 10px 10px 20px var(--primary-shadow-light), -10px -10px 20px var(--primary-shadow-dark);
   box-sizing: border-box;
-  padding: 20px 10px;
 }
 
 #insight .insight__middle .linechart {
@@ -100,26 +95,26 @@
   justify-content: center;
 }
 
+/* =================== Bottom Section =================== */
 #insight .insight__bottom {
+  width: 90%;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   margin-top: 50px;
-  width: 90%;
+  flex-wrap: wrap;
+  gap: 20px;
   justify-self: center;
-
 }
 
 #insight .insight__chart {
+  width: 45%;
+  min-width: 300px;
+  height: 300px;
+  padding: 20px;
+  margin: 0;
   border-radius: 10px;
   box-shadow: 10px 10px 20px var(--primary-shadow-light), -10px -10px 20px var(--primary-shadow-dark);
   box-sizing: border-box;
-  width: 45%;
-  height: 400px;
-  padding: 20px;
-  margin: 0 ;
-   min-width: 300px;
-   height: 300px
 }
 
 .chartbar,
@@ -134,10 +129,10 @@
   width: 80%;
   margin: 0 auto;
 }
-   
-/* Base styles remain the same */
 
-/* 980px Breakpoint */
+/* =================== Responsive Breakpoints =================== */
+
+/* 980px */
 @media (max-width: 980px) {
   #insight {
     background-size: 120px 80px;
@@ -151,29 +146,32 @@
 
   #insight .insight__top {
     flex-wrap: wrap;
-    gap: 20px;
     justify-content: center;
+    gap: 20px;
     margin-bottom: 40px;
   }
 
   #insight .insight__box {
-    height: 140px;
     width: 140px;
+    height: 140px;
   }
 
   #insight .insight__bottom {
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    justify-self: center;
   }
 
   #insight .insight__chart {
-
- 
+    width: 100%;
+    max-width: 500px; /* prevent overflow */
+    min-width: unset; /* remove fixed min width */
+    box-sizing: border-box;
   }
 }
 
-/* 768px Breakpoint */
+/* 768px */
 @media (max-width: 768px) {
   #insight {
     background-size: 100px 60px;
@@ -187,8 +185,8 @@
   }
 
   #insight .insight__box {
-    height: 130px;
     width: 130px;
+    height: 130px;
     font-size: 14px;
   }
 
@@ -198,11 +196,11 @@
   }
 
   #insight .insight__chart {
- width: 100%;
+
   }
 }
 
-/* 640px Breakpoint */
+/* 640px */
 @media (max-width: 640px) {
   #insight {
     background-image: none;
@@ -220,73 +218,67 @@
   }
 
   #insight .insight__box {
-    height: 120px;
     width: 120px;
+    height: 120px;
     padding: 10px;
   }
 
   #insight .insight__chart {
-   
-    
-  }
+    width: 100%;  }
 
   .chartround {
     width: 90%;
   }
 }
 
-/* 520px Breakpoint */
+/* 520px */
 @media (max-width: 520px) {
   #insight h1 {
     font-size: 22px;
   }
 
   #insight .insight__top {
-   display: flex;
-   flex-wrap: wrap;
+    flex-wrap: wrap;
   }
 
   #insight .insight__box {
-   width: 45%;
+    width: 45%;
     font-size: 13px;
   }
 
   #insight .insight__middle {
+    width: 95%;
     padding: 10px 5px;
-       width: 95%;
   }
+
   #insight .insight__bottom {
     width: 95%;
   }
+
   #insight .insight__chart {
-   
     padding: 10px;
-  }
+    width: 100%;  }
 }
 
-/* 480px Breakpoint */
+/* 480px */
 @media (max-width: 480px) {
-    .chartbar {
+  .chartbar {
     height: 250px;
     min-height: 250px;
   }
+
   #insight h1 {
     font-size: 20px;
     margin-bottom: 20px;
   }
-  #insight .insight__top {
-   display: flex;
-   flex-wrap: wrap;
-  }
 
   #insight .insight__box {
-   width: 45%;
+    width: 45%;
     font-size: 13px;
     max-width: 180px;
     margin: 0 auto;
     padding: 5px;
   }
-  
 
   #insight .insight__middle {
     margin-top: 20px;
@@ -298,6 +290,12 @@
 
   #insight .insight__chart {
 
+    padding: 10px;
+  }
+}
+@media (max-width: 380px){
+ #insight .insight__chart {
   
+    padding: 10px;
   }
 }

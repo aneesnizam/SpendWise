@@ -13,23 +13,12 @@
 #data-box {
   width: 100%;
   position: relative;
-
-}
-#data-box::before{
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-opacity: 0.8;
   background: url(../assets/img6.png),url(../assets/img6.png);
   background-repeat: no-repeat,no-repeat;
   background-size: 90px 80px, 80px 70px;
   background-position: top 80px right 380px,top 350px right 30px;
-
-
 }
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -39,6 +28,7 @@ input[type=number]::-webkit-outer-spin-button {
 /* Currency Selector */
 .currency-selector {
   text-align: right;
+
 }
 
 .currency-selector select {
@@ -338,7 +328,153 @@ span.totalcost {
 .history-item.other { background: #f9fafb; }
 
 
-/* Existing CSS remains the same until the media queries */
+/* Share Toggle Container */
+.share-toggle-containerr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
+  box-shadow: 
+    5px 5px 10px #c3cfdd, 
+    -5px -5px 10px #fdffff;
+  transition: all 0.3s ease;
+}
+
+.share-toggle-containerr .share-toggle-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2d3748;
+  cursor: pointer;
+}
+
+/* Custom Toggle Switch */
+.share-toggle-containerr .slide {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  background-color: #e2e8f0;
+  border-radius: 34px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.share-toggle-containerr .slide:after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: white;
+  top: 2px;
+  left: 2px;
+  transition: all 0.3s ease;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.share-toggle-containerr .share-toggle-input:checked + .slide {
+  background-color: #ffa048;
+}
+
+.share-toggle-containerr .share-toggle-input:checked + .slide:after {
+  transform: translateX(24px);
+}
+
+/* Friend Split Container */
+.friend-split-containerr {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  animation: fadeIn 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.friend-split-containerr .friend-split-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 12px;
+}
+
+.friend-split-containerr .friend-split-list {
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.friend-split-containerr .friend-split-option {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #edf2f7;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.friend-split-containerr .friend-split-option:hover {
+  background-color: #f1f5f9;
+}
+
+.friend-split-containerr .friend-split-checkbox {
+  margin-right: 12px;
+  width: 18px;
+  height: 18px;
+  accent-color: #4ade80;
+  cursor: pointer;
+}
+
+.friend-split-info {
+  font-size: 14px;
+  color: #2d3748;
+}
+
+.friend-split-email {
+  font-size: 12px;
+  color: #64748b;
+  margin-left: 5px;
+}
+
+.friend-split-empty {
+  font-size: 14px;
+  color: #64748b;
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+
+
+/* Scrollbar styling */
+.friend-split-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.friend-split-list::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.friend-split-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.friend-split-list::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
 
 /* 980px Breakpoint */
 @media (max-width: 980px) {
@@ -468,6 +604,35 @@ span.totalcost {
 
 /* 480px Breakpoint */
 @media (max-width: 480px) {
+    .share-toggle-label {
+    font-size: 15px;
+  }
+  
+  .slide {
+    width: 45px;
+    height: 24px;
+  }
+  
+  .slide:after {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .share-toggle-input:checked + .slide:after {
+    transform: translateX(21px);
+  }
+  
+  .friend-split-container {
+    padding: 12px;
+  }
+  
+  .friend-split-info {
+    font-size: 13px;
+  }
+  
+  .friend-split-email {
+    font-size: 11px;
+  }
   .delete-btn {
  text-align: right;
 }
@@ -519,154 +684,3 @@ span.totalcost {
 
 
 
-/* Extra added by Sreerag */
-
-/* Friend */
-.share-toggle-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  padding: 0.75rem 1rem;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--card-shadow);
-  transition: all 0.2s ease;
-}
-
-.share-toggle-container:hover {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.share-toggle-label {
-  font-weight: 500;
-  color: var(--text-color);
-  cursor: pointer;
-  user-select: none;
-  flex-grow: 1;
-}
-
-.share-toggle-input {
-  width: 1rem;
-  height: 1rem;
-  accent-color: var(--primary-color);
-  cursor: pointer;
-}
-
-.share-toggle-container .slide {
-  position: relative;
-  cursor: pointer;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 24px;
-  height: 20px;
-  width: 34px;
-}
-
-.share-toggle-container .slide:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 2px;
-  bottom: 2px;
-  background-color: var(--white);
-  transition: .4s;
-  border-radius: 50%;
-  z-index: 10;
-}
-
-#sharetofriend:checked + .slide {
-  background-color: var(--primary-color);
-}
-
-#sharetofriend:checked + .slide:before {
-  transform: translateX(14px);
-}
-
-/* Friend */
-.friend-split-container {
-  margin-top: 0.5rem;
-  padding: 1rem;
-  background-color: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--card-shadow);
-  animation: fadeIn 0.3s ease;
-  margin-bottom: 1rem;
-}
-
-.friend-split-title {
-  display: block;
-  margin-bottom: 0.75rem;
-  font-weight: 500;
-  color: var(--text-color);
-  font-size: 0.95rem;
-}
-
-/* Friend list */
-.friend-split-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  max-height: 200px;
-  overflow-y: auto;
-  padding-right: 0.25rem;
-}
-
-/* Scrollbar styling */
-.friend-split-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.friend-split-list::-webkit-scrollbar-track {
-  background: var(--border-color);
-  border-radius: 3px;
-}
-
-.friend-split-list::-webkit-scrollbar-thumb {
-  background: var(--text-light);
-  border-radius: 3px;
-}
-
-/* Friend option */
-.friend-split-option {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  border-radius: calc(var(--radius) - 4px);
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.friend-split-option:hover {
-  background-color: rgba(67, 97, 238, 0.05);
-}
-
-.friend-split-checkbox {
-  width: 1.1rem;
-  height: 1.1rem;
-  accent-color: var(--primary-color);
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.friend-split-info {
-  font-size: 0.9rem;
-  color: var(--text-color);
-}
-
-.friend-split-email {
-  font-size: 0.8rem;
-  color: var(--text-light);
-}
-
-/* Empty state */
-.friend-split-empty {
-  color: var(--text-light);
-  font-style: italic;
-  padding: 0.5rem;
-  text-align: center;
-  font-size: 0.9rem;
-}
