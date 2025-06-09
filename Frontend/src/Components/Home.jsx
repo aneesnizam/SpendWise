@@ -8,7 +8,8 @@ import userlogindata from "./Authstore";
 import InSight from "./InSight";
 import LendBorrow from "./LendBorrow";
 import AboutUs from "./AboutUs";
-
+import Friends from "./Friends"
+import  Shared from "./Shared"
 export default function Home() {
   const { currentView } = userlogindata();
 
@@ -24,6 +25,10 @@ export default function Home() {
         return <LendBorrow />
         case "aboutUs":
         return <AboutUs />
+          case "friends":
+        return <Friends />
+          case "shared":
+        return <Shared />
       case "home":
         return <DataBox />;
       default:

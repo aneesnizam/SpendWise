@@ -182,8 +182,9 @@
     padding: 8px 30px;
   }
   
-  #nav .middle {
-    display: none; /* Hide logo on very small screens */
+  #nav .middle img {
+    width: 70px;
+    margin-left: 20px;
   }
   
   #nav .left button {
@@ -206,8 +207,13 @@
 
 /* 480px Breakpoint */
 @media (max-width: 480px) {
+
+   #nav .left button {
+    font-size: 15px;
+   
+  }
   #nav {
-    padding: 6px 20px;
+    padding: 12px 20px;
     margin-top: 5px;
   }
   
@@ -224,8 +230,9 @@
   }
   
   #nav .right span {
-    height: 28px;
-    width: 28px;
+
+    height: 30px;
+    width: 30px;
     box-shadow: 1px 1px 3px #2c2c2c,-1px -1px 1px #c9c9c9;
   }
 }

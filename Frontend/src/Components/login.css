@@ -13,6 +13,7 @@ body {
   color: black;
   padding: 0;
   margin: 0;
+    box-sizing: border-box;
 }
 #login .firstpage {
   background-color: #e0e5ec;
@@ -21,9 +22,9 @@ body {
   box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
   box-sizing: border-box;
   width: 400px;
+
 }
-.login_container {
-}
+
 .login_container h1 {
   text-align: center;
   margin-bottom: 30px;
@@ -92,6 +93,7 @@ body {
 }
 .load {
     display: flex;
+    align-items: center;
    justify-self: center;
   width: 20px;
   height: 20px;
@@ -100,13 +102,26 @@ body {
   border-top-color: rgb(255, 255, 255);
   animation: 1s spin ease-in-out infinite;
 }
+.login_container{
+  width: 100%;
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 @media (max-width: 480px) {
+  #login{
+  
+    padding: 0px 10px;
+   
+   
+  }
 #login .firstpage{
-  width: 350px;
+  width: 90%;
+    padding: 20px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 }

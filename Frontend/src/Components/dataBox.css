@@ -26,7 +26,7 @@ opacity: 0.8;
   background: url(../assets/img6.png),url(../assets/img6.png);
   background-repeat: no-repeat,no-repeat;
   background-size: 90px 80px, 80px 70px;
-  background-position: top 80px right 380px,bottom 20px right 30px;
+  background-position: top 80px right 380px,top 350px right 30px;
 
 
 }
@@ -50,7 +50,7 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 10px;
   text-align: center;
   color: var(--text-base);
-  border: 1px dotted var(--accent-blue);
+  border: 1px solid black;
 }
 
 /* Form Layout */

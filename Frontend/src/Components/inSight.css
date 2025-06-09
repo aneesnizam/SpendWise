@@ -6,6 +6,25 @@
   --text-color-light: #e0e5ec;
   --text-color-dark: black;
 }
+.loading-message, .no-data-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 20px;
+}
+
+.loading-message {
+  color: #3498dba6;
+}
+
+.no-data-message {
+  color: #313131b0;
+}
+
 
 #insight {
   width: 100%;

@@ -16,7 +16,7 @@ export default function Profile() {
   const [newName, setNewName] = useState(user.name || "user");
   const [entries, setEntries] = useState(null);
   const [isSlider, setIsSlider] = useState(false);
-
+const [upiId,setUpiId] = useState()
   // Fetch expense entries once when component mounts
   useEffect(() => {
     api
@@ -123,7 +123,7 @@ export default function Profile() {
               <p> {!edit ? "Daily Spending Limit :" : "Set Daily Limit :"}</p>
               {edit ? (
                 <input
-                  ref={inputRef}
+                   ref={inputRef}
                   type="number"
                   value={limit}
                   onChange={(e) => setLimit(e.target.value)}
@@ -132,6 +132,19 @@ export default function Profile() {
                 <>₹{limit} </>
               )}
             </li>
+       <li>
+  <p>UPI ID:{" "}</p>
+  {edit ? (
+    <input
+      type="text"
+      value={upiId}
+      onChange={(e) => setUpiId(e.target.value)}
+    />
+  ) : (
+    <>{upiId ? upiId : "Not set"}</>
+  )}
+</li>
+
             <li>
               <p>
                 Weekly Summary:{" "}
