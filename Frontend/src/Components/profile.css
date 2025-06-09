@@ -345,7 +345,7 @@ input:checked + .slider:before {
   }
   
   input:checked + .slider:before {
-    transform: translateX(14px);
+    transform: translateX(22px);
   }
 }
 
@@ -441,7 +441,7 @@ input:checked + .slider:before {
   }
   
   input:checked + .slider:before {
-    transform: translateX(12px);
+    transform: translateX(22px);
   }
 }
 

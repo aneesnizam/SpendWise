@@ -164,7 +164,7 @@ export default function Profile() {
                   </p>
                 )}
               </p>
-              <label className="sliderlabel">
+              <label className="sliderlabel" style={edit ? {width:"70px"}: undefined}>
                 <input
                   disabled={!edit}
                   type="checkbox"

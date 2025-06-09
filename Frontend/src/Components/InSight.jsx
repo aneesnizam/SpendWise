@@ -229,7 +229,7 @@ export default function InSight() {
       <h1>Dashboard Insights</h1>
 
       {/* Top Metrics */}
-      <div className="insight__top" style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+      <div className="insight__top" style={{ display: "flex", flexWrap: "wrap" }}>
         {[
           { label: "Total Spend", value: total },
           { label: "Transactions", value: count },

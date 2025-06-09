@@ -89,6 +89,10 @@
   box-shadow: 6px 6px 14px #c3cfdd, -6px -6px 14px #ffffff;
   border-radius: 16px;
   padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  
 }
 .request-card,
 .friend-card {
@@ -96,8 +100,12 @@
   box-shadow: 6px 6px 14px #c3cfdd, -6px -6px 14px #ffffff;
   border-radius: 16px;
   padding: 20px;
+  box-sizing: border-box;
   transition: all 0.3s ease;
   text-align: center;
+  width: 100%;
+  margin: 0 auto;
+
 }
 
 .request-card:hover,
@@ -208,4 +216,31 @@
     flex-direction: column;
     gap: 8px;
   }
+}
+@media screen and (max-width: 480px){
+  .section-title {
+margin-bottom: 20px;
+  }
+  .friend-request-page{
+    padding: 20px 15px;
+    border-radius: 8px;
+  }
+.friend-list,
+.pending-section{
+
+  padding: 15px;
+
+  width: 100%;
+
+  
+}
+.request-card,
+.friend-card {
+
+  padding: 10px;
+
+  width: 100%;
+  margin: 0 auto;
+
+}
 }

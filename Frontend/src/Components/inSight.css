@@ -50,6 +50,7 @@
 #insight .insight__top {
   width: 90%;
   display: flex;
+  gap: 20px;
   align-items: center;
   justify-content: space-around;
   margin-bottom: 50px;
@@ -271,11 +272,13 @@
     font-size: 20px;
     margin-bottom: 20px;
   }
-
+    #insight .insight__top{
+      gap: 10px;
+    }
   #insight .insight__box {
-    width: 45%;
+  
     font-size: 13px;
-    max-width: 180px;
+    max-width: 130px;
     margin: 0 auto;
     padding: 5px;
   }
