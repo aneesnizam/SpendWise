@@ -13,8 +13,9 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
   const {
     showRegister,
     forgetPassword,
@@ -24,7 +25,7 @@ export default function Login() {
     setToken
   } = userlogindata();
 
-  // Check for saved credentials on component mount
+  // Load remembered credentials (if any)
   useEffect(() => {
     const savedCredentials = localStorage.getItem("rememberedCredentials");
     if (savedCredentials) {
@@ -36,48 +37,53 @@ export default function Login() {
   }, []);
 
   const handleSignin = async () => {
+    setError("");
     if (!email || !email.includes("@")) {
-      setError("please enter a valid email");
-      setSuccess("");
+      setError("Please enter a valid email");
       return;
     }
+
     if (!password) {
-      setError("please enter the password");
-      setSuccess("");
+      setError("Please enter the password");
       return;
     }
 
     try {
       setLoading(true);
       const response = await api.post("api/auth/login", { email, password });
-      
-      setUser(response.data.user);
-      setToken(response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
 
-      // Store credentials if "Remember me" is checked
-      if (rememberMe) {
-        localStorage.setItem(
-          "rememberedCredentials",
-          JSON.stringify({ email, password })
-        );
-      } else {
-        // Clear saved credentials if "Remember me" is unchecked
-        localStorage.removeItem("rememberedCredentials");
-      }
+      const { user, token, message, success } = response.data;
 
-      if (response.data.success) {
-        toast.success(response.data.message);
+      if (success) {
+        // Store in Zustand
+        setUser(user);
+        setToken(token);
+
+        // Immediately update axios default headers
+        api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+        // Remember credentials if selected
+        if (rememberMe) {
+          localStorage.setItem(
+            "rememberedCredentials",
+            JSON.stringify({ email, password })
+          );
+        } else {
+          localStorage.removeItem("rememberedCredentials");
+        }
+
+        toast.success(message || "Login successful");
         navigate("/home");
       } else {
-        toast.error(response.data.message);
+        toast.error(message || "Login failed");
       }
     } catch (err) {
-      toast.error(err.message);
+      const errorMsg = err.response?.data?.message || err.message;
+      toast.error(errorMsg);
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
-    setError(" ");
   };
 
   return (
@@ -88,7 +94,7 @@ export default function Login() {
         ) : !showRegister ? (
           <div className="login_container">
             <h1>Login</h1>
-            <form action="" onSubmit={(e) => e.preventDefault()}>
+            <form onSubmit={(e) => e.preventDefault()}>
               <div className="input_field">
                 <input
                   type="email"
@@ -107,9 +113,9 @@ export default function Login() {
               </div>
               <div className="remeber_container">
                 <div className="remeber_me">
-                  <input 
-                    type="checkbox" 
-                    id="checkbox" 
+                  <input
+                    type="checkbox"
+                    id="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
                   />
@@ -124,35 +130,21 @@ export default function Login() {
                 disabled={loading}
                 onClick={handleSignin}
               >
-                {loading ? <span className="load"></span> : " Sign In"}
+                {loading ? <span className="load"></span> : "Sign In"}
               </button>
               {error && (
-                <h2
-                  style={{
-                    color: "red",
-                    textAlign: "center",
-                    fontSize: "10px",
-                    marginTop: "15px",
-                  }}
-                >
+                <h2 style={{ color: "red", textAlign: "center", fontSize: "10px", marginTop: "15px" }}>
                   {error}
                 </h2>
               )}
               {success && (
-                <h2
-                  style={{
-                    color: "green",
-                    textAlign: "center",
-                    fontSize: "10px",
-                  }}
-                >
+                <h2 style={{ color: "green", textAlign: "center", fontSize: "10px" }}>
                   {success}
                 </h2>
               )}
             </form>
             <p>
-              Don't have an account?
-              {"  "}
+              Don't have an account?{" "}
               <a href="#" onClick={() => setShowRegister(true)}>
                 Register
               </a>

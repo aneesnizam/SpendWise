@@ -43,7 +43,7 @@ export default function DataBox() {
 
   const getUser = async () => {
     try {
-      const res = await api.get("api/user");
+  const res = await api.get("api/user");
       setUser(res.data.user);
     } catch (err) {
       console.error(err.message);
