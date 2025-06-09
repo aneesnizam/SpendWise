@@ -183,7 +183,7 @@
   }
   
   #nav .middle img {
-    width: 70px;
+    width: 80px;
     margin-left: 20px;
   }
   
@@ -218,6 +218,7 @@
   }
   
   #nav .left button {
+    scale: 1.4;
     font-size: 13px;
     box-shadow: 1px 1px 3px #000;
   }
@@ -225,12 +226,12 @@
   #nav .right button {
     height: 18px;
     width: 18px;
-    font-size: 14px;
+    font-size: 17px;
     margin-right: 10px;
   }
   
   #nav .right span {
-
+scale: 1.2;
     height: 30px;
     width: 30px;
     box-shadow: 1px 1px 3px #2c2c2c,-1px -1px 1px #c9c9c9;
