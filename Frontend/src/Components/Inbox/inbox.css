@@ -1,7 +1,7 @@
 .inbox-icon {
   position: relative;
-  background: rgba(53, 179, 252, 0.836);
-  width: 32px;
+  background: #1076ff;
+  width: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,8 +10,10 @@
   cursor: pointer;
   user-select: none;
   margin-right: 1rem;
-  padding: 2px;
+  padding: 4px;
+  height: 30px;
   color: white;
+  box-sizing: border-box;
 }
 .inbox-icon .mail {
   color: var(--white);
@@ -37,10 +39,12 @@
   max-width: 500px;
   min-width: 350px;
   height: auto;
-  background: rgb(194, 233, 255);
+ 
   color: black;
+ background-color:rgb(194, 233, 255) ;
+
   box-shadow: 
-    5px 5px 10px #c3cfdd, 
+    5px 5px 10px #c3cfdd,
     -5px -5px 10px #fdffff;
   padding: 0.5rem;
   display: flex;
@@ -93,16 +97,17 @@
   justify-content: center;
 }
 .payment-list button.yes {
-  background: green;
+  background: rgb(3, 207, 3);
   
 }
 .payment-list button.no {
-  background-color: red;
+  background-color: rgb(253, 41, 41);
 }
 
 @media (max-width: 480px) {
   .inbox-icon {
     width: 28px;
+    height: 28px;
     margin-right: 0.5rem;
   }
 

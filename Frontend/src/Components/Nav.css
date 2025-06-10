@@ -6,8 +6,8 @@
     5px 5px 10px #959da6, 
     -5px -5px 10px #aeaeae;
   padding: 8px 40px;
-  display: flex;
-  justify-content: space-between;
+ display: grid;
+ grid-template-columns: 3fr 2fr 3fr;
   align-items: center;
   box-sizing: border-box;
   margin-top: 10px;
@@ -16,13 +16,13 @@
 #nav .left {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-self: left;
 }
 
 #nav .middle img {
   display: block;
   width: 100px;
-  margin-left: 40px;
+ margin: 0 auto;
   scale: 1.1;
 }
 
@@ -58,7 +58,7 @@
 #nav .right {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-self: right;
 }
 
 #nav .right .dwnld-btn {
@@ -104,7 +104,7 @@ background: none;
   
   #nav .middle img {
     width: 90px;
-    margin-left: 30px;
+
   }
   
   #nav .right button {
@@ -120,7 +120,7 @@ background: none;
   
   #nav .middle img {
     width: 80px;
-    margin-left: 40px;
+ 
   }
   
   #nav .left button {
@@ -146,7 +146,7 @@ background: none;
   
   #nav .middle img {
     width: 70px;
-    margin-left: 50px;
+  
     scale: 1;
   }
   
@@ -160,8 +160,8 @@ background: none;
   }
   
  #nav .right .dwnld-btn {
-    height: 20px;
-    width: 20px;
+    height: 22px;
+    width: 22px;
     font-size: 16px;
     margin-right: 20px;
   }
@@ -177,7 +177,7 @@ background: none;
   
   #nav .middle img {
     width: 80px;
-    margin-left: 20px;
+  
   }
   
   #nav .left button {
@@ -186,8 +186,8 @@ background: none;
   }
   
 #nav .right .dwnld-btn {
-    height: 20px;
-    width: 20px;
+    height: 22px;
+    width: 22px;
     font-size: 16px;
     margin-right: 20px;
   }
@@ -214,8 +214,8 @@ background: none;
   }
   
 #nav .right .dwnld-btn  {
-    height: 18px;
-    width: 18px;
+    height: 22px;
+    width: 22px;
     font-size: 17px;
     margin-right: 10px;
   }

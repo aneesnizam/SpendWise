@@ -247,7 +247,7 @@ export default function InSight() {
       <div className="insight__middle" style={{ marginTop: "30px" }}>
         <div className="linechart" style={{ maxWidth: "100%", height: "300px" }}>
           {loading.expenses ? (
-            <div className="loading-message">Loading expense data...</div>
+            <div className="loading-message" style={{color:"#313131b0",fontSize:"15px"}}>Loading expense data...</div>
           ) : chartData ? (
             <Line
               data={chartData}

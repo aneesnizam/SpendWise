@@ -14,7 +14,7 @@ export default function DataBox() {
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
   const [totalCost, setTotalCost] = useState(0);
-  const [userLimit, setUserLimit] = useState(0);
+  const [userLimit, setUserLimit] = useState(user?.dailyLimit);
   const [sharedWith, setSharedWith] = useState([]);
   const [shared, setShared] = useState(false);
 
@@ -43,7 +43,7 @@ export default function DataBox() {
 
   const getUser = async () => {
     try {
-  const res = await api.get("api/user");
+      const res = await api.get("api/user");
       setUser(res.data.user);
     } catch (err) {
       console.error(err.message);
@@ -137,6 +137,7 @@ export default function DataBox() {
       toast.warn("Your daily limit exceeded", {
         autoClose: 4000,
       });
+    
     }
   }, [userLimit]);
 
@@ -325,7 +326,7 @@ export default function DataBox() {
                     </div>
                     <p className="date">{formatDateTime(entry.date)}</p>
                     <button
-                      className="delete-btn"
+                      className="delete-btn" style={{textAlign:"center"}}
                       onClick={() => handleDelete(entry._id)}
                     >
                       <FaTrash />

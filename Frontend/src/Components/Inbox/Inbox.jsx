@@ -64,7 +64,7 @@ const Inbox = () => {
   }, []);
   return (
     <div className="inbox-icon" ref={inboxRef}>
-      <span
+      <span style={{fontSize:'20px'}}
         onClick={() => setShowInbox(prev => !prev)}
         className="material-symbols-outlined mail"
       >

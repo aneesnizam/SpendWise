@@ -114,9 +114,11 @@
     font-size: 14px;
     padding: 8px 0;
   }
+#menu .menu-container .menu-header .menu-close-btn{
+   padding: 3px 8px;
+  font-size: 11px;
+  margin-left: 18px;
+  margin-top: 8px;
+}
 
-  .menu-close-btn {
-    padding: 4px 10px;
-    font-size: 14px;
-  }
 }

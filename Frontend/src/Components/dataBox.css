@@ -13,14 +13,14 @@
 #data-box {
   width: 100%;
   position: relative;
-  background: url(../assets/img6.png),url(../assets/img6.png);
-  background-repeat: no-repeat,no-repeat;
+  background: url(../assets/img6.png), url(../assets/img6.png);
+  background-repeat: no-repeat, no-repeat;
   background-size: 90px 80px, 80px 70px;
-  background-position: top 80px right 380px,top 350px right 30px;
+  background-position: top 80px right 380px, top 350px right 30px;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -28,19 +28,18 @@ input[type=number]::-webkit-outer-spin-button {
 /* Currency Selector */
 .currency-selector {
   text-align: right;
-
 }
 
 .currency-selector select {
-  background-color: var(--input-bg);
-  border: none;
-  outline: none;
-  border-radius: 10px;
-  box-shadow: var(--shadow-dark), var(--shadow-light);
-  padding: 10px;
-  text-align: center;
-  color: var(--text-base);
+  background-color: white;
   border: 1px solid black;
+  outline: none;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 10px 10px;
+  text-align: center;
+  color: var(--text-black);
+  box-shadow: 5px 5px 20px #a3b1c6, -5px -5px 20px #ffffff;
 }
 
 /* Form Layout */
@@ -85,11 +84,9 @@ input[type=number]::-webkit-outer-spin-button {
   color: var(--text-base);
   width: 66%;
   box-sizing: border-box;
-
 }
 
 .form-group input.discription {
-
   color: #4b5563;
 }
 
@@ -113,7 +110,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .expense-form button:hover {
- background: linear-gradient(to right, #ff7e5f, #feb47b);
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
   box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
   transform: scale(1.03);
   font-size: 14px;
@@ -246,87 +243,242 @@ span.totalcost {
 }
 
 /* Sample of updated colors */
-.category-tag.food { color: #22c55e; }
-.category-tag.transport { color: #3b82f6; }
-.category-tag.shopping { color: #ef4444; }
-.category-tag.entertainment { color: #f59e0b; }
-.category-tag.bills { color: #6366f1; }
-.category-tag.healthcare { color: #14b8a6; }
-.category-tag.education { color: #0284c7; }
-.category-tag.groceries { color: #eab308; }
-.category-tag.fuel { color: #b91c1c; }
-.category-tag.public-transport { color: #0ea5e9; }
-.category-tag.clothing { color: #c026d3; }
-.category-tag.electronics { color: #10b981; }
-.category-tag.movies { color: #eab308; }
-.category-tag.subscriptions { color: #334155; }
-.category-tag.electricity { color: #ea580c; }
-.category-tag.water { color: #3b82f6; }
-.category-tag.internet { color: #6366f1; }
-.category-tag.rent { color: #dc2626; }
-.category-tag.mortgage { color: #1e40af; }
-.category-tag.medicines { color: #22c55e; }
-.category-tag.doctor { color: #14b8a6; }
-.category-tag.insurance { color: #db2777; }
-.category-tag.school-fees { color: #6366f1; }
-.category-tag.books { color: #ca8a04; }
-.category-tag.personal-care { color: #e11d48; }
-.category-tag.gym { color: #ef4444; }
-.category-tag.salon { color: #16a34a; }
-.category-tag.travel { color: #0ea5e9; }
-.category-tag.flight { color: #0284c7; }
-.category-tag.hotel { color: #eab308; }
-.category-tag.gifts { color: #be123c; }
-.category-tag.charity { color: #059669; }
-.category-tag.savings { color: #22c55e; }
-.category-tag.investments { color: #8b5cf6; }
-.category-tag.pets { color: #a855f7; }
-.category-tag.home-maintenance { color: #dc2626; }
-.category-tag.childcare { color: #eab308; }
-.category-tag.taxes { color: #7f1d1d; }
-.category-tag.other { color: #4b5563; }
+.category-tag.food {
+  color: #22c55e;
+}
+.category-tag.transport {
+  color: #260e5e;
+}
+.category-tag.shopping {
+  color: #ef4444;
+}
+.category-tag.entertainment {
+  color: #f59e0b;
+}
+.category-tag.bills {
+  color: #6366f1;
+}
+.category-tag.healthcare {
+  color: #14b8a6;
+}
+.category-tag.education {
+  color: #0284c7;
+}
+.category-tag.groceries {
+  color: #eab308;
+}
+.category-tag.fuel {
+  color: #b91c1c;
+}
+.category-tag.public-transport {
+  color: #8b5cf6;
+}
+.category-tag.clothing {
+  color: #c026d3;
+}
+.category-tag.electronics {
+  color: #10b981;
+}
+.category-tag.movies {
+  color: #eab308;
+}
+.category-tag.subscriptions {
+  color: #334155;
+}
+.category-tag.electricity {
+  color: #ea580c;
+}
+.category-tag.water {
+  color: #3b82f6;
+}
+.category-tag.internet {
+  color: #6366f1;
+}
+.category-tag.rent {
+  color: #dc2626;
+}
+.category-tag.mortgage {
+  color: #1e40af;
+}
+.category-tag.medicines {
+  color: #22c55e;
+}
+.category-tag.doctor {
+  color: #14b8a6;
+}
+.category-tag.insurance {
+  color: #db2777;
+}
+.category-tag.school-fees {
+  color: #6366f1;
+}
+.category-tag.books {
+  color: #ca8a04;
+}
+.category-tag.personal-care {
+  color: #e11d48;
+}
+.category-tag.gym {
+  color: #ef4444;
+}
+.category-tag.salon {
+  color: #16a34a;
+}
+.category-tag.travel {
+  color: #0ea5e9;
+}
+.category-tag.flight {
+  color: #0284c7;
+}
+.category-tag.hotel {
+  color: #eab308;
+}
+.category-tag.gifts {
+  color: #be123c;
+}
+.category-tag.charity {
+  color: #059669;
+}
+.category-tag.savings {
+  color: #22c55e;
+}
+.category-tag.investments {
+  color: #8b5cf6;
+}
+.category-tag.pets {
+  color: #a855f7;
+}
+.category-tag.home-maintenance {
+  color: #dc2626;
+}
+.category-tag.childcare {
+  color: #eab308;
+}
+.category-tag.taxes {
+  color: #7f1d1d;
+}
+.category-tag.other {
+  color: #4b5563;
+}
 
 /* Backgrounds for history items */
-.history-item.food { background: #f0fdf4; }
-.history-item.transport { background: #eff6ff; }
-.history-item.shopping { background: #fef2f2; }
-.history-item.entertainment { background: #fefce8; }
-.history-item.bills { background: #f5f3ff; }
-.history-item.healthcare { background: #ecfdf5; }
-.history-item.education { background: #f0f9ff; }
-.history-item.groceries { background: #fefce8; }
-.history-item.fuel { background: #fef2f2; }
-.history-item.public-transport { background: #f0f9ff; }
-.history-item.clothing { background: #fdf4ff; }
-.history-item.electronics { background: #ecfdf5; }
-.history-item.movies { background: #fef9c3; }
-.history-item.subscriptions { background: #f1f5f9; }
-.history-item.electricity { background: #fff7ed; }
-.history-item.water { background: #eff6ff; }
-.history-item.internet { background: #eef2ff; }
-.history-item.rent { background: #fef2f2; }
-.history-item.mortgage { background: #f3f4f6; }
-.history-item.medicines { background: #f0fdf4; }
-.history-item.doctor { background: #ecfdf5; }
-.history-item.insurance { background: #fdf2f8; }
-.history-item.school-fees { background: #eef2ff; }
-.history-item.books { background: #fefce8; }
-.history-item.personal-care { background: #fff1f2; }
-.history-item.gym { background: #fef2f2; }
-.history-item.salon { background: #f0fdf4; }
-.history-item.travel { background: #f0f9ff; }
-.history-item.flight { background: #e0f2fe; }
-.history-item.hotel { background: #fefce8; }
-.history-item.gifts { background: #fef2f2; }
-.history-item.charity { background: #ecfdf5; }
-.history-item.savings { background: #f0fdf4; }
-.history-item.investments { background: #f5f3ff; }
-.history-item.pets { background: #fdf4ff; }
-.history-item.home-maintenance { background: #fef2f2; }
-.history-item.childcare { background: #fefce8; }
-.history-item.taxes { background: #fef2f2; }
-.history-item.other { background: #f9fafb; }
-
+.history-item.food {
+  background: #f0fdf4;
+}
+.history-item.transport {
+  background: #eff6ff;
+}
+.history-item.shopping {
+  background: #fef2f2;
+}
+.history-item.entertainment {
+  background: #fefce8;
+}
+.history-item.bills {
+  background: #f5f3ff;
+}
+.history-item.healthcare {
+  background: #ecfdf5;
+}
+.history-item.education {
+  background: #f0f9ff;
+}
+.history-item.groceries {
+  background: #fefce8;
+}
+.history-item.fuel {
+  background: #fef2f2;
+}
+.history-item.public-transport {
+  background: #f0f9ff;
+}
+.history-item.clothing {
+  background: #fdf4ff;
+}
+.history-item.electronics {
+  background: #ecfdf5;
+}
+.history-item.movies {
+  background: #fef9c3;
+}
+.history-item.subscriptions {
+  background: #f1f5f9;
+}
+.history-item.electricity {
+  background: #fff7ed;
+}
+.history-item.water {
+  background: #eff6ff;
+}
+.history-item.internet {
+  background: #eef2ff;
+}
+.history-item.rent {
+  background: #fef2f2;
+}
+.history-item.mortgage {
+  background: #f3f4f6;
+}
+.history-item.medicines {
+  background: #f0fdf4;
+}
+.history-item.doctor {
+  background: #ecfdf5;
+}
+.history-item.insurance {
+  background: #fdf2f8;
+}
+.history-item.school-fees {
+  background: #eef2ff;
+}
+.history-item.books {
+  background: #fefce8;
+}
+.history-item.personal-care {
+  background: #fff1f2;
+}
+.history-item.gym {
+  background: #fef2f2;
+}
+.history-item.salon {
+  background: #f0fdf4;
+}
+.history-item.travel {
+  background: #f0f9ff;
+}
+.history-item.flight {
+  background: #e0f2fe;
+}
+.history-item.hotel {
+  background: #fefce8;
+}
+.history-item.gifts {
+  background: #fef2f2;
+}
+.history-item.charity {
+  background: #ecfdf5;
+}
+.history-item.savings {
+  background: #f0fdf4;
+}
+.history-item.investments {
+  background: #f5f3ff;
+}
+.history-item.pets {
+  background: #fdf4ff;
+}
+.history-item.home-maintenance {
+  background: #fef2f2;
+}
+.history-item.childcare {
+  background: #fefce8;
+}
+.history-item.taxes {
+  background: #fef2f2;
+}
+.history-item.other {
+  background: #f9fafb;
+}
 
 /* Share Toggle Container */
 .share-toggle-containerr {
@@ -337,9 +489,7 @@ span.totalcost {
   padding: 10px 20px;
   border-radius: 15px;
   background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
-  box-shadow: 
-    5px 5px 10px #c3cfdd, 
-    -5px -5px 10px #fdffff;
+  box-shadow: 5px 5px 10px #c3cfdd, -5px -5px 10px #fdffff;
   transition: all 0.3s ease;
 }
 
@@ -450,12 +600,17 @@ span.totalcost {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive Design */
-
 
 /* Scrollbar styling */
 .friend-split-list::-webkit-scrollbar {
@@ -483,16 +638,15 @@ span.totalcost {
     align-items: center;
     padding: 30px 0;
   }
-  
+
   .expense-form {
     width: 60%;
     margin-bottom: 30px;
   }
-  
+
   #data-box::before {
     background-position: top 80px left 120px, top 400px right 30px;
   }
-
 }
 
 /* 768px Breakpoint */
@@ -500,20 +654,20 @@ span.totalcost {
   .expense-form {
     width: 75%;
   }
-  
+
   .form-group input {
     width: 80%;
   }
-  
+
   .expense-form button {
     width: 80%;
   }
-  
+
   #data-box::before {
     background-size: 70px 60px, 60px 50px;
-   background-position: top 80px left 10px, top 400px right 30px;
+    background-position: top 80px left 10px, top 400px right 30px;
   }
-  
+
   .entry-header {
     grid-template-columns: 2fr 2fr 1fr;
   }
@@ -524,28 +678,29 @@ span.totalcost {
   .expense-form {
     width: 85%;
   }
-  
+
   .form-group input {
     width: 80%;
   }
-  
+
   .expense-form button {
     width: 90%;
   }
-  
+
   #data-box::before {
     opacity: 0.6;
     background-position: top 10px left 10px, top 450px right 30px;
   }
-  
+
   .summary-box h4 {
     font-size: 20px;
   }
-  
-  .limit-value, .summary-box .label {
+
+  .limit-value,
+  .summary-box .label {
     font-size: 18px;
   }
-  
+
   span.totalcost {
     font-size: 22px;
   }
@@ -554,133 +709,137 @@ span.totalcost {
 /* 520px Breakpoint */
 @media (max-width: 520px) {
   .expense-history ul {
-  list-style: none;
-  width: 90%;
-  margin: 0 auto;
-  padding: 0;
-}
+    list-style: none;
+    width: 90%;
+    margin: 0 auto;
+    padding: 0;
+  }
   .expense-form {
     width: 95%;
   }
-  
+
   #data-box::before {
     background-size: 50px 40px, 40px 30px;
     background-position: top 80px left 120px, top 400px right 30px;
     display: none;
   }
-  
+
   .entry-header {
-    grid-template-columns: 3fr 2fr 1fr;
+    grid-template-columns: 4fr 2fr 1fr;
     font-size: 14px;
   }
-  
+
   .entry-details span {
     font-size: 15px;
   }
-  
+
   .delete-btn {
     scale: 1;
     width: 50px;
   }
-  
+
   .category-tag {
     font-size: 14px;
     padding: 0;
   }
-   #data-box p.date {
- 
-  font-size: 12px;
-}
- .entry-details p {
-  margin-right: 3px;
-  font-size: 14px;
-}
-.entry-details span {
-  
-  font-size: 13px;
-  font-weight: 650;
-}
+  #data-box p.date {
+    font-size: 12px;
+  }
+  .entry-details p {
+    margin-right: 3px;
+    font-size: 14px;
+  }
+  .entry-details span {
+    font-size: 13px;
+    font-weight: 650;
+  }
 }
 
 /* 480px Breakpoint */
 @media (max-width: 480px) {
-    .share-toggle-label {
+  .share-toggle-label {
     font-size: 15px;
   }
-  
+
   .slide {
     width: 45px;
     height: 24px;
   }
-  
+
   .slide:after {
     width: 20px;
     height: 20px;
   }
-  
+
   .share-toggle-input:checked + .slide:after {
     transform: translateX(21px);
   }
-  
+
   .friend-split-container {
     padding: 12px;
   }
-  
+
   .friend-split-info {
     font-size: 13px;
   }
-  
+
   .friend-split-email {
     font-size: 11px;
   }
   .delete-btn {
- text-align: right;
-}
+    text-align: right;
+  }
   .form-group label {
     font-size: 14px;
   }
-  
+
   .form-group input {
     padding: 8px;
     font-size: 14px;
   }
-  
+
   .expense-form button {
     padding: 12px 8px;
     font-size: 14px;
   }
-  
 
-  
   .entry-header {
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 4fr 2fr 1fr;
   }
-  
+
   .history-item {
     padding: 8px 5px;
   }
-  
+
   .summary-box h4 {
     font-size: 18px;
   }
-  
-  .limit-value, .summary-box .label {
+
+  .limit-value,
+  .summary-box .label {
     font-size: 16px;
   }
-  
+
   span.totalcost {
     font-size: 20px;
   }
- .currency-selector select {
-
-  padding: 5px;
-  font-size: 10px;
-  
+  .currency-selector select {
+    padding: 3px;
+    font-size: 12px;
+  }
+  #data-box p.date {
+    font-size: 11px;
+  }
+  .entry-details{
+    flex-wrap: wrap;
+    gap:8px;
+    margin-bottom: 15px;
+    justify-content: center;
+    align-items: center;
+  }
+    .entry-details p {
+    width:min-content;
+    width: 100%;
+    margin-bottom: 0;
+  }
 }
-}
-
-
-
-
-
-

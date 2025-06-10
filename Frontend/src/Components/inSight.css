@@ -21,7 +21,7 @@
 }
 
 .loading-message {
-  color: #3498dba6;
+  color: #313131b0;
 }
 
 .no-data-message {
@@ -263,28 +263,57 @@
 
 /* 480px */
 @media (max-width: 480px) {
+    html, body {
+    width: 100%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+    #insight {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+    #insight .insight__top,
+  #insight .insight__bottom {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #insight .insight__box,
+  #insight .insight__chart {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+
   .chartbar {
     height: 250px;
     min-height: 250px;
   }
-
+  
+.no-data-message{
+  font-size: 16px;
+  padding: 2px 40px;
+}
   #insight h1 {
     font-size: 20px;
     margin-bottom: 20px;
   }
     #insight .insight__top{
-      gap: 10px;
+      gap: 20px;
     }
   #insight .insight__box {
   
     font-size: 13px;
-    max-width: 130px;
     margin: 0 auto;
     padding: 5px;
   }
 
   #insight .insight__middle {
     margin-top: 20px;
+    width: 100%;
   }
 
   #insight .insight__bottom {
