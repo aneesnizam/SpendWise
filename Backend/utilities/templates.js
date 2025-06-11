@@ -5,7 +5,7 @@ export const otpTemplate = (otp) => `
     <p>You requested a password reset. Use the following OTP to reset your password:</p>
     <h1 style="color: #333; background-color: #f2f2f2; padding: 10px 20px; display: inline-block; border-radius: 5px;">${otp}</h1>
     <p style="margin-top: 20px;">This OTP is valid for 10 minutes.</p>
-    <img src="https://res.cloudinary.com/daccfo8ad/image/upload/v1748229706/logo_knhbyj.jpg" alt="Security" style="width: 100px; margin-top: 20px;" />
+    <img src="https://res.cloudinary.com/daccfo8ad/image/upload/v1749390425/logo_b64zz1.png" alt="Security" style="width: 100px; margin-top: 20px;" />
     <p style="font-size: 0.9em; color: #999;">If you did not request this, please ignore this email.</p>
     </div>
 `;
@@ -40,5 +40,6 @@ export const generateWeeklySummaryEmail = (name, summary, total) => `
 
     <hr style="margin: 30px 0;" />
     <p style="color: gray; font-size: 13px;">This is an automated weekly report from your expense tracker. No action is needed.</p>
+    <img src="https://res.cloudinary.com/daccfo8ad/image/upload/v1749390425/logo_b64zz1.png" alt="Security" style="width: 100px; margin-top: 20px;" />
   </div>
 `;

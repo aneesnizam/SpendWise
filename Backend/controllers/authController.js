@@ -3,8 +3,10 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 import sendOTPEmail from "../utilities/sendOTPEmail .js";
 import crypto from "crypto";
+import sendVerificationMail from "../utilities/emailVerification.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "secret1234secret";
+const isProd = process.env.NODE_ENV === "production";
 
 export const register = async (req, res) => {
   try {
@@ -21,6 +23,12 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
+
+    const token = jwt.sign({ userId: newUser._id }, JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    sendVerificationMail(token, email);
 
     res
       .status(201)
@@ -41,7 +49,9 @@ export const login = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user)
       return res.json({ success: false, message: "Email not registered" });
-
+    if (!user.verified){
+      return res.json({ success: false, message: "Email not verified" });
+    }
     const isMatch = await bcrypt.compare(password, user.password);
     user.password = undefined;
     if (!isMatch)
@@ -53,15 +63,16 @@ export const login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      secure: isProd,
+      sameSite: isProd ? "None" : "Lax",
       maxAge: 24 * 60 * 60 * 1000 * 30, //30 day
     });
 
     res.json({
       success: true,
       message: "Login successful",
-      user
+      user,
+      token
     });
   } catch (err) {
     res
@@ -134,8 +145,150 @@ export const resetPassword = async (req, res) => {
 export const logout = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    secure: isProd,
+    sameSite: isProd ? "None" : "Lax",
   });
   res.json({ success: true, message: "Logged out successfully" });
 };
+
+export const EmailVerification = async (req, res) => {
+  try {
+    const { token } = req.params;
+    if (!token) {
+      return res.send(`
+        <html>
+          <head>
+            <style>
+              body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                background-color: #4361ee;
+                font-family: Arial, sans-serif;
+                color: #ffffff;
+              }
+              h1 {
+                font-size: 2rem;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>Verification failed</h1>
+          </body>
+        </html>
+      `);
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded) {
+      return res.send(`
+        <html>
+          <head>
+            <style>
+              body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                background-color: #4361ee;
+                font-family: Arial, sans-serif;
+                color: #ffffff;
+              }
+              h2 {
+                font-size: 2rem;
+              }
+            </style>
+          </head>
+          <body>
+            <h2>Invalid or expired token</h2>
+          </body>
+        </html>
+      `);
+    }
+
+    const user = await User.findById(decoded.userId);
+    if (!user) {
+      return res.send(`
+        <html>
+          <head>
+            <style>
+              body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                background-color: #4361ee;
+                font-family: Arial, sans-serif;
+                color: #ffffff;
+              }
+            </style>
+          </head>
+          <body>
+            <h2>User not found</h2>
+          </body>
+        </html>
+      `);
+    }
+
+    user.verified = true;
+    await user.save();
+
+    res.send(`
+      <html>
+        <head>
+          <style>
+            body {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 100vh;
+              background: linear-gradient(135deg, #4f46e5, #3b82f6);
+              color: white;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              flex-direction: column;
+              text-align: center;
+            }
+            h1 {
+              font-size: 2.5rem;
+              margin-bottom: 1rem;
+            }
+            p {
+              font-size: 1.2rem;
+              opacity: 0.9;
+            }
+          </style>
+        </head>
+        <body>
+          <h1>🎉 Email Verified Successfully!</h1>
+          <p>Welcome to SpendWise. You can now log in and start tracking your expenses.</p>
+        </body>
+      </html>
+    `);
+  } catch (err) {
+    res.status(500).send(`
+      <html>
+        <head>
+          <style>
+            body {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 100vh;
+              background-color: #f8d7da;
+              font-family: Arial, sans-serif;
+              color: #721c24;
+            }
+            h2 {
+              font-size: 2rem;
+            }
+          </style>
+        </head>
+        <body>
+          <h2>Server error: ${err.message}</h2>
+        </body>
+      </html>
+    `);
+  }
+};
+

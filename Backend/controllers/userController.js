@@ -17,7 +17,7 @@ export const getUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try{
-        const { name, getSummary, dailyLimit, currency } = req.body;
+        const { name, getSummary, dailyLimit, currency, upiId } = req.body;
 
         const user = await User.findById(req.userId, "-password");
 
@@ -29,6 +29,7 @@ export const updateUser = async (req, res) => {
         if (getSummary !== undefined) user.getSummary = getSummary;
         if(dailyLimit) user.dailyLimit = dailyLimit;
         if(currency) user.currency = currency;
+        if(upiId) user.upiId = upiId;
 
         await user.save();
 
@@ -38,3 +39,4 @@ export const updateUser = async (req, res) => {
         return res.status(500).json({ success: false, message: "Server error" });
     }
 }
+
