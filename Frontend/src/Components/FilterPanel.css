@@ -147,19 +147,23 @@
   width: 90%;
   margin: 0 auto;
   padding: 10px 10px;
-  background-color: var(--submit-btn, #2ecc71); /* keep default fallback */
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  box-shadow: 
+    8px 8px 16px #d9c3c3, 
+    -8px -8px 16px #ffffff;; /* keep default fallback */
   border: none;
   border-radius: 25px;
-  box-shadow: 10px 10px 20px var(--primary-shadow-dark), -10px -10px 20px var(--primary-shadow-light);
+
   font-size: 18px;
   display: flex;
   justify-content: center;
 }
 
 #filter-panel .actions button:hover {
-  background-color: rgb(38, 224, 32); /* unique */
-  box-shadow: 0 4px 10px rgb(183, 216, 182); /* unique */
-  transform: scale(1.03);
+  transform: translateY(-3px);
+  box-shadow: 
+    10px 10px 20px #d9c3c3, 
+    -10px -10px 20px #ffffff;
   font-size: 19px;
 }
 

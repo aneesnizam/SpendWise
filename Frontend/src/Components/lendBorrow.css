@@ -1,38 +1,38 @@
 #lend-borrow-section {
 
 
-  /* 🧱 Base background and shadows */
+  /*  Base background and shadows */
   --lb-bg-main: #e0e5ec;                    /* Main background color */
   --lb-shadow-dark: #a3b1c6;                /* Dark shadow for neumorphism */
   --lb-shadow-light: #d8d8d8;               /* Light shadow for neumorphism */
   --lb-shadow-inset-dark: #a3b1c6;          /* Inner shadow (dark) */
   --lb-shadow-inset-light: #ffffff;         /* Inner shadow (light) */
 
-  /* 🔘 Button colors */
+  /*  Button colors */
   --lb-btn-primary: #4a6bff;                /* Primary (submit) button */
   --lb-btn-edit: #ffc107;                   /* Edit button */
   --lb-btn-delete: #f44336;                 /* Delete button */
 
-  /* 💸 Lend entry colors */
+  /*  Lend entry colors */
   --lb-lend-bg: #e8f5e9;                    /* Background for lend summary/entry */
   --lb-lend-border: #4caf50;                /* Left border for lend entry */
   --lb-lend-text: #2e7d32;                  /* Text color for lend badge */
 
-  /* 💰 Borrow entry colors */
+  /*  Borrow entry colors */
   --lb-borrow-bg: #ffebee;                  /* Background for borrow summary/entry */
   --lb-borrow-border: #f44336;              /* Left border for borrow entry */
   --lb-borrow-text: #c62828;                /* Text color for borrow badge */
 
-  /* ✅ Settled status */
+  /*  Settled status */
   --lb-status-green: #20c997;               /* Green text for settled */
   --lb-status-green-bg: #e6f7f58c;          /* Light green background */
 
-  /* ⏳ Pending status */
+  /*  Pending status */
   --lb-status-orange: #fd7e14;              /* Orange text for pending */
   --lb-status-orange-bg: #fff3e080;         /* Light orange background */
 
-  /* 🔢 Input field background */
-  --lb-input-bg: #b7f2ff29;                 /* Light blue semi-transparent background */
+  /* Input field background */
+  --lb-input-bg: #fff4ebbe;                 /* Light blue semi-transparent background */
 
 
   margin: 0;
@@ -87,12 +87,15 @@
 
 #lend-borrow-section .form-container button {
   padding: 10px 10px;
-  background-color: var(--lb-btn-primary);
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  box-shadow: 
+    8px 8px 16px #d9c3c3, 
+    -8px -8px 16px #ffffff;
   color: white;
   border: none;
   border-radius: 25px;
   font-weight: 600;
-  box-shadow: 5px 5px 10px var(--lb-shadow-dark), -5px -5px 10px var(--lb-shadow-inset-light);
+ 
   cursor: pointer;
 }
 

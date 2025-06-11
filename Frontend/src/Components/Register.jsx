@@ -11,7 +11,8 @@ export default function Register() {
   const [error, setError] = useState(" ");
   const [success, setSuccess] = useState(" ");
   const [loading, setLoading] = useState(false);
-
+const [confirmPass,setConfirmPass] = useState("")
+const [popup,SetPopUp] = useState(false)
   const HandleSignup = async() => {
     
 
@@ -25,6 +26,11 @@ export default function Register() {
       setSuccess("");
       return;
     }
+    if (password !== confirmPass){
+       setError("The passwords do not match");
+      setSuccess("");
+      return;
+    }
 
     try {
       setLoading(true);
@@ -32,8 +38,9 @@ export default function Register() {
         // console.log(res.data);
         
         if (res.data.success) {
-          setShowRegister(false);
-           toast.success(res.data.message);
+         
+          SetPopUp(true);
+     
          
         }
         else{
@@ -52,9 +59,13 @@ export default function Register() {
     setName("");
     setPassword("");
   };
-
+const handlePopup = () => {
+setShowRegister(false);
+     toast.success("Please log in to continue. ");
+}
   return (
-    <div className="login_container">
+    <>
+    <div className={`login_container ${popup ? "popupBlur" : undefined} `}>
       <h1>Register</h1>
       <form action="" onSubmit={(e) => e.preventDefault()}>
         <div className="input_field">
@@ -81,6 +92,14 @@ export default function Register() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+          <div className="input_field">
+          <input
+            type="password"
+            value={confirmPass}
+            placeholder="confirm Password"
+            onChange={(e) => setConfirmPass(e.target.value)}
+          />
+        </div>
         <button 
          disabled = {loading}
           type="submit"
@@ -104,11 +123,7 @@ export default function Register() {
             {error}
           </h2>
         )}
-        {/* {success && (
-          <h2 style={{ color: "green", textAlign: "center", fontSize: "10px" }}>
-            {success}
-          </h2>
-        )} */}
+      
       </form>
       <p>
         Already have an account?{" "}
@@ -116,6 +131,15 @@ export default function Register() {
           Login
         </a>
       </p>
+ 
     </div>
+       {popup &&   <div className="popupContainer">
+        <div className="popup">
+          <h6>Registration successful! </h6>
+          <p>A verification email has been sent to your registered email address. Please check your inbox and follow the link to verify your account.</p>
+          <button onClick={handlePopup}>OK</button>
+        </div>
+      </div>}
+    </>
   );
 }

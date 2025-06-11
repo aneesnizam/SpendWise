@@ -174,23 +174,28 @@
     border-radius: 12px;
   }
  .feedback-section {
-    padding: 1.1rem;
+    padding: 15px 10px
   }
   .about h1 {
     font-size: 1.8rem;
   }
 
   .about p {
-    font-size: 1rem;
+    font-size: 14px;
   }
  .feedback-section h2{
     margin: 0;
-    margin-bottom: 10px;
+
  }
   .feedback-form textarea {
     padding: 1rem;
-    width: 90%;
-  }
+    width: auto;
+    display: flex;
+  align-items: center;
+justify-self: center;
+margin-top: 10px;
+
+}
 }
 
 /* Animation for status message */

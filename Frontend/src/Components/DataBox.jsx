@@ -135,7 +135,7 @@ export default function DataBox() {
   useEffect(() => {
     if (userLimit <= 0) {
       toast.warn("Your daily limit exceeded", {
-        autoClose: 4000,
+        autoClose: 2000,
       });
     
     }

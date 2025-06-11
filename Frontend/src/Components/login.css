@@ -97,9 +97,9 @@ body {
    justify-self: center;
   width: 20px;
   height: 20px;
-  border: 4px solid rgb(36, 36, 36);
+border: 4px solid #2e2e2e;   
   border-radius: 50%;
-  border-top-color: rgb(255, 255, 255);
+border-top-color: #79dafd;   
   animation: 1s spin ease-in-out infinite;
 }
 .login_container{
@@ -109,6 +109,54 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+.popupBlur{
+  opacity: 0.5;
+
+ 
+}
+ .popupContainer{
+  position: absolute;
+box-sizing: border-box;
+width: 270px;
+  top: 50%;
+  left: 50%;
+  background-color: 		#e3f6fc;
+  transform: translate(-50%, -50%); 
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+   border-radius: 20px;
+   padding: 30px;
+}
+ .popupContainer .popup{
+display: flex;
+align-items: center;
+flex-direction: column;
+justify-content: center;
+}
+.popup h6{
+  margin: 0;
+  font-size: 15px;
+  color: rgb(0, 105, 0);
+  margin-bottom: 12px;
+
+}
+.popup p{
+  font-weight: 450;
+  margin-bottom: 25px;
+  font-size: 13px;
+  text-align: center;
+}
+.popup button{
+  background-color:#ffa763 ;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.popup button:hover{
+    background-color:#ff882d ;
 }
 @media (max-width: 480px) {
   #login{
