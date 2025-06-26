@@ -1,32 +1,38 @@
 import Expense from "../models/expenseModel.js";
 import mongoose from "mongoose";
+import User from "../models/userModel.js";
 
 export const createExpense = async (req, res) => {
   try {
-    const { title, amount, category, date } = req.body;
+    const { title, amount, category, date, sharedWith = [] } = req.body;
+
+    const sharedWithData = sharedWith.map((item) => ({
+      friend: item.friend,
+      amount: item.amount,
+      paid: item.paid || false,
+    }));
+
     const newExpense = new Expense({
       user: req.userId,
       title,
       amount,
       category,
       date,
+      createdBy: req.userId,
+      sharedWith: sharedWithData,
     });
     await newExpense.save();
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Expense created successfully",
-        newExpense,
-      });
+    res.status(201).json({
+      success: true,
+      message: "Expense created successfully",
+      newExpense,
+    });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Failed to create expense",
-        error: err.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Failed to create expense",
+      error: err.message,
+    });
   }
 };
 
@@ -45,7 +51,7 @@ export const getExpenses = async (req, res) => {
       filter.date = { $gte: startOfDay, $lte: endOfDay };
     }
 
-    const expenses = await Expense.find(filter).sort({ createdAt: -1 });
+    const expenses = await Expense.find(filter).sort({ date: -1 });
 
     let totalAmount = 0;
     if (today === "true") {
@@ -87,13 +93,11 @@ export const updateExpense = async (req, res) => {
       updated,
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Failed to update expense",
-        error: err.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Failed to update expense",
+      error: err.message,
+    });
   }
 };
 
@@ -107,13 +111,11 @@ export const deleteExpense = async (req, res) => {
     if (!deleted) return res.status(404).json({ message: "Expense not found" });
     res.json({ success: true, message: "Expense deleted successfully" });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Failed to delete expense",
-        error: err.message,
-      });
+    res.status(500).json({
+      success: false,
+      message: "Failed to delete expense",
+      error: err.message,
+    });
   }
 };
 
@@ -201,5 +203,92 @@ export const filterExpenses = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
+
+export const sharedExpenses = async (req, res) => {
+  try {
+    const expenses = await Expense.find({
+      "sharedWith.friend": req.userId,
+    }).select("-__v").populate("createdBy", "name email upiId").sort({date: -1});
+
+    const shared = expenses.map((expense) => {
+      const userShare = expense.sharedWith.filter(
+        (item) => item.friend.toString() === req.userId.toString()
+      );
+      return {
+        ...expense.toObject(),
+        sharedWith: userShare,
+      };
+    });
+
+    res.json({ success: true, shared });
+  } catch (err) {
+    res.json({ success: false, message: err.message });
+  }
+};
+
+export const acceptPaymentRequest = async (req, res) => {
+  try {
+    const expenseId = req.params.id;
+    const userId = req.userId;
+    const { friend, amount } = req.body;
+
+    const expense = await Expense.findById(expenseId);
+    if (!expense) {
+      return res.status(404).json({ success: false, message: "Expense not found" });
+    }
+
+    const sharedEntry = expense.sharedWith.find((entry) =>
+      entry.friend.toString() === friend.toString()
+    );
+
+    if (!sharedEntry) {
+      return res.status(400).json({ success: false, message: "You are not part of this expense" });
+    }
+
+    const friendExpense = new Expense({
+      user: friend,
+      title: expense.title,
+      amount,
+      category: expense.category,
+      date: expense.date,
+      createdBy: userId,
+      sharedWith: [],
+    });
+
+
+    sharedEntry.paid = true;
+    expense.amount = expense.amount - amount;
+    await friendExpense.save();
+    await expense.save();
+
+
+    await User.findByIdAndUpdate(userId, {
+      $pull: {
+        inbox: { id: expenseId }
+      }
+    });
+
+    res.status(200).json({ success: true, message: "Payment confirmed and inbox updated" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export const rejectPaymentRequest = async (req, res) => {
+  try {
+    const expenseId = req.params.id;
+    const userId = req.userId;
+
+    await User.findByIdAndUpdate(userId, {
+      $pull: {
+        inbox: { id: expenseId }
+      }
+    });
+
+    res.status(200).json({ success: true, message: "Request rejected" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
   }
 };
