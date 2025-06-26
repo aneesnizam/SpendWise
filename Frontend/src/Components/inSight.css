@@ -39,11 +39,11 @@
 }
 
 #insight h1 {
+  color: #2d3748;
   text-align: center;
-  font-size: 30px;
-  color: var(--text-color-light);
-  text-shadow: 2px 2px 2px var(--primary-shadow-light), -2px -2px 4px var(--text-shadow-dark);
   margin-bottom: 50px;
+  font-size: 2.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* =================== Top Section =================== */

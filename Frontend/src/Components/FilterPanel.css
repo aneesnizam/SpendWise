@@ -60,9 +60,11 @@
 }
 
 .filter-form .top h2 {
-  text-shadow: 2px 2px 2px var(--heading-shadow-1), -2px -2px 4px var(--heading-shadow-2);
-  font-size: 30px;
-  color: #e0e5ec; /* unique, keep literal */
+  color: #2d3748;
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 2.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #filter-panel .summary {}

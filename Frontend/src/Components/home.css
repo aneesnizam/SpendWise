@@ -13,6 +13,7 @@
   background: url(../assets//bg2.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
+  
 }
 
 /* #home-page nav {
@@ -30,6 +31,8 @@
     -10px -10px 20px var(--primary-shadow-darkk);
   box-sizing: border-box;
    background-color: var(--box-colour);
+   padding-bottom: 50px;
+   margin-bottom: 30px;
 }
 
 @media  (max-width:520px){

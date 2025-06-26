@@ -1,0 +1,165 @@
+/* FuelCalculator.css */
+
+#fuelcost {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
+  border-radius: 20px;
+  box-shadow: 
+    10px 10px 60px #b8c4d9, 
+    -10px -10px 60px #dae0ea;
+  color: #2d3748;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#fuelcost h1 {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #2d3748;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formGroup, .formRate {
+  margin-bottom: 1.5rem;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.formGroup label, .formRate label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #4a5568;
+    text-align: left; 
+  width: 93%;
+}
+
+.formGroup input, .formRate input {
+  
+  width: 90%;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #f0f5fc, #e0e5ec);
+  box-shadow: 
+    inset 3px 3px 6px #c3cfdd, 
+    inset -3px -3px 6px #fdffff;
+  font-size: 16px;
+  color: #2d3748;
+  transition: all 0.3s ease;
+}
+
+.formGroup input:focus, .formRate input:focus {
+  outline: none;
+  box-shadow: 
+    inset 5px 5px 10px #b8c4d9, 
+    inset -5px -5px 10px #ffffff;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  box-shadow: 
+    8px 8px 16px #d9c3c3, 
+    -8px -8px 16px #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 1rem;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    10px 10px 20px #d9c3c3, 
+    -10px -10px 20px #ffffff;
+  background: linear-gradient(to right, #feb47b, #ff7e5f);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+.result {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.result h5 {
+  font-size: 1.2rem;
+  color: #2d3748;
+  padding: 15px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
+  box-shadow: 
+    5px 5px 10px #c3cfdd, 
+    -5px -5px 10px #fdffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #home {
+    padding: 1.5rem;
+    margin: 1.5rem;
+  }
+  
+  #home h1 {
+    font-size: 1.3rem;
+  }
+  
+  .formGroup input, .formRate input {
+    padding: 10px 12px;
+    font-size: 15px;
+  }
+  
+  button[type="submit"] {
+    padding: 12px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  #home {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 15px;
+  }
+  
+  #home h1 {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .formGroup, .formRate {
+    margin-bottom: 1.2rem;
+  }
+  
+  .formGroup input, .formRate input {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+  
+  button[type="submit"] {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .result h5 {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}

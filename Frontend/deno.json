@@ -1,0 +1,12 @@
+{
+  "deploy": {
+    "name": "",
+    "exclude": [
+      "**/node_modules"
+    ],
+    "include": [],
+    "entrypoint": "deploy.js"
+  }
+}
+
+

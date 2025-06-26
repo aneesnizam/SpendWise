@@ -94,6 +94,7 @@ background: none;
   display: inline-block;
   width: 100%;
   scale: 1.1;
+  cursor:pointer;
 }
 
 /* 980px Breakpoint */

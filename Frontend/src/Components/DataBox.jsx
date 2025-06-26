@@ -4,6 +4,7 @@ import api from "../utilities/axios";
 import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
 import userlogindata from "./Authstore";
+import IntialLoader from "./Loading/IntialLoader";
 
 export default function DataBox() {
   const { user, friends, setUser } = userlogindata();
@@ -17,11 +18,12 @@ export default function DataBox() {
   const [userLimit, setUserLimit] = useState(user?.dailyLimit);
   const [sharedWith, setSharedWith] = useState([]);
   const [shared, setShared] = useState(false);
-
+const[loading,setLoading] = useState(true)
   const exchangeRate = 1 / 85.1;
 
   const fetchHistory = async () => {
     try {
+     
       const res = await api.get("api/expenses?today=true");
       setHistory(res.data.expenses);
       setTotalCost(res.data.totalAmount);
@@ -30,6 +32,12 @@ export default function DataBox() {
       }
     } catch (err) {
       console.error(err.message);
+    }
+    finally{
+      setLoading(false)
+    //   setTimeout(() => {
+    //   setLoading(false)
+    // },3000)
     }
   };
 
@@ -45,14 +53,18 @@ export default function DataBox() {
     try {
       const res = await api.get("api/user");
       setUser(res.data.user);
+       
     } catch (err) {
       console.error(err.message);
     }
   };
 
   useEffect(() => {
-    getUser();
-  }, []);
+  const loadData = async () => {
+    await getUser(); // first get the user
+  };
+  loadData();
+}, []);
 
   useEffect(() => {
     if (user && user.dailyLimit !== undefined) {
@@ -140,6 +152,7 @@ export default function DataBox() {
     
     }
   }, [userLimit]);
+if (loading) return <IntialLoader />;
 
   return (
     <section id="data-box">
@@ -168,6 +181,9 @@ export default function DataBox() {
               {[
                 "Food",
                 "Travel",
+                "Transport",
+                "KSRTC",
+                "Fuel",
                 "Clothing",
                 "Education",
                 "Entertainment",

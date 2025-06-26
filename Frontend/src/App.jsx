@@ -6,9 +6,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import GuestRoute from "./Components/GuestRoute";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import userlogindata from "./Components/Authstore";
+
+
 export default function App() {
+
    
+
   return (
     <div >
       <BrowserRouter>
@@ -32,7 +35,8 @@ export default function App() {
         </Routes>
 
         <ToastContainer autoClose={1400} />
-      </BrowserRouter>
+      </BrowserRouter> 
+     
     </div>
   );
 }

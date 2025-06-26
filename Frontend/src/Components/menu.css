@@ -15,6 +15,15 @@
   transition: all 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
+
+
+    &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 /* Menu Header */

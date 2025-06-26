@@ -55,7 +55,13 @@
   background-size: 90px 80px, 70px 60px;
   background-position: top 30px left 330px,bottom 20px right 30px;
 }
-
+#lend-borrow-section h2{
+    color: #2d3748;
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 2.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
 #lend-borrow-section .form-container {
   width: 50%;
 }
@@ -78,11 +84,24 @@
   margin-left: 10px;
   border-radius: 10px;
   padding: 5px 10px;
-  background-color: var(--lb-input-bg);
-  color: black;
-  border: 1px dotted black;
-  box-shadow: inset 3px 3px 5px var(--lb-shadow-inset-dark), inset -3px -3px 5px var(--lb-shadow-inset-light);
+  background: linear-gradient(145deg, #fefaf6e1, #fff2e5);
+  color: #5a4a42;
+  border: 1px solid rgba(91, 88, 85, 0.2);
+  box-shadow: 
+    inset 2px 2px 4px rgba(203, 175, 143, 0.1),
+    inset -2px -2px 4px rgba(255, 253, 250, 0.9);
   font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+#lend-borrow-section .form-container select:focus,
+#lend-borrow-section .form-container input:focus {
+  outline: none;
+  background: linear-gradient(145deg, #fff8f0, #ffeedd);
+  box-shadow: 
+    inset 2px 2px 4px rgba(203, 175, 143, 0.15),
+    inset -2px -2px 4px rgba(255, 253, 250, 1),
+    0 0 0 2px rgba(255, 179, 71, 0.15);
 }
 
 #lend-borrow-section .form-container button {
@@ -347,7 +366,11 @@
   color: #555;
   font-size: 14px;
 }
-
+.no-entries-message,.loading-message{
+  text-align: center;
+  padding: 15px 0;
+  color: #484848d3;
+}
 /* Responsive */
 /* 🔁 Responsive: 980px */
 @media (max-width: 980px) {

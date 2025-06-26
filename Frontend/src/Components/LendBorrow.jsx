@@ -117,7 +117,7 @@ export default function LendBorrow() {
 
   return (
     <section id="lend-borrow-section">
-      {/* Form + Summary */}
+     <h2>Lend and Borrow</h2>
       <div className="form-summary-wrapper">
         <div className="form-container">
           <form onSubmit={handleSubmit}>
