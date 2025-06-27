@@ -173,11 +173,14 @@
 
 @media (max-width: 480px) {
   #help {
-    padding: 10px;
+    padding: 0px;
+    background: none;
   }
   
   .help-wrapper {
-    padding: 15px;
+    padding: 5px;
+    background: transparent;
+    box-shadow: none;
     border-radius: 12px;
   }
   

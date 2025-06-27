@@ -1,14 +1,14 @@
 // utilities/axios.js
 import axios from "axios";
-import { store } from "../Components/Authstore";
+import { store } from "./Authstore";
 
 // Set up the instance
 const api = axios.create({
   baseURL: "https://spendwise-web.onrender.com",
   withCredentials: true,
   headers: {
-    'Cache-Control': 'no-store',
-  }
+    "Cache-Control": "no-store",
+  },
 });
 
 // Optional: Load token from localStorage directly for safety

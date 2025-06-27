@@ -3,25 +3,30 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./DateFilter.css";
 import api from "../utilities/axios";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 
 export default function DateFilter() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [fetchedData, setFetchedData] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
   const [highlightDates, setHighlightDates] = useState([]);
-  const [dateString, setDateString] = useState('');
+  const [dateString, setDateString] = useState("");
   const { setCurrentView } = userlogindata();
 
   // Fetch highlight dates
   useEffect(() => {
-    api.get("api/expenses")
+    api
+      .get("api/expenses")
       .then((res) => {
         const uniqueDates = [
           ...new Set(
             res.data.expenses.map((item) => {
               const d = new Date(item.date);
-              return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+              return new Date(
+                d.getFullYear(),
+                d.getMonth(),
+                d.getDate()
+              ).getTime();
             })
           ),
         ].map((time) => new Date(time));
@@ -34,7 +39,7 @@ export default function DateFilter() {
   // const handleManualDateChange = (e) => {
   //   const value = e.target.value;
   //   setDateString(value);
-    
+
   //   // Parse DD/MM/YYYY format
   //   if (value.length === 10) {
   //     const parts = value.split('/');
@@ -42,7 +47,7 @@ export default function DateFilter() {
   //       const day = parseInt(parts[0], 10);
   //       const month = parseInt(parts[1], 10) - 1;
   //       const year = parseInt(parts[2], 10);
-        
+
   //       if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
   //         const parsedDate = new Date(year, month, day);
   //         if (!isNaN(parsedDate.getTime())) {
@@ -53,13 +58,15 @@ export default function DateFilter() {
   //   }
   // };
 
-
-
   // Handle date selection (from calendar or manual input)
   const handleDateSelection = (date) => {
     if (!date || isNaN(date.getTime())) return;
-    
-    const normalizedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+    const normalizedDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
     setSelectedDate(normalizedDate);
     setDateString(formatToDDMMYYYY(normalizedDate));
 
@@ -70,7 +77,8 @@ export default function DateFilter() {
       return `${yyyy}-${mm}-${dd}`;
     };
 
-    api.get(`api/expenses/filter?date=${formatDate(normalizedDate)}`)
+    api
+      .get(`api/expenses/filter?date=${formatDate(normalizedDate)}`)
       .then((res) => {
         setFetchedData(res.data.expenses);
         setTotalCost(res.data.total);
@@ -80,9 +88,9 @@ export default function DateFilter() {
 
   // Format date to DD/MM/YYYY string
   const formatToDDMMYYYY = (date) => {
-    if (!date) return '';
-    const dd = String(date.getDate()).padStart(2, '0');
-    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    if (!date) return "";
+    const dd = String(date.getDate()).padStart(2, "0");
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
     const yyyy = date.getFullYear();
     return `${dd}/${mm}/${yyyy}`;
   };
@@ -99,14 +107,13 @@ export default function DateFilter() {
 
   return (
     <section id="date-filter">
-         <form className="selector">
-          <select onChange={(e) => setCurrentView(e.target.value)}>
-            <option value="filterByDate">Date Only Filter</option>
-            <option value="dateRange">Advanced Filter </option>
-          </select>
-        </form>
+      <form className="selector">
+        <select onChange={(e) => setCurrentView(e.target.value)}>
+          <option value="filterByDate">Date Only Filter</option>
+          <option value="dateRange">Advanced Filter </option>
+        </select>
+      </form>
       <div className="form-section">
-     
         <div className="form-left">
           <div className="date-input-container">
             <DatePicker
@@ -138,21 +145,33 @@ export default function DateFilter() {
 
         <div className="form-right">
           <div className="info-block">
-            <h4>Total cost: <span>₹ {totalCost}</span> </h4>
+            <h4>
+              Total cost: <span>₹ {totalCost}</span>{" "}
+            </h4>
           </div>
         </div>
       </div>
 
       <div className="history-section">
-        <ul style={{padding:"0px"}}>
+        <ul style={{ padding: "0px" }}>
           {[...fetchedData]
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((data) => (
-              <li key={data._id} className={`history-item ${data.category.toLowerCase()}`}>
+              <li
+                key={data._id}
+                className={`history-item ${data.category.toLowerCase()}`}
+              >
                 <div className="entry-card">
-                  <div className="entry-header" style={{gridTemplateColumns:"2fr 3fr"}}>
+                  <div
+                    className="entry-header"
+                    style={{ gridTemplateColumns: "2fr 3fr" }}
+                  >
                     <div className="entry-details">
-                      <p className={`category-tag ${data.category.toLowerCase()}`}>{data.category}:</p>
+                      <p
+                        className={`category-tag ${data.category.toLowerCase()}`}
+                      >
+                        {data.category}:
+                      </p>
                       <span>₹{data.amount}</span>
                     </div>
                     <p>{DateDisplay(data.date)}</p>

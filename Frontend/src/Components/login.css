@@ -5,7 +5,8 @@ body {
 }
 #login {
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
+    height: 100vh;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -22,6 +23,7 @@ body {
   box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #fff;
   box-sizing: border-box;
   width: 400px;
+
 
 }
 
@@ -160,7 +162,7 @@ justify-content: center;
 }
 @media (max-width: 480px) {
   #login{
-  
+  height: 100dvh;
     padding: 0px 10px;
    
    
@@ -171,5 +173,6 @@ justify-content: center;
   display: flex;
   justify-content: center;
   align-items: center;
+ 
 }
 }

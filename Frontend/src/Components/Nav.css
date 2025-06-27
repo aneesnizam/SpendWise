@@ -78,23 +78,81 @@ background: none;
   background-color: white;
 }
 
+
 #nav .right .DpImage {
   height: 42px;
   width: 42px;
   border-radius: 50%;
-
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 2px 2px 5px #2c2c2c,-2px -2px 1px #c9c9c9;
+  position: relative;
+  color: white;
+  font-weight: bold;
+  font-family: 'Arial', sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+
+  /* Inset 3D effect */
+  box-shadow:
+    inset 2px 2px 5px rgba(78, 78, 78, 0.4),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.2),
+    1px 1px 2px rgba(151, 151, 151, 0.1); /* mild outer lift for contrast */
+  
+  background-blend-mode: overlay;
 }
 
-#nav .right span img {
-  display: inline-block;
-  width: 100%;
-  scale: 1.1;
-  cursor:pointer;
+/* Glossy top overlay */
+.DpImage::after {
+  content: '';
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  right: 0%;
+  height: 45%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.25), transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- Unique 3-Color Gradients (A–Z) --- */
+.DpImage.N { background: linear-gradient(135deg, #ff6a00, #ee0979, #ff9a00); } /* Peach Magma */
+.DpImage.B { background: linear-gradient(135deg, #2b5876, #4e4376, #6a82fb); } /* Indigo Ice */
+.DpImage.C { background: linear-gradient(135deg, #11998e, #38ef7d, #43cea2); } /* Emerald Depth */
+.DpImage.D { background: linear-gradient(135deg, #ff512f, #dd2476, #ff758c); } /* Flamingo Coral */
+.DpImage.E { background: linear-gradient(135deg, #654ea3, #eaafc8, #a18cd1); } /* Lavender Sky */
+.DpImage.F { background: linear-gradient(135deg, #56ab2f, #a8e063, #76b852); } /* Forest Lime */
+.DpImage.G { background: linear-gradient(135deg, #f7971e, #ffd200, #f953c6); } /* Sunrise Blaze */
+.DpImage.H { background: linear-gradient(135deg, #fc6076, #ff9a44, #ff4e50); } /* Candy Peach */
+.DpImage.I { background: linear-gradient(135deg, #00c6ff, #0072ff, #70e1f5); } /* Arctic Wave */
+.DpImage.J { background: linear-gradient(135deg, #1e3c72, #2a5298, #00bcd4); } /* Deep Aqua */
+.DpImage.K { background: linear-gradient(135deg, #bdc3c7, #2c3e50, #8e9eab); } /* Steel Sky */
+.DpImage.L { background: linear-gradient(135deg, #ffafbd, #ffc3a0, #da70d6); } /* Candy Lilac */
+.DpImage.M { background: linear-gradient(135deg, #f0c27b, #4b1248, #d38312); } /* Gold Berry */
+.DpImage.A { background: linear-gradient(135deg, #43e97b, #38f9d7, #00c9ff); } /* Sea Mint */
+.DpImage.O { background: linear-gradient(135deg, #b31217, #e52d27, #ff6a6a); } /* Deep Red */
+.DpImage.P { background: linear-gradient(135deg, #00dbde, #fc00ff, #7f00ff); } /* Neon Glow */
+.DpImage.Q { background: linear-gradient(135deg, #f7971e, #ffd200, #ff416c); } /* Gold Cherry */
+.DpImage.R { background: linear-gradient(135deg, #36d1dc, #5b86e5, #6a11cb); } /* Cool Sky */
+.DpImage.S { background: linear-gradient(135deg, #fceabb, #f8b500, #eacda3); } /* Golden Sand */
+.DpImage.T { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); } /* Midnight Frost */
+.DpImage.U { background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e); } /* Peach Cream */
+.DpImage.V { background: linear-gradient(135deg, #c6ffdd, #fbd786, #f7797d); } /* Pastel Glow */
+.DpImage.W { background: linear-gradient(135deg, #ffe259, #ffa751, #f5af19); } /* Honey Heat */
+.DpImage.X { background: linear-gradient(135deg, #d1913c, #ffd194, #f6e58d); } /* Desert Blush */
+.DpImage.Y { background: linear-gradient(135deg, #6a11cb, #2575fc, #3a7bd5); } /* Electric Blue */
+.DpImage.Z { background: linear-gradient(135deg, #232526, #414345, #485563); } /* Dark Metal */
+
+/* --- Fallback (if no matching class) --- */
+.DpImage {
+  background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 50%, #A6C1EE 100%);
+}
+
+
+
+#nav .right .DpImage h1 {
+ 
 }
 
 /* 980px Breakpoint */

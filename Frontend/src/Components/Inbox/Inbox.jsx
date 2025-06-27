@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import './inbox.css'
-import userlogindata from "../Authstore";
+import "./inbox.css";
+import userlogindata from "../../utilities/Authstore";
 import api from "../../utilities/axios";
 
 const Inbox = () => {
@@ -64,8 +64,9 @@ const Inbox = () => {
   }, []);
   return (
     <div className="inbox-icon" ref={inboxRef}>
-      <span style={{fontSize:'20px'}}
-        onClick={() => setShowInbox(prev => !prev)}
+      <span
+        style={{ fontSize: "20px" }}
+        onClick={() => setShowInbox((prev) => !prev)}
         className="material-symbols-outlined mail"
       >
         mail

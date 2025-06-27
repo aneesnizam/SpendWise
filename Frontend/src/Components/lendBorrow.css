@@ -657,4 +657,7 @@ padding-left: 20px;
   .entry-row{
     gap: 2px;
   }
+  #lend-borrow-section h2{
+    font-size: 28px;
+  }
 }

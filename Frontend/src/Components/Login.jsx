@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./login.css";
 import Register from "./Register";
 import Forgetpass from "./Forgetpass";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 import api from "../utilities/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -22,14 +22,15 @@ export default function Login() {
     setForgetPassword,
     setShowRegister,
     setUser,
-    setToken
+    setToken,
   } = userlogindata();
 
   // Load remembered credentials (if any)
   useEffect(() => {
     const savedCredentials = localStorage.getItem("rememberedCredentials");
     if (savedCredentials) {
-      const { email: savedEmail, password: savedPassword } = JSON.parse(savedCredentials);
+      const { email: savedEmail, password: savedPassword } =
+        JSON.parse(savedCredentials);
       setEmail(savedEmail);
       setPassword(savedPassword);
       setRememberMe(true);
@@ -125,20 +126,29 @@ export default function Login() {
                   Forgot password?
                 </a>
               </div>
-              <button
-                type="submit"
-                disabled={loading}
-                onClick={handleSignin}
-              >
+              <button type="submit" disabled={loading} onClick={handleSignin}>
                 {loading ? <span className="load"></span> : "Sign In"}
               </button>
               {error && (
-                <h2 style={{ color: "red", textAlign: "center", fontSize: "10px", marginTop: "15px" }}>
+                <h2
+                  style={{
+                    color: "red",
+                    textAlign: "center",
+                    fontSize: "10px",
+                    marginTop: "15px",
+                  }}
+                >
                   {error}
                 </h2>
               )}
               {success && (
-                <h2 style={{ color: "green", textAlign: "center", fontSize: "10px" }}>
+                <h2
+                  style={{
+                    color: "green",
+                    textAlign: "center",
+                    fontSize: "10px",
+                  }}
+                >
                   {success}
                 </h2>
               )}

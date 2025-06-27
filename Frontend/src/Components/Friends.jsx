@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../utilities/axios";
 import "./Friends.css";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 
 const FriendRequest = () => {
   const [email, setEmail] = useState("");
   const { friends, fetchFriendsData, pendingRequests } = userlogindata();
   const [isLoading, setIsLoading] = useState(false);
+  const [deleteUser,setDeleteUser] = useState()
 
   const sendRequest = async (e) => {
     e.preventDefault();
@@ -50,16 +51,17 @@ const FriendRequest = () => {
     }
   };
 
-  const handleRemoveFriend = async (id) => {
+  const handleRemoveFriend = async () => {
     try {
       setIsLoading(true);
-      await api.delete(`api/friend/${id}`);
+      await api.delete(`api/friend/${deleteUser}`);
       toast.success("Friend removed");
       fetchFriendsData();
     } catch {
       toast.error("Failed to remove friend");
     } finally {
       setIsLoading(false);
+      setDeleteUser('')
     }
   };
 
@@ -67,10 +69,24 @@ const FriendRequest = () => {
     fetchFriendsData();
   }, []);
 
+
+  const handleDeleteConfirm = (id) => {
+setDeleteUser(id)
+  }
   return (
     <>
-      <div className="friend-request-page">
+  
+      <div className="friend-request-page" >
+       {
+      deleteUser &&    <div className="confirmBoxWrapper" >   <div className="confirmBox">
+          <h5>Remove Friend?</h5>
+          <div className="buttonWrapper"> <button onClick={() => setDeleteUser('')}>no</button>
+          <button onClick={handleRemoveFriend}>yes</button></div>
+         </div>
+     
 
+        </div>
+    }
         <form onSubmit={sendRequest} className="request-form">
           <div className="form-group">
             <input
@@ -190,7 +206,7 @@ const FriendRequest = () => {
                       <span className="user-email">{friend.email}</span>
                     </div>
                     <button
-                      onClick={() => handleRemoveFriend(friend._id)}
+                      onClick={() => handleDeleteConfirm(friend._id)}
                       className="remove-btn"
                       disabled={isLoading}
                     >

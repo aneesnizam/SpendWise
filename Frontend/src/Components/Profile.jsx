@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./profile.css";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 import { toast } from "react-toastify";
 import api from "../utilities/axios";
 import { MdEdit } from "react-icons/md";
@@ -46,7 +46,11 @@ export default function Profile() {
   // Update user's name
   const handleName = async () => {
     try {
-      const res = await api.post("api/user", { name: newName, upiId, getSummary: isSlider });
+      const res = await api.post("api/user", {
+        name: newName,
+        upiId,
+        getSummary: isSlider,
+      });
 
       setUser(res.data.user);
     } catch (err) {
@@ -164,7 +168,10 @@ export default function Profile() {
                   </p>
                 )}
               </p>
-              <label className="sliderlabel" style={edit ? {width:"70px"}: undefined}>
+              <label
+                className="sliderlabel"
+                style={edit ? { width: "70px" } : undefined}
+              >
                 <input
                   disabled={!edit}
                   type="checkbox"

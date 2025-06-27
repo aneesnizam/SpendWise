@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import "./menu.css";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 
 export default function Menu() {
   const { setShowMenu, setCurrentView } = userlogindata();
@@ -69,8 +69,8 @@ export default function Menu() {
           >
             Fuel Calculator
           </li>
-           <li className="menu-item" onClick={() => handleNavigation("help")}>
-           Help Desk
+          <li className="menu-item" onClick={() => handleNavigation("help")}>
+            Help Desk
           </li>
           <li className="menu-item" onClick={() => handleNavigation("aboutUs")}>
             About Us

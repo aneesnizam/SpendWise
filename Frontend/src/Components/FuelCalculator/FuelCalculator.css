@@ -112,12 +112,12 @@ button[type="submit"]:active {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  #home {
+  #fuelcost {
     padding: 1.5rem;
     margin: 1.5rem;
   }
   
-  #home h1 {
+  #fuelcost h1 {
     font-size: 1.3rem;
   }
   
@@ -133,13 +133,13 @@ button[type="submit"]:active {
 }
 
 @media (max-width: 480px) {
-  #home {
+  #fuelcost {
     padding: 1rem;
     margin: 1rem;
     border-radius: 15px;
   }
   
-  #home h1 {
+  #fuelcost h1 {
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
   }

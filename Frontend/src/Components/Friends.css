@@ -4,8 +4,112 @@
   background: #f0f5fc;
   min-height: 100vh;
   box-sizing: border-box;
+  position: relative;
   font-family: "Segoe UI", sans-serif;
 }
+.confirmBoxWrapper{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9;
+  left: 0;
+  top: 0;
+ background: rgba(0, 0, 0, 0.249);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
+.confirmBox {
+  position: fixed;
+    width: 200px;
+  height: 130px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  padding: 30px 50px;
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
+  border-radius: 20px;
+  box-shadow: 
+    15px 15px 30px #b8c4d9,
+    -15px -15px 30px #b4b4b4;
+  z-index: 1001;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeIn 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.confirmBox h5 {
+  margin: 0 0 25px 0;
+  color: #2d3748;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 3rem;
+}
+
+.buttonWrapper {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.buttonWrapper button {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    5px 5px 10px #c3cfdd,
+    -5px -5px 10px #fdffff;
+}
+
+.buttonWrapper button:first-child {
+  background: linear-gradient(145deg, #e0e5ec, #f0f5fc);
+  color: #4a5568;
+}
+
+.buttonWrapper button:last-child {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+  box-shadow: 
+    5px 5px 10px #d9c3c3,
+    -5px -5px 10px #ffffff;
+}
+
+.buttonWrapper button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    8px 8px 16px #b8c4d9,
+    -8px -8px 16px #ffffff;
+}
+
+.buttonWrapper button:last-child:hover {
+  background: linear-gradient(to right, #ff6b4d, #fea66b);
+}
+
+.buttonWrapper button:active {
+  transform: translateY(0);
+  box-shadow: 
+    3px 3px 6px #c3cfdd,
+    -3px -3px 6px #fdffff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
 
 .request-form {
   display: flex;
@@ -123,8 +227,8 @@
 
 .avatar-placeholder,
 .avatar {
-  width: 40px;
-  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   background: #cbd5e0;
   border-radius: 50%;
   display: flex;
@@ -137,7 +241,7 @@
 }
 
 .user-email {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #2d3748;
   word-break: break-all;

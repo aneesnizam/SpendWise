@@ -1,6 +1,6 @@
 .inbox-icon {
   position: relative;
-  background: #1076ff;
+background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a6c1ee 100%);
   width: 30px;
   display: flex;
   justify-content: center;
@@ -13,6 +13,7 @@
   padding: 4px;
   height: 30px;
   color: white;
+  border: 1px solid #00f2fe;
   box-sizing: border-box;
 }
 .inbox-icon .mail {

@@ -3,7 +3,7 @@ import "./FilterPanel.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import api from "../utilities/axios";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 import Target from "../utilities/Target";
 
 export default function FilterPanel() {
@@ -22,9 +22,7 @@ export default function FilterPanel() {
   const [groupByCategory, setGroupByCategory] = useState(true);
   const [categoryExpenses, setCategoryExpenses] = useState([]);
 
-const {
-   setCurrentView,currentView
-} = userlogindata()
+  const { setCurrentView, currentView } = userlogindata();
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -131,25 +129,31 @@ const {
     }
   }, [categoryExpenses, sortedItems, groupByCategory]);
 
-
-const sortedCtegory = [...categoryExpenses].sort((a,b) => {
-  return sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount;
-})
+  const sortedCtegory = [...categoryExpenses].sort((a, b) => {
+    return sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount;
+  });
 
   return (
     <section id="filter-panel">
       <form className="filter-form" onSubmit={(e) => e.preventDefault()}>
         <div className="top">
-           <div className="selector">
-          <select value={ currentView } onChange={(e) => setCurrentView(e.target.value)}>
-            <option value="filterByDate">Date Only Filter</option>
-            <option value="dateRange">Advanced Filter </option>
-          </select>
-        </div>
+          <div className="selector">
+            <select
+              value={currentView}
+              onChange={(e) => setCurrentView(e.target.value)}
+            >
+              <option value="filterByDate">Date Only Filter</option>
+              <option value="dateRange">Advanced Filter </option>
+            </select>
+          </div>
           <h2 className="historyheading">Advanced Filter</h2>
           <header className="summary">
             <h3>
-              Total: <span> <Target  target={total}/></span>
+              Total:{" "}
+              <span>
+                {" "}
+                <Target target={total} />
+              </span>
             </h3>
             <h3>
               Count: <span>{count}</span>
@@ -175,7 +179,6 @@ const sortedCtegory = [...categoryExpenses].sort((a,b) => {
           </select>
 
           <DatePicker
-         
             selected={startDate ? new Date(startDate) : null}
             onChange={handleStartDate}
             dateFormat="dd/MM/yyyy"
@@ -212,7 +215,7 @@ const sortedCtegory = [...categoryExpenses].sort((a,b) => {
           />
 
           <select
-          disabled={groupByCategory}
+            disabled={groupByCategory}
             className="categoryselector"
             value={sortField}
             onChange={(e) => setSortField(e.target.value)}
@@ -292,11 +295,10 @@ const sortedCtegory = [...categoryExpenses].sort((a,b) => {
                       </p>
                       <span>₹{amount}</span>
                     </div>
-                  
+
                     <p className="date">{formatDate(date)}</p>
-                      <p className="second">{title}</p>
+                    <p className="second">{title}</p>
                   </header>
-                  
                 </div>
               </li>
             ))}

@@ -3,7 +3,7 @@ import "./InSight.css";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 import api from "../utilities/axios";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 import Target from "../utilities/Target";
 import { toast } from "react-toastify";
 
@@ -96,7 +96,9 @@ export default function InSight() {
       try {
         setLoading((prev) => ({ ...prev, expenses: true }));
         const res = await api.get("api/expenses/");
-        const rawExpenses = Array.isArray(res.data.expenses) ? res.data.expenses : [];
+        const rawExpenses = Array.isArray(res.data.expenses)
+          ? res.data.expenses
+          : [];
         if (!isMounted) return;
 
         let amount = 0;
@@ -120,9 +122,14 @@ export default function InSight() {
         rawExpenses.forEach((item) => {
           if (!item?.date) return;
           const date = new Date(item.date);
-          const localDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+          const localDate = new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate()
+          );
           if (localDate >= monday && localDate <= sunday) {
-            const dayIndex = localDate.getDay() === 0 ? 6 : localDate.getDay() - 1;
+            const dayIndex =
+              localDate.getDay() === 0 ? 6 : localDate.getDay() - 1;
             totalsByDay[dayIndex] += Number(item.amount) || 0;
           }
         });
@@ -207,7 +214,9 @@ export default function InSight() {
         setLoading((prev) => ({ ...prev, borrowLend: true }));
         const res = await api.get("api/borrowlend");
         if (!isMounted) return;
-        setBorrowLendData(Array.isArray(res.data.transactions) ? res.data.transactions : []);
+        setBorrowLendData(
+          Array.isArray(res.data.transactions) ? res.data.transactions : []
+        );
       } catch (error) {
         if (isMounted) {
           console.error("Failed to fetch borrow/lend entries:", error);
@@ -229,15 +238,24 @@ export default function InSight() {
       <h1>Dashboard Insights</h1>
 
       {/* Top Metrics */}
-      <div className="insight__top" style={{ display: "flex", flexWrap: "wrap" }}>
+      <div
+        className="insight__top"
+        style={{ display: "flex", flexWrap: "wrap" }}
+      >
         {[
           { label: "Total Spend", value: total },
           { label: "Transactions", value: count },
           { label: "Categories", value: categoryCount },
           { label: "Days Tracked", value: daysCount },
         ].map((item, idx) => (
-          <div className="insight__box" key={idx} style={{ flex: "1 1 120px", minWidth: "120px" }}>
-            <h3><Target target={item.value} /></h3>
+          <div
+            className="insight__box"
+            key={idx}
+            style={{ flex: "1 1 120px", minWidth: "120px" }}
+          >
+            <h3>
+              <Target target={item.value} />
+            </h3>
             <p>{item.label}</p>
           </div>
         ))}
@@ -245,9 +263,17 @@ export default function InSight() {
 
       {/* Line Chart */}
       <div className="insight__middle" style={{ marginTop: "30px" }}>
-        <div className="linechart" style={{ maxWidth: "100%", height: "300px" }}>
+        <div
+          className="linechart"
+          style={{ maxWidth: "100%", height: "300px" }}
+        >
           {loading.expenses ? (
-            <div className="loading-message" style={{color:"#313131b0",fontSize:"15px"}}>Loading expense data...</div>
+            <div
+              className="loading-message"
+              style={{ color: "#313131b0", fontSize: "15px" }}
+            >
+              Loading expense data...
+            </div>
           ) : chartData ? (
             <Line
               data={chartData}
@@ -274,7 +300,10 @@ export default function InSight() {
       </div>
 
       {/* Bottom Charts */}
-      <div className="insight__bottom" style={{ marginTop: "40px", display: "flex", flexWrap: "wrap" }}>
+      <div
+        className="insight__bottom"
+        style={{ marginTop: "40px", display: "flex", flexWrap: "wrap" }}
+      >
         {/* Borrow/Lend Chart */}
         <div className="insight__chart">
           {loading.borrowLend ? (
@@ -304,7 +333,8 @@ export default function InSight() {
                   title: { display: true, text: "Lend vs Borrow Summary" },
                   tooltip: {
                     callbacks: {
-                      label: (context) => `₹ ${context.parsed.y.toLocaleString("en-IN")}`,
+                      label: (context) =>
+                        `₹ ${context.parsed.y.toLocaleString("en-IN")}`,
                     },
                   },
                 },
@@ -319,7 +349,9 @@ export default function InSight() {
               }}
             />
           ) : (
-            <div className="no-data-message"><p>No lend/borrow data available</p></div>
+            <div className="no-data-message">
+              <p>No lend/borrow data available</p>
+            </div>
           )}
         </div>
 
@@ -350,7 +382,9 @@ export default function InSight() {
               }}
             />
           ) : (
-            <div className="no-data-message"><p>No category data available</p></div>
+            <div className="no-data-message">
+              <p>No category data available</p>
+            </div>
           )}
         </div>
       </div>

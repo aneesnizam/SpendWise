@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 import api from "../utilities/axios";
 import "./Shared.css";
 import QRCode from "react-qr-code";
-
 
 const Shared = () => {
   const [sharedExpenses, setSharedExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [load, setLoad] = useState(false);
-  const {user} = userlogindata();
-  const [showQR,setShowQR] = useState(null)
+  const { user } = userlogindata();
+  const [showQR, setShowQR] = useState(null);
 
   const fetchSharedExpenses = async () => {
     try {
@@ -27,18 +26,18 @@ const Shared = () => {
   const handleMarkPaid = async (expense) => {
     try {
       setLoad(true);
-      await api.post(`api/friend/inbox/send/${expense.user}`,{
-          name: user?.name,
-          amount: expense.sharedWith[0].amount,
-          title: expense.title,
-          id: expense._id
+      await api.post(`api/friend/inbox/send/${expense.user}`, {
+        name: user?.name,
+        amount: expense.sharedWith[0].amount,
+        title: expense.title,
+        id: expense._id,
       });
       toast.success("Mark as message sent");
       fetchSharedExpenses();
     } catch (err) {
       toast.error("Failed to mark as paid");
-    } finally{
-        setLoad(false);
+    } finally {
+      setLoad(false);
     }
   };
 
@@ -46,9 +45,8 @@ const Shared = () => {
     fetchSharedExpenses();
   }, []);
 
- return (
+  return (
     <>
-      
       <div className="shared-expense-container">
         {loading ? (
           <div className="loading-state-s">
@@ -111,9 +109,7 @@ const Shared = () => {
                           </button>
                         )}
                         {showQR == expense._id && (
-                          <div
-                            className="qrcode"
-                          >
+                          <div className="qrcode">
                             <QRCode
                               value={`upi://pay?pa=${
                                 expense.createdBy.upiId

@@ -4,8 +4,8 @@ import { ToastContainer } from "react-toastify";
 import Home from "./Components/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import GuestRoute from "./Components/GuestRoute";
-import ProtectedRoute from "./Components/ProtectedRoute";
+import GuestRoute from "./utilities/GuestRoute";
+import ProtectedRoute from "./utilities/ProtectedRoute";
 
 
 export default function App() {

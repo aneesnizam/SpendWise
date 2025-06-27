@@ -3,20 +3,22 @@ import "./Nav.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FiDownload } from "react-icons/fi";
 import dp from "../assets/dp.jpg";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 import Menu from "./Menu";
 import Profile from "./Profile";
 import Logo from "../assets/sw5.png";
 import Inbox from "./Inbox/Inbox";
 export default function Nav() {
-  const { showMenu, setShowMenu, setViewProfile, viewProfile } =
+  const { showMenu, setShowMenu, setViewProfile, viewProfile,user } =
     userlogindata();
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+const name = user.name[0]
 
   useEffect(() => {
     const handler = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
+      
     };
 
     window.addEventListener("beforeinstallprompt", handler);
@@ -42,7 +44,7 @@ export default function Nav() {
       alert("App is not installable yet.");
     }
   };
-  
+
   return (
     <>
       <section id="nav">
@@ -64,12 +66,14 @@ export default function Nav() {
           )}
 
           <Inbox />
-          <span className="DpImage"
+          <span
+            className={`DpImage ${name.toUpperCase() || ''}`}
             onClick={() => {
               setViewProfile(true);
             }}
           >
-            <img src={dp} alt="" />
+            <h1>    {name? name.toUpperCase() : "U"}</h1>
+      
           </span>
         </div>
         {viewProfile && <Profile />}

@@ -3,7 +3,7 @@ import "./dataBox.css";
 import api from "../utilities/axios";
 import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 import IntialLoader from "./Loading/IntialLoader";
 
 export default function DataBox() {
@@ -18,12 +18,11 @@ export default function DataBox() {
   const [userLimit, setUserLimit] = useState(user?.dailyLimit);
   const [sharedWith, setSharedWith] = useState([]);
   const [shared, setShared] = useState(false);
-const[loading,setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
   const exchangeRate = 1 / 85.1;
 
   const fetchHistory = async () => {
     try {
-     
       const res = await api.get("api/expenses?today=true");
       setHistory(res.data.expenses);
       setTotalCost(res.data.totalAmount);
@@ -32,12 +31,11 @@ const[loading,setLoading] = useState(true)
       }
     } catch (err) {
       console.error(err.message);
-    }
-    finally{
-      setLoading(false)
-    //   setTimeout(() => {
-    //   setLoading(false)
-    // },3000)
+    } finally {
+      setLoading(false);
+      //   setTimeout(() => {
+      //   setLoading(false)
+      // },3000)
     }
   };
 
@@ -53,18 +51,17 @@ const[loading,setLoading] = useState(true)
     try {
       const res = await api.get("api/user");
       setUser(res.data.user);
-       
     } catch (err) {
       console.error(err.message);
     }
   };
 
   useEffect(() => {
-  const loadData = async () => {
-    await getUser(); // first get the user
-  };
-  loadData();
-}, []);
+    const loadData = async () => {
+      await getUser(); // first get the user
+    };
+    loadData();
+  }, []);
 
   useEffect(() => {
     if (user && user.dailyLimit !== undefined) {
@@ -149,10 +146,9 @@ const[loading,setLoading] = useState(true)
       toast.warn("Your daily limit exceeded", {
         autoClose: 2000,
       });
-    
     }
   }, [userLimit]);
-if (loading) return <IntialLoader />;
+  if (loading) return <IntialLoader />;
 
   return (
     <section id="data-box">
@@ -342,7 +338,8 @@ if (loading) return <IntialLoader />;
                     </div>
                     <p className="date">{formatDateTime(entry.date)}</p>
                     <button
-                      className="delete-btn" style={{textAlign:"center"}}
+                      className="delete-btn"
+                      style={{ textAlign: "center" }}
                       onClick={() => handleDelete(entry._id)}
                     >
                       <FaTrash />

@@ -1,6 +1,6 @@
 // Components/Authstore.js
 import { create } from "zustand";
-import api from "../utilities/axios";
+import api from "./axios";
 import { toast } from "react-toastify";
 
 const getInitialToken = () => {
@@ -31,7 +31,7 @@ const userlogindata = create((set) => ({
   showRegister: false,
   forgetPassword: false,
   searchdate: false,
-  loadingScreen:true,
+  loadingScreen: true,
 
   fetchFriendsData: async () => {
     try {
@@ -84,7 +84,7 @@ const userlogindata = create((set) => ({
   setShowRegister: (value) => set({ showRegister: value }),
   setForgetPassword: (value) => set({ forgetPassword: value }),
   setSearchdate: (value) => set({ searchdate: value }),
-  setLoadingScreen: (value) => set({loadingScreen: value})
+  setLoadingScreen: (value) => set({ loadingScreen: value }),
 }));
 
 export default userlogindata;

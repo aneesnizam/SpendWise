@@ -2,18 +2,18 @@ import React, { useEffect, lazy, Suspense } from "react";
 import "./home.css";
 import Nav from "./Nav";
 import DataBox from "./DataBox";
-const DateFilter = lazy(() => import ("./DateFilter") ) ;
+const DateFilter = lazy(() => import("./DateFilter"));
 import FilterPanel from "./FilterPanel";
-import userlogindata from "./Authstore";
+import userlogindata from "../utilities/Authstore";
 const InSight = lazy(() => import("./InSight"));
-const LendBorrow = lazy(() => import("./LendBorrow")) ;
-const AboutUs = lazy(() => import("./AboutUs")) ;
-const Friends = lazy(() => import( "./Friends"));
-const Shared = lazy(() => import( "./Shared"));
+const LendBorrow = lazy(() => import("./LendBorrow"));
+const AboutUs = lazy(() => import("./AboutUs"));
+const Friends = lazy(() => import("./Friends"));
+const Shared = lazy(() => import("./Shared"));
 import Loading from "./Loading/Loading";
-const FuelCalculator = lazy(() => import("./FuelCalculator/FuelCalculator")) ;
-const Calculator = lazy(() => import("./Calculator/Calculator"))
-const Help = lazy(() => import("./Help/Help"))
+const FuelCalculator = lazy(() => import("./FuelCalculator/FuelCalculator"));
+const Calculator = lazy(() => import("./Calculator/Calculator"));
+const Help = lazy(() => import("./Help/Help"));
 
 export default function Home() {
   const { currentView, fetchFriendsData } = userlogindata();
@@ -21,9 +21,11 @@ export default function Home() {
   const renderView = () => {
     switch (currentView) {
       case "filterByDate":
-        return  <Suspense fallback={<Loading />}>
+        return (
+          <Suspense fallback={<Loading />}>
             <DateFilter />
-          </Suspense>;
+          </Suspense>
+        );
       case "dateRange":
         return <FilterPanel />;
       case "insight":
@@ -33,33 +35,47 @@ export default function Home() {
           </Suspense>
         );
       case "lend/borrow":
-        return <Suspense fallback={<Loading />}>
-          <LendBorrow />
-        </Suspense>;
+        return (
+          <Suspense fallback={<Loading />}>
+            <LendBorrow />
+          </Suspense>
+        );
       case "aboutUs":
-        return <Suspense fallback={<Loading />}>
-          <AboutUs />
-        </Suspense>;
+        return (
+          <Suspense fallback={<Loading />}>
+            <AboutUs />
+          </Suspense>
+        );
       case "friends":
-        return <Suspense fallback={<Loading />}>
-          <Friends />
-        </Suspense>;
+        return (
+          <Suspense fallback={<Loading />}>
+            <Friends />
+          </Suspense>
+        );
       case "shared":
-        return <Suspense fallback={<Loading />}>
-          <Shared />
-        </Suspense>;
-        case "calculator":
-        return <Suspense fallback={<Loading />}>
-          <Calculator />
-        </Suspense>;
+        return (
+          <Suspense fallback={<Loading />}>
+            <Shared />
+          </Suspense>
+        );
+      case "calculator":
+        return (
+          <Suspense fallback={<Loading />}>
+            <Calculator />
+          </Suspense>
+        );
       case "fuelCalculator":
-        return <Suspense fallback={<Loading />}>
-          <FuelCalculator />
-        </Suspense>;
-         case "help":
-        return <Suspense fallback={<Loading />}>
-          <Help />
-        </Suspense>;
+        return (
+          <Suspense fallback={<Loading />}>
+            <FuelCalculator />
+          </Suspense>
+        );
+      case "help":
+        return (
+          <Suspense fallback={<Loading />}>
+            <Help />
+          </Suspense>
+        );
       case "home":
         return <DataBox />;
       default:
