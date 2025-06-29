@@ -6,10 +6,10 @@ import "./Shared.css";
 import QRCode from "react-qr-code";
 
 const Shared = () => {
-  const [sharedExpenses, setSharedExpenses] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [load, setLoad] = useState(false);
-  const { user } = userlogindata();
+  const { user,sharedExpenses,setSharedExpenses} = userlogindata();
   const [showQR, setShowQR] = useState(null);
 
   const fetchSharedExpenses = async () => {
@@ -44,7 +44,10 @@ const Shared = () => {
   useEffect(() => {
     fetchSharedExpenses();
   }, []);
-
+const handleDate = (d) =>{
+const date = new Date(d).toLocaleString();
+return date
+}
   return (
     <>
       <div className="shared-expense-container">
@@ -86,6 +89,12 @@ const Shared = () => {
                     <span className="detail-label">Pay to:</span>
                     <span className="detail-value">
                       {expense.createdBy.name} ({expense.createdBy.email})
+                    </span>
+                  </div>
+                     <div className="detail-row">
+                    <span className="detail-label">Date:</span>
+                    <span className="detail-value date ">
+                      {handleDate(expense.date )|| " "}
                     </span>
                   </div>
                   <div className="detail-row">

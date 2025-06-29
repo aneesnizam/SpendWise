@@ -98,8 +98,13 @@
 
 .detail-value {
   color: #2d3748;
+  text-align: right;
 }
-
+.detail-value.date{
+font-size: 13px;
+display: flex;
+align-self: center;
+}
 .upi-id {
   font-style: italic;
   color: #3182ce;
@@ -171,7 +176,7 @@
 
   .detail-row {
     font-size: 15px;
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 4px;
   }
 

@@ -127,6 +127,7 @@ export default function InSight() {
             date.getMonth(),
             date.getDate()
           );
+
           if (localDate >= monday && localDate <= sunday) {
             const dayIndex =
               localDate.getDay() === 0 ? 6 : localDate.getDay() - 1;

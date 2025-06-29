@@ -5,6 +5,14 @@ import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
 import userlogindata from "../utilities/Authstore";
 import IntialLoader from "./Loading/IntialLoader";
+import {
+  SwipeableList,
+  SwipeableListItem,
+  SwipeAction,
+  TrailingActions
+} from 'react-swipeable-list';
+import 'react-swipeable-list/dist/styles.css';
+
 
 export default function DataBox() {
   const { user, friends, setUser } = userlogindata();
@@ -20,6 +28,37 @@ export default function DataBox() {
   const [shared, setShared] = useState(false);
   const [loading, setLoading] = useState(true);
   const exchangeRate = 1 / 85.1;
+const [inactiveDates,setInactiveDates] = useState()
+const[deletePopup,setDeletePopup] = useState('')
+const trailingActions = (id) => (
+
+  <TrailingActions>
+
+    <SwipeAction destructive={false} onClick={() => {setDeletePopup(id)}}>
+
+    <div
+             style={{
+          background: "linear-gradient(120deg, #e0e5ec 10%, rgb(255, 113, 113))",
+          color: "rgba(0, 0, 0, 0.35)",
+          padding: "0 20px",
+          fontWeight: "bold",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxSizing: "border-box",
+          borderRadius: "0",
+   
+         
+        }}
+      >
+        Delete
+      </div>    
+    </SwipeAction>
+  </TrailingActions>
+);
+
 
   const fetchHistory = async () => {
     try {
@@ -38,6 +77,40 @@ export default function DataBox() {
       // },3000)
     }
   };
+
+const getLastExpenseDayDiff = async () => {
+  try {
+    const res = await api.get("api/expenses/");
+    const rawExpenses = Array.isArray(res.data.expenses)
+      ? res.data.expenses
+      : [];
+
+    const Datalists = [];
+
+    rawExpenses.forEach((item) => {
+      if (!item?.date) return;
+      const date = new Date(item.date);
+      const localDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+      );
+      Datalists.push(localDate);
+    });
+
+    if (Datalists.length === 0) return null;
+
+    const latestDate = new Date(Math.max(...Datalists));
+    const currentDate = new Date();
+    const diffInMs = Math.abs(latestDate - currentDate);
+    const diffInDys = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+    setInactiveDates(diffInDys - 1);
+  } catch (err) {
+    console.error("Failed to get last expense date difference:", err);
+    return null;
+  }
+};
 
   const handleCheckboxChange = (friendId) => {
     setSharedWith((prev) =>
@@ -61,6 +134,7 @@ export default function DataBox() {
       await getUser(); // first get the user
     };
     loadData();
+    getLastExpenseDayDiff();
   }, []);
 
   useEffect(() => {
@@ -120,26 +194,42 @@ export default function DataBox() {
     setError("");
   };
 
-  const handleDelete = async (id) => {
+  const handleDeleteYes = async () => {
     try {
-      const res = await api.delete(`api/expenses/${id}`);
+      const res = await api.delete(`api/expenses/${deletePopup}`);
       if (res.data.success) {
         toast.success(res.data.message);
         fetchHistory();
+        setDeletePopup('')
       }
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  const formatDateTime = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleString("en-IN", {
-      timeZone: "Asia/Kolkata",
-      dateStyle: "medium",
-      timeStyle: "short",
-    });
-  };
+const formatDateTime = (dateString) => {
+  const date = new Date(dateString);
+
+  const formattedDate = date.toLocaleDateString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+
+  let formattedTime = date.toLocaleTimeString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+  // Add non-breaking space before am/pm
+  formattedTime = formattedTime.replace(/(\d{1,2}:\d{2}) (\w{2})/, '$1\u00A0$2');
+
+  return `${formattedDate}, ${formattedTime}`;
+};
+
 
   useEffect(() => {
     if (userLimit <= 0) {
@@ -150,8 +240,26 @@ export default function DataBox() {
   }, [userLimit]);
   if (loading) return <IntialLoader />;
 
+
+
+  const handleDeleteNo = () => {
+
+setDeletePopup('')
+  }
+
   return (
     <section id="data-box">
+      {deletePopup &&    <div className="deleteContainer">
+        <div className="delBox">
+          <h5>Delete</h5>
+          <div className="buttonContainers">
+            <button onClick={handleDeleteNo}>No</button>
+            <button onClick={handleDeleteYes}>yes</button>
+          </div>
+        </div>
+      </div>}
+   
+      {inactiveDates >=2 && <div className="InactiveDays"><h5>You’ve been inactive for <strong>{inactiveDates} </strong>days!  Let’s get back on track!  </h5></div>  }
       <form className="currency-selector">
         <select
           name="currency"
@@ -166,45 +274,54 @@ export default function DataBox() {
       <div className="form-container">
         <form className="expense-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Category</label>
-            <input
-              list="categories"
-              type="text"
-              value={customCategory}
-              onChange={(e) => setCustomCategory(e.target.value)}
-            />
-            <datalist id="categories">
-              {[
-                "Food",
-                "Travel",
-                "Transport",
-                "KSRTC",
-                "Fuel",
-                "Clothing",
-                "Education",
-                "Entertainment",
-                "Healthcare",
-                "Utilities",
-                "Rent",
-                "Savings",
-                "Gifts",
-                "Groceries",
-                "Subscriptions",
-                "Maintenance",
-                "Insurance",
-                "Pet Care",
-                "Electronics",
-                "Personal Care",
-                "Investment",
-                "Stationery",
-                "Charity",
-                "Phone & Internet",
-                "Loan Payments",
-              ].map((option) => (
-                <option key={option} value={option} />
-              ))}
-            </datalist>
-          </div>
+  <label>Category</label>
+  <select className="CategorySelector"
+    value={customCategory}
+    onChange={(e) => setCustomCategory(e.target.value)}
+  >
+    <option value="">-- Select Category --</option>
+    <option value="food">Food</option>
+    <option value="transport">Transport</option>
+    <option value="shopping">Shopping</option>
+    <option value="entertainment">Entertainment</option>
+    <option value="bills">Bills</option>
+    <option value="healthcare">Healthcare</option>
+    <option value="education">Education</option>
+    <option value="groceries">Groceries</option>
+    <option value="fuel">Fuel</option>
+    <option value="public-transport">Public Transport</option>
+    <option value="clothing">Clothing</option>
+    <option value="electronics">Electronics</option>
+    <option value="movies">Movies</option>
+    <option value="subscriptions">Subscriptions</option>
+    <option value="electricity">Electricity</option>
+    <option value="water">Water</option>
+    <option value="internet">Internet</option>
+    <option value="rent">Rent</option>
+    <option value="mortgage">Mortgage</option>
+    <option value="medicines">Medicines</option>
+    <option value="doctor">Doctor</option>
+    <option value="insurance">Insurance</option>
+    <option value="school-fees">School Fees</option>
+    <option value="books">Books</option>
+    <option value="personal-care">Personal Care</option>
+    <option value="gym">Gym</option>
+    <option value="salon">Salon</option>
+    <option value="travel">Travel</option>
+    <option value="flight">Flight</option>
+    <option value="hotel">Hotel</option>
+    <option value="gifts">Gifts</option>
+    <option value="charity">Charity</option>
+    <option value="savings">Savings</option>
+    <option value="investments">Investments</option>
+    <option value="pets">Pets</option>
+    <option value="home-maintenance">Home Maintenance</option>
+    <option value="childcare">Childcare</option>
+    <option value="taxes">Taxes</option>
+    <option value="other">Other</option>
+  </select>
+</div>
+
 
           <div className="form-group">
             <label>Cost</label>
@@ -312,16 +429,18 @@ export default function DataBox() {
 
       <section className="expense-history">
         <ul>
+          <SwipeableList>
           {[...history]
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .map((entry) => (
+              <SwipeableListItem className={`history-item ${entry.category.toLowerCase()}` } key={entry._id} trailingActions={trailingActions(entry._id)}  >
+              
               <li
-                key={entry._id}
-                className={`history-item ${entry.category.toLowerCase()}`}
+                 style={{ width: '100%' }}
               >
                 <div className="entry-card">
                   <header className="entry-header">
-                    <div className="entry-details">
+                    <div className="entry-details" >
                       <p
                         className={`category-tag ${entry.category.toLowerCase()}`}
                       >
@@ -336,11 +455,11 @@ export default function DataBox() {
                           : entry.amount.toFixed(2)}
                       </span>
                     </div>
-                    <p className="date">{formatDateTime(entry.date)}</p>
+                    <p style={{textAlign:"center"}} className="date">{formatDateTime(entry.date)} </p>
                     <button
                       className="delete-btn"
                       style={{ textAlign: "center" }}
-                      onClick={() => handleDelete(entry._id)}
+                      onClick={() => setDeletePopup(entry._id)}
                     >
                       <FaTrash />
                     </button>
@@ -350,7 +469,10 @@ export default function DataBox() {
                   </footer>
                 </div>
               </li>
+             
+              </SwipeableListItem>
             ))}
+            </SwipeableList>
         </ul>
       </section>
     </section>

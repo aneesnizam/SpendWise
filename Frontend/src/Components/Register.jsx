@@ -35,7 +35,7 @@ export default function Register() {
       await api
         .post("api/auth/register", { name, password, email })
         .then((res) => {
-          // console.log(res.data);
+         
 
           if (res.data.success) {
             SetPopUp(true);

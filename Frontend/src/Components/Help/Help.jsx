@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./Help.css";
 
 export default function Help() {
+
+  
   const helpData = [
     {
       question: "How do I change my daily spending limit?",
@@ -56,6 +58,10 @@ export default function Help() {
       answer: "Click the inbox icon next to your profile in the top navigation bar to view all confirmations and system notifications."
     },
     {
+  question: "How do I delete an expense?",
+  answer: "You can delete an expense by swiping it from right to left or by clicking the 'Delete' button."
+},
+    {
       question: "How do I log out of my account?",
       answer: "Click on your profile icon in the top-right corner and select 'Logout' from the profile panel."
     }
@@ -69,8 +75,9 @@ export default function Help() {
         <h1>Help Desk</h1>
         <ul>
           {helpData.map((item, index) => (
-            <li key={index} className={visibleIndex === index ? "active" : ""}>
+            <li key={index} className={visibleIndex === index ? "active" : ""} >
               <div
+              
                 className="top"
                 onClick={() =>
                   setVisibleIndex(visibleIndex === index ? null : index)

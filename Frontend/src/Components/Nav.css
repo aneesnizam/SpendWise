@@ -133,9 +133,9 @@ background: none;
 .DpImage.A { background: linear-gradient(135deg, #43e97b, #38f9d7, #00c9ff); } /* Sea Mint */
 .DpImage.O { background: linear-gradient(135deg, #b31217, #e52d27, #ff6a6a); } /* Deep Red */
 .DpImage.P { background: linear-gradient(135deg, #00dbde, #fc00ff, #7f00ff); } /* Neon Glow */
-.DpImage.Q { background: linear-gradient(135deg, #f7971e, #ffd200, #ff416c); } /* Gold Cherry */
+.DpImage.S { background: linear-gradient(135deg, #f7971e, #ffd200, #ff416c); } /* Gold Cherry */
 .DpImage.R { background: linear-gradient(135deg, #36d1dc, #5b86e5, #6a11cb); } /* Cool Sky */
-.DpImage.S { background: linear-gradient(135deg, #fceabb, #f8b500, #eacda3); } /* Golden Sand */
+.DpImage.Q { background: linear-gradient(135deg, #fceabb, #f8b500, #eacda3); } /* Golden Sand */
 .DpImage.T { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); } /* Midnight Frost */
 .DpImage.U { background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e); } /* Peach Cream */
 .DpImage.V { background: linear-gradient(135deg, #c6ffdd, #fbd786, #f7797d); } /* Pastel Glow */
@@ -260,6 +260,9 @@ background: none;
    #nav .left button {
     font-size: 15px;
    
+  }
+  #nav .right{
+    gap: 10px;
   }
   #nav {
     padding: 12px 20px;

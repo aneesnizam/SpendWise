@@ -15,7 +15,8 @@
  --box-colour: #e0e5ec;
  --submit-btn:rgb(25, 192, 25);
 
- 
+  min-height: 100vh;
+  height: auto;
 
 
 }

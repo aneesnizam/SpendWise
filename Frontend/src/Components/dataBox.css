@@ -72,7 +72,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-left: 10px;
 }
 
-.form-group input {
+.form-group input,.CategorySelector {
   background-color: var(--input-bg);
   border: none;
   outline: none;
@@ -84,8 +84,17 @@ input[type="number"]::-webkit-outer-spin-button {
   color: var(--text-base);
   width: 66%;
   box-sizing: border-box;
+}.CategorySelector option{
+   background-color: #e7ebef;
 }
-
+.CategorySelector{
+    appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  text-align: center;
+  text-align-last: center;
+}
 .form-group input.discription {
   color: #4b5563;
 }
@@ -184,6 +193,7 @@ span.totalcost {
   border-radius: 10px;
   box-shadow: var(--shadow-dark), var(--shadow-light);
   box-sizing: border-box;
+     border-left: 3px solid #4b5563;
 }
 
 .entry-card {
@@ -364,121 +374,161 @@ span.totalcost {
 /* Backgrounds for history items */
 .history-item.food {
   background: #f0fdf4;
+  border-left: 3px solid #22c55e;
 }
 .history-item.transport {
   background: #eff6ff;
+  border-left: 3px solid #260e5e;
 }
 .history-item.shopping {
   background: #fef2f2;
+  border-left: 3px solid #ef4444;
 }
 .history-item.entertainment {
   background: #fefce8;
+  border-left: 3px solid #f59e0b;
 }
 .history-item.bills {
   background: #f5f3ff;
+  border-left: 3px solid #6366f1;
 }
 .history-item.healthcare {
   background: #ecfdf5;
+  border-left: 3px solid #14b8a6;
 }
 .history-item.education {
   background: #f0f9ff;
+  border-left: 3px solid #0284c7;
 }
 .history-item.groceries {
   background: #fefce8;
+  border-left: 3px solid #eab308;
 }
 .history-item.fuel {
   background: #fef2f2;
+  border-left: 3px solid #b91c1c;
 }
 .history-item.public-transport {
   background: #f0f9ff;
+  border-left: 3px solid #8b5cf6;
 }
 .history-item.clothing {
   background: #fdf4ff;
+  border-left: 3px solid #c026d3;
 }
 .history-item.electronics {
   background: #ecfdf5;
+  border-left: 3px solid #10b981;
 }
 .history-item.movies {
   background: #fef9c3;
+  border-left: 3px solid #eab308;
 }
 .history-item.subscriptions {
   background: #f1f5f9;
+  border-left: 3px solid #334155;
 }
 .history-item.electricity {
   background: #fff7ed;
+  border-left: 3px solid #ea580c;
 }
 .history-item.water {
   background: #eff6ff;
+  border-left: 3px solid #3b82f6;
 }
 .history-item.internet {
   background: #eef2ff;
+  border-left: 3px solid #6366f1;
 }
 .history-item.rent {
   background: #fef2f2;
+  border-left: 3px solid #dc2626;
 }
 .history-item.mortgage {
   background: #f3f4f6;
+  border-left: 3px solid #1e40af;
 }
 .history-item.medicines {
   background: #f0fdf4;
+  border-left: 3px solid #22c55e;
 }
 .history-item.doctor {
   background: #ecfdf5;
+  border-left: 3px solid #14b8a6;
 }
 .history-item.insurance {
   background: #fdf2f8;
+  border-left: 3px solid #db2777;
 }
 .history-item.school-fees {
   background: #eef2ff;
+  border-left: 3px solid #6366f1;
 }
 .history-item.books {
   background: #fefce8;
+  border-left: 3px solid #ca8a04;
 }
 .history-item.personal-care {
   background: #fff1f2;
+  border-left: 3px solid #e11d48;
 }
 .history-item.gym {
   background: #fef2f2;
+  border-left: 3px solid #ef4444;
 }
 .history-item.salon {
   background: #f0fdf4;
+  border-left: 3px solid #16a34a;
 }
 .history-item.travel {
   background: #f0f9ff;
+  border-left: 3px solid #0ea5e9;
 }
 .history-item.flight {
   background: #e0f2fe;
+  border-left: 3px solid #0284c7;
 }
 .history-item.hotel {
   background: #fefce8;
+  border-left: 3px solid #eab308;
 }
 .history-item.gifts {
   background: #fef2f2;
+  border-left: 3px solid #be123c;
 }
 .history-item.charity {
   background: #ecfdf5;
+  border-left: 3px solid #059669;
 }
 .history-item.savings {
   background: #f0fdf4;
+  border-left: 3px solid #22c55e;
 }
 .history-item.investments {
   background: #f5f3ff;
+  border-left: 3px solid #8b5cf6;
 }
 .history-item.pets {
   background: #fdf4ff;
+  border-left: 3px solid #a855f7;
 }
 .history-item.home-maintenance {
   background: #fef2f2;
+  border-left: 3px solid #dc2626;
 }
 .history-item.childcare {
   background: #fefce8;
+  border-left: 3px solid #eab308;
 }
 .history-item.taxes {
   background: #fef2f2;
+  border-left: 3px solid #7f1d1d;
 }
 .history-item.other {
   background: #f9fafb;
+  border-left: 3px solid #4b5563;
 }
+
 
 /* Share Toggle Container */
 .share-toggle-containerr {
@@ -630,6 +680,107 @@ span.totalcost {
 .friend-split-list::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+.InactiveDays {
+  position: relative;
+  text-align: center;
+  padding: 0px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, rgba(203, 213, 225, 0.9) 0%, rgba(148, 163, 184, 0.9) 100%);
+  color: #1e293b; /* slate-800 for better readability */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+margin-bottom: 15px;
+  border-left: 6px solid #94a3b8; /* slate-400 as accent border */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+}
+
+.InactiveDays:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Optional icon styling */
+.InactiveDays::before {
+  content: "⏳";
+  font-size: 1.5em;
+}
+
+.InactiveDays h4{
+
+}
+.deleteContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  backdrop-filter: blur(5px); /* This creates the blur effect */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.delBox {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}
+
+.delBox h5 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.buttonContainers {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.buttonContainers button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.buttonContainers button:first-child {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.buttonContainers button:first-child:hover {
+  background-color: #e0e0e0;
+}
+
+.buttonContainers button:last-child {
+  background-color: #ff4444;
+  color: white;
+}
+
+.buttonContainers button:last-child:hover {
+  background-color: #cc0000;
+}
 
 /* 980px Breakpoint */
 @media (max-width: 980px) {
@@ -760,7 +911,13 @@ span.totalcost {
   .share-toggle-label {
     font-size: 15px;
   }
-
+.InactiveDays{
+  text-align: left;
+  font-size: 14px;
+}
+.InactiveDays::before {
+  font-size: 1.7em;
+}
   .slide {
     width: 45px;
     height: 24px;
@@ -788,6 +945,7 @@ span.totalcost {
   }
   .delete-btn {
     text-align: right;
+    display: none;
   }
   .form-group label {
     font-size: 14px;
@@ -809,6 +967,7 @@ span.totalcost {
 
   .history-item {
     padding: 8px 5px;
+    /* border-right: 2px solid rgb(255, 113, 113); */
   }
 
   .summary-box h4 {
@@ -842,4 +1001,14 @@ span.totalcost {
     width: 100%;
     margin-bottom: 0;
   }
+  .delBox {
+  background-color: white;
+  padding: 20px 5px;
+  width: 200px;
+
+}
+
+.delBox h5 {
+  font-size: 1.1rem;
+}
 }

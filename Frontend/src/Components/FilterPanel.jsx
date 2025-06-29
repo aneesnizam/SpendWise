@@ -5,6 +5,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import api from "../utilities/axios";
 import userlogindata from "../utilities/Authstore";
 import Target from "../utilities/Target";
+import {
+  SwipeableList,
+  SwipeableListItem,
+  SwipeAction,
+  TrailingActions,
+} from "react-swipeable-list";
+import "react-swipeable-list/dist/styles.css";
+import { toast } from "react-toastify";
 
 export default function FilterPanel() {
   const [startDate, setStartDate] = useState("");
@@ -21,8 +29,38 @@ export default function FilterPanel() {
   const [loading, setLoading] = useState(false);
   const [groupByCategory, setGroupByCategory] = useState(true);
   const [categoryExpenses, setCategoryExpenses] = useState([]);
-
   const { setCurrentView, currentView } = userlogindata();
+  const [deletePopup, setDeletePopup] = useState("");
+
+  const trailingActions = (id) => (
+    <TrailingActions>
+      <SwipeAction
+        destructive={false}
+        onClick={() => {
+          setDeletePopup(id);
+        }}
+      >
+        <div
+          style={{
+            background:
+              "linear-gradient(120deg, #e0e5ec 10%, rgb(255, 113, 113))",
+            color: "rgba(0, 0, 0, 0.35)",
+            padding: "0 20px",
+            fontWeight: "bold",
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxSizing: "border-box",
+            borderRadius: "0",
+          }}
+        >
+          Delete
+        </div>
+      </SwipeAction>
+    </TrailingActions>
+  );
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -133,8 +171,36 @@ export default function FilterPanel() {
     return sortOrder === "asc" ? a.amount - b.amount : b.amount - a.amount;
   });
 
+  const handleDeleteYes = async () => {
+    console.log("yes")
+    try {
+      const res = await api.delete(`api/expenses/${deletePopup}`);
+      if (res.data.success) {
+        toast.success(res.data.message);
+        handleSubmit()
+        setDeletePopup("");
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+  const handleDeleteNo = () => {
+    setDeletePopup("");
+  };
+
   return (
     <section id="filter-panel">
+      {deletePopup && (
+        <div className="deleteContainer">
+          <div className="delBox">
+            <h5>Delete</h5>
+            <div className="buttonContainers">
+              <button onClick={handleDeleteNo}>No</button>
+              <button onClick={handleDeleteYes}>yes</button>
+            </div>
+          </div>
+        </div>
+      )}
       <form className="filter-form" onSubmit={(e) => e.preventDefault()}>
         <div className="top">
           <div className="selector">
@@ -282,26 +348,35 @@ export default function FilterPanel() {
           )
         ) : sortedItems.length ? (
           <ul className="expense-list">
-            {sortedItems.map(({ _id, category, amount, date, title }) => (
-              <li
-                key={_id}
-                className={`history-item ${category.toLowerCase()}`}
-              >
-                <div className="entry-cards">
-                  <header className="entry-headers">
-                    <div className="entry-details">
-                      <p className={`category-tag ${category.toLowerCase()}`}>
-                        {category.charAt(0).toUpperCase() + category.slice(1)}:
-                      </p>
-                      <span>₹{amount}</span>
-                    </div>
+            <SwipeableList>
+              {sortedItems.map(({ _id, category, amount, date, title }) => (
+                <SwipeableListItem
+                  className={`history-item ${category.toLowerCase()}`}
+                  key={_id}
+                  trailingActions={trailingActions(_id)}
+                >
+                  <li style={{ width: "100%" }}>
+                    <div className="entry-cards">
+                      <header className="entry-headers">
+                        <div className="entry-details">
+                          <p
+                            className={`category-tag ${category.toLowerCase()}`}
+                          >
+                            {category.charAt(0).toUpperCase() +
+                              category.slice(1)}
+                            :
+                          </p>
+                          <span>₹{amount}</span>
+                        </div>
 
-                    <p className="date">{formatDate(date)}</p>
-                    <p className="second">{title}</p>
-                  </header>
-                </div>
-              </li>
-            ))}
+                        <p className="date">{formatDate(date)}</p>
+                        <p className="second">{title}</p>
+                      </header>
+                    </div>
+                  </li>
+                </SwipeableListItem>
+              ))}
+            </SwipeableList>
           </ul>
         ) : (
           <p className="no-results">

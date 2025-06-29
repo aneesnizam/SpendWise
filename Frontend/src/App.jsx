@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "./Components/Login";
 import { ToastContainer } from "react-toastify";
 import Home from "./Components/Home";
@@ -9,8 +9,6 @@ import ProtectedRoute from "./utilities/ProtectedRoute";
 
 
 export default function App() {
-
-   
 
   return (
     <div >

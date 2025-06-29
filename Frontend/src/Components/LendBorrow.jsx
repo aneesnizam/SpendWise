@@ -165,16 +165,16 @@ export default function LendBorrow() {
           </form>
         </div>
 
-        <div className="summary-container">
+        <div className="summary-container"  >
           {shouldShowLendSummary && (
-            <div className="summary-box lend-summary">
+            <div className="summary-box lend-summary" data-aos="fade-up">
               <h4>Lend</h4>
               <h5>Total: ₹{calculateTotal("lend")}</h5>
               <h5>Entries: {countEntries("lend")}</h5>
             </div>
           )}
           {shouldShowBorrowSummary && (
-            <div className="summary-box borrow-summary">
+            <div className="summary-box borrow-summary" data-aos="fade-up">
               <h4>Borrow</h4>
               <h5>Total: ₹{calculateTotal("borrow")}</h5>
               <h5>Entries: {countEntries("borrow")}</h5>
@@ -217,7 +217,7 @@ export default function LendBorrow() {
         ) : (
           <ul className="entry-list">
             {filteredData.map((item) => (
-              <li
+              <li 
                 key={item._id}
                 className={`entry-item ${item.type === "borrow" ? "borrow-item" : "lend-item"} ${
                   item.status === "settled" ? "settled" : ""

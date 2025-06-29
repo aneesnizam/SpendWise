@@ -55,8 +55,11 @@ const name = user.name[0]
           {showMenu && <Menu />}
         </div>
         <div className="middle">
-          {" "}
+          
+          <a href="">
+         
           <img src={Logo} alt="" />
+          </a>
         </div>
         <div className="right">
           {deferredPrompt && (

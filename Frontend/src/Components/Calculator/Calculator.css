@@ -130,8 +130,9 @@
 /* Responsive adjustments */
 @media (max-width: 480px) {
   .calculatorWrapper {
-    height: 82vh;
+    height: auto;
     padding: 10px;
+    align-items: flex-start;
   }
 
   #calculator {

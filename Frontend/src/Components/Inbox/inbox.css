@@ -1,6 +1,6 @@
 .inbox-icon {
   position: relative;
-background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a6c1ee 100%);
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a6c1ee 100%);
   width: 30px;
   display: flex;
   justify-content: center;
@@ -19,13 +19,17 @@ background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a6c1ee 100%);
 .inbox-icon .mail {
   color: var(--white);
 }
+.material-symbols-outlined {
+  color: #fff !important; 
+  -webkit-text-fill-color: #fff !important; /* iOS/Safari fix */
+}
 .inbox-icon .dot {
   position: absolute;
   width: 10px;
   height: 10px;
   top: -0.1rem;
   right: -0.1rem;
- 
+
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   background: red;
@@ -38,19 +42,17 @@ background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a6c1ee 100%);
   right: 0;
   border-radius: 15px;
   max-width: 500px;
-  min-width: 350px;
-  height: auto;
  
-  color: black;
- background-color:rgb(194, 233, 255) ;
+  height: auto;
 
-  box-shadow: 
-    5px 5px 10px #c3cfdd,
-    -5px -5px 10px #fdffff;
+  color: black;
+  background-color: rgb(194, 233, 255);
+
+  box-shadow: 5px 5px 10px #c3cfdd, -5px -5px 10px #fdffff;
   padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
- justify-content: center;
+  justify-content: center;
   align-items: center;
 }
 
@@ -67,9 +69,12 @@ background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a6c1ee 100%);
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background: var(--primary-color);
+  background: rgba(255, 255, 255, 0.568);
   border-radius: var(--radius);
   padding: 0.3rem;
+
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 .payment-list p {
   color: black;
@@ -82,7 +87,6 @@ background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a6c1ee 100%);
 }
 
 .payment-list button {
-
   padding: 0.3rem;
   margin-top: 0;
   background: none;
@@ -99,12 +103,29 @@ background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a6c1ee 100%);
 }
 .payment-list button.yes {
   background: rgb(3, 207, 3);
-  
 }
 .payment-list button.no {
   background-color: rgb(253, 41, 41);
 }
+.pendingReq {
+  display: flex;
+  padding: 10px 8px;
+  background: rgba(255, 255, 255, 0.568);
+  border-radius: var(--radius);
+  margin: 0;
+  align-items: center;
+  justify-content: center;
 
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6c757d;
+  max-width: 500px;
+  min-width: 350px;
+  text-align: center;
+}
 @media (max-width: 480px) {
   .inbox-icon {
     width: 28px;
@@ -113,25 +134,42 @@ background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #a6c1ee 100%);
   }
 
   .inbox-icon .payment-requests {
-    top: 2.9rem;
-  right: 0;
-  border-radius: 15px;
-  max-width: 400px;
-  min-width: 300px;
-  
+    position: fixed;
+    width: 90vw;
+    top: 4.5rem;
+    right: 3%;
+    border-radius: 15px;
   }
 
   .payment-list {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+   
   }
-
+.payment-requests .payment-list{
+  padding-bottom: 20px;
+}
   .payment-list p {
     width: 100%;
   }
 
   .payment-list .btns {
     justify-content: flex-start;
+  }
+   .pendingReq{
+    min-width: 95%;
+  }
+}
+@media (max-width: 380px) { 
+  .pendingReq{
+    min-width: 95%;
+  }
+  .inbox-icon .payment-requests {
+    position: fixed;
+    width: 90%;
+    top: 4.5rem;
+    right: 3%;
+    border-radius: 15px;
   }
 }

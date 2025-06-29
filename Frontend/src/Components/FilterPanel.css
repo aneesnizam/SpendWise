@@ -159,6 +159,9 @@
   font-size: 18px;
   display: flex;
   justify-content: center;
+
+    color: #fff !important; 
+  -webkit-text-fill-color: #fff !important;
 }
 
 #filter-panel .actions button:hover {

@@ -32,6 +32,7 @@ const userlogindata = create((set) => ({
   forgetPassword: false,
   searchdate: false,
   loadingScreen: true,
+  sharedExpenses:[],
 
   fetchFriendsData: async () => {
     try {
@@ -85,6 +86,7 @@ const userlogindata = create((set) => ({
   setForgetPassword: (value) => set({ forgetPassword: value }),
   setSearchdate: (value) => set({ searchdate: value }),
   setLoadingScreen: (value) => set({ loadingScreen: value }),
+  setSharedExpenses: (value) => set({ sharedExpenses: value }),
 }));
 
 export default userlogindata;
