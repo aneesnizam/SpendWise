@@ -38,8 +38,8 @@ const trailingActions = (id) => (
 
     <div
              style={{
-          background: "linear-gradient(120deg, #e0e5ec 10%, rgb(255, 113, 113))",
-          color: "rgba(0, 0, 0, 0.35)",
+         background: "linear-gradient(135deg, #f5f7fa 0%,rgb(255, 76, 76) 100%)",
+  color: "rgba(108, 117, 125, 0.8)",
           padding: "0 20px",
           fontWeight: "bold",
           width: "100%",
@@ -251,7 +251,7 @@ setDeletePopup('')
     <section id="data-box">
       {deletePopup &&    <div className="deleteContainer">
         <div className="delBox">
-          <h5>Delete</h5>
+          <h5>Delete?</h5>
           <div className="buttonContainers">
             <button onClick={handleDeleteNo}>No</button>
             <button onClick={handleDeleteYes}>yes</button>

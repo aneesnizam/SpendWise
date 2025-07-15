@@ -31,6 +31,9 @@ export default function FilterPanel() {
   const [categoryExpenses, setCategoryExpenses] = useState([]);
   const { setCurrentView, currentView } = userlogindata();
   const [deletePopup, setDeletePopup] = useState("");
+  const [page,setPage] = useState(1);
+  const [limit,setLimit] = useState(20)
+  const[totalPages,setTotalPages] = useState(0)
 
   const trailingActions = (id) => (
     <TrailingActions>

@@ -6,8 +6,13 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
+      strategies: 'injectManifest', // 👈 using custom service worker
+      srcDir: 'src',                // 👈 your custom SW is in src/
+      filename: 'custom-sw.js',     // 👈 custom SW file
+
+      registerType: 'autoUpdate',   // auto update SW
       includeAssets: ['icon512_maskable.png', 'icon512_rounded.png'],
+
       manifest: {
         name: 'SpendWise',
         short_name: 'spendWise',
