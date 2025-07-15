@@ -1,7 +1,8 @@
 Backend/.env
 Backend/package-lock.json
 Backend/node_modules
-
+node_modules
+Frontend/node_modules
 
 # Logs
 Frontend/logs
