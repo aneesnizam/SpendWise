@@ -6,13 +6,19 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import GuestRoute from "./utilities/GuestRoute";
 import ProtectedRoute from "./utilities/ProtectedRoute";
-import { requestNotificationPermission, subscribeUserToPush } from "./utilities/pushNotifications";
+import {
+  requestNotificationPermission,
+  subscribeUserToPush,
+} from "./utilities/pushNotifications";
 import userlogindata from "./utilities/Authstore";
-
+import Landing from "./Components/LandingPage/Landing";
+import Register from "./Components/Register";
 export default function App() {
+
+
   const { user } = userlogindata();
 
-useEffect(() => {
+  useEffect(() => {
     if (!user) return;
 
     const handleEnableNotifications = async () => {
@@ -39,12 +45,15 @@ useEffect(() => {
         }
 
         if (permission !== "granted") {
-          alert("Notifications not enabled. Please enable them in browser settings.");
+          alert(
+            "Notifications not enabled. Please enable them in browser settings."
+          );
           return;
         }
 
         const registration = await navigator.serviceWorker.ready;
-        const existingSubscription = await registration.pushManager.getSubscription();
+        const existingSubscription =
+          await registration.pushManager.getSubscription();
 
         if (existingSubscription) {
           console.log("Already subscribed to push.");
@@ -67,17 +76,26 @@ useEffect(() => {
   }, [user]);
 
   return (
-    <div >
+    <div>
       <BrowserRouter>
         <Routes>
           <Route
             path="/"
             element={
               <GuestRoute>
+                <Landing />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <GuestRoute>
                 <Login />
               </GuestRoute>
             }
           />
+        
           <Route
             path="/home"
             element={
@@ -89,8 +107,7 @@ useEffect(() => {
         </Routes>
 
         <ToastContainer autoClose={1400} />
-      </BrowserRouter> 
-     
+      </BrowserRouter>
     </div>
   );
 }
