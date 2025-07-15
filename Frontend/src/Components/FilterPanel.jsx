@@ -31,9 +31,9 @@ export default function FilterPanel() {
   const [categoryExpenses, setCategoryExpenses] = useState([]);
   const { setCurrentView, currentView } = userlogindata();
   const [deletePopup, setDeletePopup] = useState("");
-  const [page,setPage] = useState(1);
-  const [limit,setLimit] = useState(20)
-  const[totalPages,setTotalPages] = useState(0)
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(20);
+  const [totalPages, setTotalPages] = useState(0);
 
   const trailingActions = (id) => (
     <TrailingActions>
@@ -100,6 +100,10 @@ export default function FilterPanel() {
       .catch(console.error);
   }, []);
 
+  useEffect(()=>{
+    handleSubmit();
+  },[page])
+
   const handleSubmit = () => {
     setLoading(true);
     const params = new URLSearchParams();
@@ -115,6 +119,9 @@ export default function FilterPanel() {
     }
     if (selectedCategory) params.append("category", selectedCategory);
 
+    params.append("page", page);
+    params.append("limit", limit);
+
     api
       .get(`api/expenses/filter?${params.toString()}`)
       .then((res) => {
@@ -129,6 +136,7 @@ export default function FilterPanel() {
             return acc;
           }, {});
           setCategoryExpenses(Object.values(grouped));
+          setTotalPages(res.data.totalPages)
         } else {
           setFilteredItems(res.data.expenses);
         }
@@ -175,12 +183,12 @@ export default function FilterPanel() {
   });
 
   const handleDeleteYes = async () => {
-    console.log("yes")
+    console.log("yes");
     try {
       const res = await api.delete(`api/expenses/${deletePopup}`);
       if (res.data.success) {
         toast.success(res.data.message);
-        handleSubmit()
+        handleSubmit();
         setDeletePopup("");
       }
     } catch (err) {
@@ -350,37 +358,69 @@ export default function FilterPanel() {
             </p>
           )
         ) : sortedItems.length ? (
-          <ul className="expense-list">
-            <SwipeableList>
-              {sortedItems.map(({ _id, category, amount, date, title }) => (
-                <SwipeableListItem
-                  className={`history-item ${category.toLowerCase()}`}
-                  key={_id}
-                  trailingActions={trailingActions(_id)}
-                >
-                  <li style={{ width: "100%" }}>
-                    <div className="entry-cards">
-                      <header className="entry-headers">
-                        <div className="entry-details">
-                          <p
-                            className={`category-tag ${category.toLowerCase()}`}
-                          >
-                            {category.charAt(0).toUpperCase() +
-                              category.slice(1)}
-                            :
-                          </p>
-                          <span>₹{amount}</span>
-                        </div>
+          <>
+            <ul className="expense-list">
+              <SwipeableList>
+                {sortedItems.map(({ _id, category, amount, date, title }) => (
+                  <SwipeableListItem
+                    className={`history-item ${category.toLowerCase()}`}
+                    key={_id}
+                    trailingActions={trailingActions(_id)}
+                  >
+                    <li style={{ width: "100%" }}>
+                      <div className="entry-cards">
+                        <header className="entry-headers">
+                          <div className="entry-details">
+                            <p
+                              className={`category-tag ${category.toLowerCase()}`}
+                            >
+                              {category.charAt(0).toUpperCase() +
+                                category.slice(1)}
+                              :
+                            </p>
+                            <span>₹{amount}</span>
+                          </div>
 
-                        <p className="date">{formatDate(date)}</p>
-                        <p className="second">{title}</p>
-                      </header>
-                    </div>
-                  </li>
-                </SwipeableListItem>
+                          <p className="date">{formatDate(date)}</p>
+                          <p className="second">{title}</p>
+                        </header>
+                      </div>
+                    </li>
+                  </SwipeableListItem>
+                ))}
+              </SwipeableList>
+            </ul>
+            {/* Pagination Controls */}
+            <div className="pagination">
+              <button
+                className="page-btn"
+                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                disabled={page === 1}
+              >
+                Prev
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  className={`page-btn ${page === i + 1 ? "active" : ""}`}
+                  onClick={() => setPage(i + 1)}
+                >
+                  {i + 1}
+                </button>
               ))}
-            </SwipeableList>
-          </ul>
+
+              <button
+                className="page-btn"
+                onClick={() =>
+                  setPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={page === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          </>
         ) : (
           <p className="no-results">
             No results yet. Apply any filter and click submit.
