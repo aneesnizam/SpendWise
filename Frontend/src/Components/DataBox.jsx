@@ -9,10 +9,9 @@ import {
   SwipeableList,
   SwipeableListItem,
   SwipeAction,
-  TrailingActions
-} from 'react-swipeable-list';
-import 'react-swipeable-list/dist/styles.css';
-
+  TrailingActions,
+} from "react-swipeable-list";
+import "react-swipeable-list/dist/styles.css";
 
 export default function DataBox() {
   const { user, friends, setUser } = userlogindata();
@@ -28,40 +27,41 @@ export default function DataBox() {
   const [shared, setShared] = useState(false);
   const [loading, setLoading] = useState(true);
   const exchangeRate = 1 / 85.1;
-const [inactiveDates,setInactiveDates] = useState()
-const[deletePopup,setDeletePopup] = useState('')
-const [lastDeleted, setLastDeleted] = useState(null);
-const [undoTimer, setUndoTimer] = useState(null);
+  const [inactiveDates, setInactiveDates] = useState();
+  const [deletePopup, setDeletePopup] = useState("");
+  const [lastDeleted, setLastDeleted] = useState(null);
+  const [undoTimer, setUndoTimer] = useState(null);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
-const trailingActions = (id) => (
-
-  <TrailingActions>
-
-    <SwipeAction destructive={false} onClick={() => {setDeletePopup(id)}}>
-
-    <div
-             style={{
-         background: "linear-gradient(135deg, #f5f7fa 0%,rgb(255, 76, 76) 100%)",
-  color: "rgba(108, 117, 125, 0.8)",
-          padding: "0 20px",
-          fontWeight: "bold",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxSizing: "border-box",
-          borderRadius: "0",
-   
-         
+  const trailingActions = (id) => (
+    <TrailingActions>
+      <SwipeAction
+        destructive={false}
+        onClick={() => {
+          setDeletePopup(id);
         }}
       >
-        Delete
-      </div>    
-    </SwipeAction>
-  </TrailingActions>
-);
-
+        <div
+          style={{
+            background:
+              "linear-gradient(135deg, #f5f7fa 0%,rgb(255, 76, 76) 100%)",
+            color: "rgba(108, 117, 125, 0.8)",
+            padding: "0 20px",
+            fontWeight: "bold",
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxSizing: "border-box",
+            borderRadius: "0",
+          }}
+        >
+          Delete
+        </div>
+      </SwipeAction>
+    </TrailingActions>
+  );
 
   const fetchHistory = async () => {
     try {
@@ -81,39 +81,39 @@ const trailingActions = (id) => (
     }
   };
 
-const getLastExpenseDayDiff = async () => {
-  try {
-    const res = await api.get("api/expenses/");
-    const rawExpenses = Array.isArray(res.data.expenses)
-      ? res.data.expenses
-      : [];
+  const getLastExpenseDayDiff = async () => {
+    try {
+      const res = await api.get("api/expenses/");
+      const rawExpenses = Array.isArray(res.data.expenses)
+        ? res.data.expenses
+        : [];
 
-    const Datalists = [];
+      const Datalists = [];
 
-    rawExpenses.forEach((item) => {
-      if (!item?.date) return;
-      const date = new Date(item.date);
-      const localDate = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate()
-      );
-      Datalists.push(localDate);
-    });
+      rawExpenses.forEach((item) => {
+        if (!item?.date) return;
+        const date = new Date(item.date);
+        const localDate = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        );
+        Datalists.push(localDate);
+      });
 
-    if (Datalists.length === 0) return null;
+      if (Datalists.length === 0) return null;
 
-    const latestDate = new Date(Math.max(...Datalists));
-    const currentDate = new Date();
-    const diffInMs = Math.abs(latestDate - currentDate);
-    const diffInDys = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+      const latestDate = new Date(Math.max(...Datalists));
+      const currentDate = new Date();
+      const diffInMs = Math.abs(latestDate - currentDate);
+      const diffInDys = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
 
-    setInactiveDates(diffInDys - 1);
-  } catch (err) {
-    console.error("Failed to get last expense date difference:", err);
-    return null;
-  }
-};
+      setInactiveDates(diffInDys - 1);
+    } catch (err) {
+      console.error("Failed to get last expense date difference:", err);
+      return null;
+    }
+  };
 
   const handleCheckboxChange = (friendId) => {
     setSharedWith((prev) =>
@@ -177,6 +177,7 @@ const getLastExpenseDayDiff = async () => {
     }));
 
     try {
+      setSubmitLoading(true);
       const res = await api.post("api/expenses/", {
         title: description,
         amount: cost,
@@ -187,6 +188,8 @@ const getLastExpenseDayDiff = async () => {
       fetchHistory(); // Refresh history
     } catch (err) {
       toast.error(err?.response?.data?.message || err.message);
+    } finally {
+      setSubmitLoading(false);
     }
 
     setCustomCategory("");
@@ -196,74 +199,70 @@ const getLastExpenseDayDiff = async () => {
     setSharedWith([]);
     setError("");
   };
-const handleDeleteYes = async () => {
-const deletedItem = history.find((item)=> item._id === deletePopup);
-if (!deletedItem) return;
-  const deleteId = deletePopup;
-setHistory((prev) => prev.filter((item)=> item._id !== deletePopup));
-setLastDeleted(deletedItem);
-setDeletePopup('');
+  const handleDeleteYes = async () => {
+    const deletedItem = history.find((item) => item._id === deletePopup);
+    if (!deletedItem) return;
+    const deleteId = deletePopup;
+    setHistory((prev) => prev.filter((item) => item._id !== deletePopup));
+    setLastDeleted(deletedItem);
+    setDeletePopup("");
 
-
-
-
-const timer = setTimeout(async () => {
-    try {
-      const res = await api.delete(`api/expenses/${deleteId}`);
-      if (res.data.success) {
-        setLastDeleted(null)
-        fetchHistory();
-        
+    const timer = setTimeout(async () => {
+      try {
+        const res = await api.delete(`api/expenses/${deleteId}`);
+        if (res.data.success) {
+          setLastDeleted(null);
+          fetchHistory();
+        }
+      } catch (err) {
+        console.error(err.message);
       }
-    } catch (err) {
-      console.error(err.message);
-    }
-  },4000);
-setUndoTimer(timer)
-}
-
-const handleUndo = () =>{
-  if(undoTimer){
-    clearTimeout(undoTimer);
-    setUndoTimer(null)
-  }
-if(lastDeleted){
-  setHistory((prev) => [lastDeleted,...prev]);
-  setLastDeleted(null)
-  toast.success("Undo Successful")
-}
-
-}
-useEffect(() => {
-  return () => {
-    if (undoTimer) clearTimeout(undoTimer);
+    }, 4000);
+    setUndoTimer(timer);
   };
-}, [undoTimer]);
 
+  const handleUndo = () => {
+    if (undoTimer) {
+      clearTimeout(undoTimer);
+      setUndoTimer(null);
+    }
+    if (lastDeleted) {
+      setHistory((prev) => [lastDeleted, ...prev]);
+      setLastDeleted(null);
+      toast.success("Undo Successful");
+    }
+  };
+  useEffect(() => {
+    return () => {
+      if (undoTimer) clearTimeout(undoTimer);
+    };
+  }, [undoTimer]);
 
-const formatDateTime = (dateString) => {
-  const date = new Date(dateString);
+  const formatDateTime = (dateString) => {
+    const date = new Date(dateString);
 
-  const formattedDate = date.toLocaleDateString("en-IN", {
-    timeZone: "Asia/Kolkata",
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
+    const formattedDate = date.toLocaleDateString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
 
-  let formattedTime = date.toLocaleTimeString("en-IN", {
-    timeZone: "Asia/Kolkata",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+    let formattedTime = date.toLocaleTimeString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
 
-  // Add non-breaking space before am/pm
-  formattedTime = formattedTime.replace(/(\d{1,2}:\d{2}) (\w{2})/, '$1\u00A0$2');
+    // Add non-breaking space before am/pm
+    formattedTime = formattedTime.replace(
+      /(\d{1,2}:\d{2}) (\w{2})/,
+      "$1\u00A0$2"
+    );
 
-  return `${formattedDate}, ${formattedTime}`;
-};
-
+    return `${formattedDate}, ${formattedTime}`;
+  };
 
   useEffect(() => {
     if (userLimit <= 0) {
@@ -274,26 +273,32 @@ const formatDateTime = (dateString) => {
   }, [userLimit]);
   if (loading) return <IntialLoader />;
 
-
-
   const handleDeleteNo = () => {
-
-setDeletePopup('')
-  }
+    setDeletePopup("");
+  };
 
   return (
     <section id="data-box">
-      {deletePopup &&    <div className="deleteContainer">
-        <div className="delBox">
-          <h5>Delete?</h5>
-          <div className="buttonContainers">
-            <button onClick={handleDeleteNo}>No</button>
-            <button onClick={handleDeleteYes}>yes</button>
+      {deletePopup && (
+        <div className="deleteContainer">
+          <div className="delBox">
+            <h5>Delete?</h5>
+            <div className="buttonContainers">
+              <button onClick={handleDeleteNo}>No</button>
+              <button onClick={handleDeleteYes}>yes</button>
+            </div>
           </div>
         </div>
-      </div>}
-   
-      {inactiveDates >=2 && <div className="InactiveDays"><h5>You’ve been inactive for <strong>{inactiveDates} </strong>days!  Let’s get back on track!  </h5></div>  }
+      )}
+
+      {inactiveDates >= 2 && (
+        <div className="InactiveDays">
+          <h5>
+            You’ve been inactive for <strong>{inactiveDates} </strong>days!
+            Let’s get back on track!{" "}
+          </h5>
+        </div>
+      )}
       <form className="currency-selector">
         <select
           name="currency"
@@ -308,54 +313,54 @@ setDeletePopup('')
       <div className="form-container">
         <form className="expense-form" onSubmit={handleSubmit}>
           <div className="form-group">
-  <label>Category</label>
-  <select className="CategorySelector"
-    value={customCategory}
-    onChange={(e) => setCustomCategory(e.target.value)}
-  >
-    <option value="">-- Select Category --</option>
-    <option value="food">Food</option>
-    <option value="transport">Transport</option>
-    <option value="shopping">Shopping</option>
-    <option value="entertainment">Entertainment</option>
-    <option value="bills">Bills</option>
-    <option value="healthcare">Healthcare</option>
-    <option value="education">Education</option>
-    <option value="groceries">Groceries</option>
-    <option value="fuel">Fuel</option>
-    <option value="public-transport">Public Transport</option>
-    <option value="clothing">Clothing</option>
-    <option value="electronics">Electronics</option>
-    <option value="movies">Movies</option>
-    <option value="subscriptions">Subscriptions</option>
-    <option value="electricity">Electricity</option>
-    <option value="water">Water</option>
-    <option value="internet">Internet</option>
-    <option value="rent">Rent</option>
-    <option value="mortgage">Mortgage</option>
-    <option value="medicines">Medicines</option>
-    <option value="doctor">Doctor</option>
-    <option value="insurance">Insurance</option>
-    <option value="school-fees">School Fees</option>
-    <option value="books">Books</option>
-    <option value="personal-care">Personal Care</option>
-    <option value="gym">Gym</option>
-    <option value="salon">Salon</option>
-    <option value="travel">Travel</option>
-    <option value="flight">Flight</option>
-    <option value="hotel">Hotel</option>
-    <option value="gifts">Gifts</option>
-    <option value="charity">Charity</option>
-    <option value="savings">Savings</option>
-    <option value="investments">Investments</option>
-    <option value="pets">Pets</option>
-    <option value="home-maintenance">Home Maintenance</option>
-    <option value="childcare">Childcare</option>
-    <option value="taxes">Taxes</option>
-    <option value="other">Other</option>
-  </select>
-</div>
-
+            <label>Category</label>
+            <select
+              className="CategorySelector"
+              value={customCategory}
+              onChange={(e) => setCustomCategory(e.target.value)}
+            >
+              <option value="">-- Select Category --</option>
+              <option value="food">Food</option>
+              <option value="transport">Transport</option>
+              <option value="shopping">Shopping</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="bills">Bills</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="education">Education</option>
+              <option value="groceries">Groceries</option>
+              <option value="fuel">Fuel</option>
+              <option value="public-transport">Public Transport</option>
+              <option value="clothing">Clothing</option>
+              <option value="electronics">Electronics</option>
+              <option value="movies">Movies</option>
+              <option value="subscriptions">Subscriptions</option>
+              <option value="electricity">Electricity</option>
+              <option value="water">Water</option>
+              <option value="internet">Internet</option>
+              <option value="rent">Rent</option>
+              <option value="mortgage">Mortgage</option>
+              <option value="medicines">Medicines</option>
+              <option value="doctor">Doctor</option>
+              <option value="insurance">Insurance</option>
+              <option value="school-fees">School Fees</option>
+              <option value="books">Books</option>
+              <option value="personal-care">Personal Care</option>
+              <option value="gym">Gym</option>
+              <option value="salon">Salon</option>
+              <option value="travel">Travel</option>
+              <option value="flight">Flight</option>
+              <option value="hotel">Hotel</option>
+              <option value="gifts">Gifts</option>
+              <option value="charity">Charity</option>
+              <option value="savings">Savings</option>
+              <option value="investments">Investments</option>
+              <option value="pets">Pets</option>
+              <option value="home-maintenance">Home Maintenance</option>
+              <option value="childcare">Childcare</option>
+              <option value="taxes">Taxes</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
 
           <div className="form-group">
             <label>Cost</label>
@@ -425,7 +430,10 @@ setDeletePopup('')
             </div>
           )}
 
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={submitLoading} className="submit-btn">
+            {" "}
+            {submitLoading ? "Submitting..." : "Submit"}
+          </button>
           {error && <p className="error-message">{error}</p>}
         </form>
 
@@ -464,58 +472,59 @@ setDeletePopup('')
       <section className="expense-history">
         <ul>
           <SwipeableList>
-          {[...history]
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
-            .map((entry) => (
-              <SwipeableListItem className={`history-item ${entry.category.toLowerCase()}` } key={entry._id} trailingActions={trailingActions(entry._id)}  >
-              
-              <li
-                 style={{ width: '100%' }}
-              >
-                <div className="entry-card">
-                  <header className="entry-header">
-                    <div className="entry-details" >
-                      <p
-                        className={`category-tag ${entry.category.toLowerCase()}`}
-                      >
-                        {entry.category.charAt(0).toUpperCase() +
-                          entry.category.slice(1)}
-                        :
-                      </p>
-                      <span>
-                        {currency}
-                        {currency === "$"
-                          ? (entry.amount * exchangeRate).toFixed(2)
-                          : entry.amount.toFixed(2)}
-                      </span>
+            {[...history]
+              .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .map((entry) => (
+                <SwipeableListItem
+                  className={`history-item ${entry.category.toLowerCase()}`}
+                  key={entry._id}
+                  trailingActions={trailingActions(entry._id)}
+                >
+                  <li style={{ width: "100%" }}>
+                    <div className="entry-card">
+                      <header className="entry-header">
+                        <div className="entry-details">
+                          <p
+                            className={`category-tag ${entry.category.toLowerCase()}`}
+                          >
+                            {entry.category.charAt(0).toUpperCase() +
+                              entry.category.slice(1)}
+                            :
+                          </p>
+                          <span>
+                            {currency}
+                            {currency === "$"
+                              ? (entry.amount * exchangeRate).toFixed(2)
+                              : entry.amount.toFixed(2)}
+                          </span>
+                        </div>
+                        <p style={{ textAlign: "center" }} className="date">
+                          {formatDateTime(entry.date)}{" "}
+                        </p>
+                        <button
+                          className="delete-btn"
+                          style={{ textAlign: "center" }}
+                          onClick={() => setDeletePopup(entry._id)}
+                        >
+                          <FaTrash />
+                        </button>
+                      </header>
+                      <footer className="entry-footer">
+                        <p>{entry.title}</p>
+                      </footer>
                     </div>
-                    <p style={{textAlign:"center"}} className="date">{formatDateTime(entry.date)} </p>
-                    <button
-                      className="delete-btn"
-                      style={{ textAlign: "center" }}
-                      onClick={() => setDeletePopup(entry._id)}
-                    >
-                      <FaTrash />
-                    </button>
-                  </header>
-                  <footer className="entry-footer">
-                    <p>{entry.title}</p>
-                  </footer>
-                </div>
-              </li>
-             
-              </SwipeableListItem>
-            ))}
-            </SwipeableList>
+                  </li>
+                </SwipeableListItem>
+              ))}
+          </SwipeableList>
         </ul>
       </section>
       {lastDeleted && (
-  <div className="undo-popup">
-    <p>Expense deleted. Undo?</p>
-    <button onClick={handleUndo}>Undo</button>
-  </div>
-)}
-
+        <div className="undo-popup">
+          <p>Expense deleted. Undo?</p>
+          <button onClick={handleUndo}>Undo</button>
+        </div>
+      )}
     </section>
   );
 }

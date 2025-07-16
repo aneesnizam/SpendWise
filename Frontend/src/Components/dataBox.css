@@ -72,7 +72,8 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-left: 10px;
 }
 
-.form-group input,.CategorySelector {
+.form-group input,
+.CategorySelector {
   background-color: var(--input-bg);
   border: none;
   outline: none;
@@ -84,14 +85,15 @@ input[type="number"]::-webkit-outer-spin-button {
   color: var(--text-base);
   width: 66%;
   box-sizing: border-box;
-}.CategorySelector option{
-   background-color: #e7ebef;
 }
-.CategorySelector{
-    appearance: none;
+.CategorySelector option {
+  background-color: #e7ebef;
+}
+.CategorySelector {
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  
+
   text-align: center;
   text-align-last: center;
 }
@@ -118,7 +120,7 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
 }
 
-.expense-form button:hover {
+.submit-btn:hover:not(:disabled) {
   background: linear-gradient(to right, #ff7e5f, #feb47b);
   box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
   transform: scale(1.03);
@@ -193,7 +195,7 @@ span.totalcost {
   border-radius: 10px;
   box-shadow: var(--shadow-dark), var(--shadow-light);
   box-sizing: border-box;
-     border-left: 3px solid #4b5563;
+  border-left: 3px solid #4b5563;
 }
 
 .entry-card {
@@ -529,7 +531,6 @@ span.totalcost {
   border-left: 3px solid #4b5563;
 }
 
-
 /* Share Toggle Container */
 .share-toggle-containerr {
   display: flex;
@@ -686,11 +687,16 @@ span.totalcost {
   padding: 0px 24px;
   width: 100%;
   box-sizing: border-box;
-  background: linear-gradient(135deg, rgba(203, 213, 225, 0.9) 0%, rgba(148, 163, 184, 0.9) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(203, 213, 225, 0.9) 0%,
+    rgba(148, 163, 184, 0.9) 100%
+  );
   color: #1e293b; /* slate-800 for better readability */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
-margin-bottom: 15px;
+  margin-bottom: 15px;
   border-left: 6px solid #94a3b8; /* slate-400 as accent border */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 1rem;
@@ -701,12 +707,12 @@ margin-bottom: 15px;
   align-items: center;
   justify-content: center;
   gap: 8px;
-
 }
 
 .InactiveDays:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 /* Optional icon styling */
@@ -715,8 +721,7 @@ margin-bottom: 15px;
   font-size: 1.5em;
 }
 
-.InactiveDays h4{
-
+.InactiveDays h4 {
 }
 .deleteContainer {
   position: fixed;
@@ -789,17 +794,16 @@ margin-bottom: 15px;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 20px;
   padding: 12px 24px;
   background: linear-gradient(145deg, #2d3748, #1a202c);
   color: white;
   border-radius: 12px;
-  box-shadow: 
-    0 4px 6px rgba(0, 0, 0, 0.1),
-    0 10px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   animation: slideUp 0.3s ease-out forwards;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .undo-popup p {
@@ -817,9 +821,7 @@ margin-bottom: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 
-    2px 2px 4px rgba(0, 0, 0, 0.2),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .undo-popup button:hover {
@@ -829,11 +831,13 @@ margin-bottom: 15px;
 
 .undo-popup button:active {
   transform: translateY(0);
-  box-shadow: 
-    1px 1px 2px rgba(0, 0, 0, 0.2),
-    inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(0, 0, 0, 0.1);
 }
-
+.submit-btn:disabled {
+  background-color: #a0a0a0; /* dimmed color */
+  cursor: not-allowed;
+  opacity: 0.6;
+}
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -883,7 +887,9 @@ margin-bottom: 15px;
   .expense-form {
     width: 75%;
   }
-
+  .undo-popup {
+    width: 300px;
+  }
   .form-group input {
     width: 80%;
   }
@@ -989,13 +995,13 @@ margin-bottom: 15px;
   .share-toggle-label {
     font-size: 15px;
   }
-.InactiveDays{
-  text-align: left;
-  font-size: 14px;
-}
-.InactiveDays::before {
-  font-size: 1.7em;
-}
+  .InactiveDays {
+    text-align: left;
+    font-size: 14px;
+  }
+  .InactiveDays::before {
+    font-size: 1.7em;
+  }
   .slide {
     width: 45px;
     height: 24px;
@@ -1067,26 +1073,43 @@ margin-bottom: 15px;
   #data-box p.date {
     font-size: 11px;
   }
-  .entry-details{
+  .entry-details {
     flex-wrap: wrap;
-    gap:8px;
+    gap: 8px;
     margin-bottom: 15px;
     justify-content: center;
     align-items: center;
   }
-    .entry-details p {
-    width:min-content;
+  .entry-details p {
+    width: min-content;
     width: 100%;
     margin-bottom: 0;
   }
   .delBox {
-  background-color: white;
-  padding: 20px 5px;
-  width: 200px;
+    background-color: white;
+    padding: 20px 5px;
+    width: 200px;
+  }
 
+  .delBox h5 {
+    font-size: 1.1rem;
+  }
+  .undo-popup p {
+    font-size: 0.8rem;
+  }
+  .undo-popup {
+    width: 230px;
+  }
 }
-
-.delBox h5 {
-  font-size: 1.1rem;
-}
+@media (max-width: 360px) {
+  .undo-popup p {
+    font-size: 0.6rem;
+  }
+  .undo-popup {
+    width: 200px;
+  }
+  .undo-popup button {
+    border-radius: 8px;
+    padding: 3px 13px;
+  }
 }
