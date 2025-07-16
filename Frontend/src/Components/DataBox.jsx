@@ -29,8 +29,6 @@ export default function DataBox() {
   const exchangeRate = 1 / 85.1;
   const [inactiveDates, setInactiveDates] = useState();
   const [deletePopup, setDeletePopup] = useState("");
-  const [lastDeleted, setLastDeleted] = useState(null);
-  const [undoTimer, setUndoTimer] = useState(null);
   const [submitLoading, setSubmitLoading] = useState(false);
 
   const trailingActions = (id) => (
@@ -75,9 +73,6 @@ export default function DataBox() {
       console.error(err.message);
     } finally {
       setLoading(false);
-      //   setTimeout(() => {
-      //   setLoading(false)
-      // },3000)
     }
   };
 
@@ -134,7 +129,7 @@ export default function DataBox() {
 
   useEffect(() => {
     const loadData = async () => {
-      await getUser(); // first get the user
+      await getUser();
     };
     loadData();
     getLastExpenseDayDiff();
@@ -185,7 +180,7 @@ export default function DataBox() {
         sharedWith: shared ? sharedWithData : [],
       });
       toast.success(res.data.message);
-      fetchHistory(); // Refresh history
+      fetchHistory();
     } catch (err) {
       toast.error(err?.response?.data?.message || err.message);
     } finally {
@@ -199,68 +194,42 @@ export default function DataBox() {
     setSharedWith([]);
     setError("");
   };
+
   const handleDeleteYes = async () => {
-    const deletedItem = history.find((item) => item._id === deletePopup);
-    if (!deletedItem) return;
-    const deleteId = deletePopup;
-    setHistory((prev) => prev.filter((item) => item._id !== deletePopup));
-    setLastDeleted(deletedItem);
-    setDeletePopup("");
+    const idToDelete = deletePopup;
+    setDeletePopup(""); // Close the popup immediately
 
-    const timer = setTimeout(async () => {
-      try {
-        const res = await api.delete(`api/expenses/${deleteId}`);
-        if (res.data.success) {
-          setLastDeleted(null);
-          fetchHistory();
-        }
-      } catch (err) {
-        console.error(err.message);
+    try {
+      const res = await api.delete(`api/expenses/${idToDelete}`);
+      if (res.data.success) {
+        toast.success("Expense deleted successfully.");
+        fetchHistory(); // Refresh history to reflect the change
       }
-    }, 4000);
-    setUndoTimer(timer);
+    } catch (err) {
+      toast.error("Failed to delete expense.");
+      console.error(err.message);
+    }
   };
 
-  const handleUndo = () => {
-    if (undoTimer) {
-      clearTimeout(undoTimer);
-      setUndoTimer(null);
-    }
-    if (lastDeleted) {
-      setHistory((prev) => [lastDeleted, ...prev]);
-      setLastDeleted(null);
-      toast.success("Undo Successful");
-    }
+  const handleDeleteNo = () => {
+    setDeletePopup("");
   };
-  useEffect(() => {
-    return () => {
-      if (undoTimer) clearTimeout(undoTimer);
-    };
-  }, [undoTimer]);
 
   const formatDateTime = (dateString) => {
     const date = new Date(dateString);
-
     const formattedDate = date.toLocaleDateString("en-IN", {
       timeZone: "Asia/Kolkata",
       day: "2-digit",
       month: "short",
       year: "numeric",
     });
-
     let formattedTime = date.toLocaleTimeString("en-IN", {
       timeZone: "Asia/Kolkata",
       hour: "2-digit",
       minute: "2-digit",
       hour12: true,
     });
-
-    // Add non-breaking space before am/pm
-    formattedTime = formattedTime.replace(
-      /(\d{1,2}:\d{2}) (\w{2})/,
-      "$1\u00A0$2"
-    );
-
+    formattedTime = formattedTime.replace(/(\d{1,2}:\d{2}) (\w{2})/, "$1\u00A0$2");
     return `${formattedDate}, ${formattedTime}`;
   };
 
@@ -271,11 +240,8 @@ export default function DataBox() {
       });
     }
   }, [userLimit]);
-  if (loading) return <IntialLoader />;
 
-  const handleDeleteNo = () => {
-    setDeletePopup("");
-  };
+  if (loading) return <IntialLoader />;
 
   return (
     <section id="data-box">
@@ -285,7 +251,7 @@ export default function DataBox() {
             <h5>Delete?</h5>
             <div className="buttonContainers">
               <button onClick={handleDeleteNo}>No</button>
-              <button onClick={handleDeleteYes}>yes</button>
+              <button onClick={handleDeleteYes}>Yes</button>
             </div>
           </div>
         </div>
@@ -431,7 +397,6 @@ export default function DataBox() {
           )}
 
           <button type="submit" disabled={submitLoading} className="submit-btn">
-            {" "}
             {submitLoading ? "Submitting..." : "Submit"}
           </button>
           {error && <p className="error-message">{error}</p>}
@@ -519,12 +484,6 @@ export default function DataBox() {
           </SwipeableList>
         </ul>
       </section>
-      {lastDeleted && (
-        <div className="undo-popup">
-          <p>Expense deleted. Undo?</p>
-          <button onClick={handleUndo}>Undo</button>
-        </div>
-      )}
     </section>
   );
 }

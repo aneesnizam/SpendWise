@@ -1,3 +1,4 @@
+
 :root {
   --bg-base: #f0f4f8;
   --text-base: #1f2937;
@@ -9,7 +10,7 @@
   --accent-red: #ef4444;
 }
 
-/* Root Section */
+/* Root Section & Body */
 #data-box {
   width: 100%;
   position: relative;
@@ -38,8 +39,111 @@ input[type="number"]::-webkit-outer-spin-button {
   border-radius: 10px;
   padding: 10px 10px;
   text-align: center;
-  color: var(--text-black);
+  color: var(--text-base);
   box-shadow: 5px 5px 20px #a3b1c6, -5px -5px 20px #ffffff;
+}
+
+/* Inactive Days Alert */
+.InactiveDays {
+  position: relative;
+  text-align: center;
+  padding: 0px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(
+    135deg,
+    rgba(203, 213, 225, 0.9) 0%,
+    rgba(148, 163, 184, 0.9) 100%
+  );
+  color: #1e293b;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border-left: 6px solid #94a3b8;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.InactiveDays:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.InactiveDays::before {
+  content: "⏳";
+  font-size: 1.5em;
+}
+
+/* Delete Popup */
+.deleteContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+}
+
+.delBox {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 340px;
+  text-align: center;
+}
+
+.delBox h5 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.buttonContainers {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.buttonContainers button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.buttonContainers button:first-child {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.buttonContainers button:first-child:hover {
+  background-color: #e0e0e0;
+}
+
+.buttonContainers button:last-child {
+  background-color: #ff4444;
+  color: white;
+}
+
+.buttonContainers button:last-child:hover {
+  background-color: #cc0000;
 }
 
 /* Form Layout */
@@ -86,25 +190,24 @@ input[type="number"]::-webkit-outer-spin-button {
   width: 66%;
   box-sizing: border-box;
 }
+
 .CategorySelector option {
   background-color: #e7ebef;
 }
+
 .CategorySelector {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
   text-align: center;
   text-align-last: center;
 }
+
 .form-group input.discription {
   color: #4b5563;
 }
 
-.form-group select {
-}
-
-/* Buttons */
+/* Form Buttons */
 .expense-form button {
   width: 70%;
   margin: 0 auto;
@@ -127,6 +230,12 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 14px;
 }
 
+.submit-btn:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 /* Error Message */
 .error-message {
   color: var(--accent-red);
@@ -147,6 +256,12 @@ input[type="number"]::-webkit-outer-spin-button {
   color: var(--text-base);
 }
 
+.summary-box .label {
+  font-size: 20px;
+  margin-right: 10px;
+  color: var(--text-base);
+}
+
 .limit-value {
   font-size: 20px;
   font-weight: 700;
@@ -159,12 +274,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .limit-value.negative {
   color: var(--accent-red);
-}
-
-.summary-box .label {
-  font-size: 20px;
-  margin-right: 10px;
-  color: var(--text-base);
 }
 
 span.totalcost {
@@ -246,7 +355,11 @@ span.totalcost {
   font-size: 16px;
 }
 
-/* Category Tags */
+.entry-footer p {
+  color: #4b5563;
+}
+
+/* Category Tags & Backgrounds */
 .category-tag {
   padding: 3px 6px;
   border-radius: 10px;
@@ -254,284 +367,89 @@ span.totalcost {
   font-weight: bold;
 }
 
-/* Sample of updated colors */
-.category-tag.food {
-  color: #22c55e;
-}
-.category-tag.transport {
-  color: #260e5e;
-}
-.category-tag.shopping {
-  color: #ef4444;
-}
-.category-tag.entertainment {
-  color: #f59e0b;
-}
-.category-tag.bills {
-  color: #6366f1;
-}
-.category-tag.healthcare {
-  color: #14b8a6;
-}
-.category-tag.education {
-  color: #0284c7;
-}
-.category-tag.groceries {
-  color: #eab308;
-}
-.category-tag.fuel {
-  color: #b91c1c;
-}
-.category-tag.public-transport {
-  color: #8b5cf6;
-}
-.category-tag.clothing {
-  color: #c026d3;
-}
-.category-tag.electronics {
-  color: #10b981;
-}
-.category-tag.movies {
-  color: #eab308;
-}
-.category-tag.subscriptions {
-  color: #334155;
-}
-.category-tag.electricity {
-  color: #ea580c;
-}
-.category-tag.water {
-  color: #3b82f6;
-}
-.category-tag.internet {
-  color: #6366f1;
-}
-.category-tag.rent {
-  color: #dc2626;
-}
-.category-tag.mortgage {
-  color: #1e40af;
-}
-.category-tag.medicines {
-  color: #22c55e;
-}
-.category-tag.doctor {
-  color: #14b8a6;
-}
-.category-tag.insurance {
-  color: #db2777;
-}
-.category-tag.school-fees {
-  color: #6366f1;
-}
-.category-tag.books {
-  color: #ca8a04;
-}
-.category-tag.personal-care {
-  color: #e11d48;
-}
-.category-tag.gym {
-  color: #ef4444;
-}
-.category-tag.salon {
-  color: #16a34a;
-}
-.category-tag.travel {
-  color: #0ea5e9;
-}
-.category-tag.flight {
-  color: #0284c7;
-}
-.category-tag.hotel {
-  color: #eab308;
-}
-.category-tag.gifts {
-  color: #be123c;
-}
-.category-tag.charity {
-  color: #059669;
-}
-.category-tag.savings {
-  color: #22c55e;
-}
-.category-tag.investments {
-  color: #8b5cf6;
-}
-.category-tag.pets {
-  color: #a855f7;
-}
-.category-tag.home-maintenance {
-  color: #dc2626;
-}
-.category-tag.childcare {
-  color: #eab308;
-}
-.category-tag.taxes {
-  color: #7f1d1d;
-}
-.category-tag.other {
-  color: #4b5563;
-}
+/* Category Tag Colors */
+.category-tag.food { color: #22c55e; }
+.category-tag.transport { color: #260e5e; }
+.category-tag.shopping { color: #ef4444; }
+.category-tag.entertainment { color: #f59e0b; }
+.category-tag.bills { color: #6366f1; }
+.category-tag.healthcare { color: #14b8a6; }
+.category-tag.education { color: #0284c7; }
+.category-tag.groceries { color: #eab308; }
+.category-tag.fuel { color: #b91c1c; }
+.category-tag.public-transport { color: #8b5cf6; }
+.category-tag.clothing { color: #c026d3; }
+.category-tag.electronics { color: #10b981; }
+.category-tag.movies { color: #eab308; }
+.category-tag.subscriptions { color: #334155; }
+.category-tag.electricity { color: #ea580c; }
+.category-tag.water { color: #3b82f6; }
+.category-tag.internet { color: #6366f1; }
+.category-tag.rent { color: #dc2626; }
+.category-tag.mortgage { color: #1e40af; }
+.category-tag.medicines { color: #22c55e; }
+.category-tag.doctor { color: #14b8a6; }
+.category-tag.insurance { color: #db2777; }
+.category-tag.school-fees { color: #6366f1; }
+.category-tag.books { color: #ca8a04; }
+.category-tag.personal-care { color: #e11d48; }
+.category-tag.gym { color: #ef4444; }
+.category-tag.salon { color: #16a34a; }
+.category-tag.travel { color: #0ea5e9; }
+.category-tag.flight { color: #0284c7; }
+.category-tag.hotel { color: #eab308; }
+.category-tag.gifts { color: #be123c; }
+.category-tag.charity { color: #059669; }
+.category-tag.savings { color: #22c55e; }
+.category-tag.investments { color: #8b5cf6; }
+.category-tag.pets { color: #a855f7; }
+.category-tag.home-maintenance { color: #dc2626; }
+.category-tag.childcare { color: #eab308; }
+.category-tag.taxes { color: #7f1d1d; }
+.category-tag.other { color: #4b5563; }
 
-/* Backgrounds for history items */
-.history-item.food {
-  background: #f0fdf4;
-  border-left: 3px solid #22c55e;
-}
-.history-item.transport {
-  background: #eff6ff;
-  border-left: 3px solid #260e5e;
-}
-.history-item.shopping {
-  background: #fef2f2;
-  border-left: 3px solid #ef4444;
-}
-.history-item.entertainment {
-  background: #fefce8;
-  border-left: 3px solid #f59e0b;
-}
-.history-item.bills {
-  background: #f5f3ff;
-  border-left: 3px solid #6366f1;
-}
-.history-item.healthcare {
-  background: #ecfdf5;
-  border-left: 3px solid #14b8a6;
-}
-.history-item.education {
-  background: #f0f9ff;
-  border-left: 3px solid #0284c7;
-}
-.history-item.groceries {
-  background: #fefce8;
-  border-left: 3px solid #eab308;
-}
-.history-item.fuel {
-  background: #fef2f2;
-  border-left: 3px solid #b91c1c;
-}
-.history-item.public-transport {
-  background: #f0f9ff;
-  border-left: 3px solid #8b5cf6;
-}
-.history-item.clothing {
-  background: #fdf4ff;
-  border-left: 3px solid #c026d3;
-}
-.history-item.electronics {
-  background: #ecfdf5;
-  border-left: 3px solid #10b981;
-}
-.history-item.movies {
-  background: #fef9c3;
-  border-left: 3px solid #eab308;
-}
-.history-item.subscriptions {
-  background: #f1f5f9;
-  border-left: 3px solid #334155;
-}
-.history-item.electricity {
-  background: #fff7ed;
-  border-left: 3px solid #ea580c;
-}
-.history-item.water {
-  background: #eff6ff;
-  border-left: 3px solid #3b82f6;
-}
-.history-item.internet {
-  background: #eef2ff;
-  border-left: 3px solid #6366f1;
-}
-.history-item.rent {
-  background: #fef2f2;
-  border-left: 3px solid #dc2626;
-}
-.history-item.mortgage {
-  background: #f3f4f6;
-  border-left: 3px solid #1e40af;
-}
-.history-item.medicines {
-  background: #f0fdf4;
-  border-left: 3px solid #22c55e;
-}
-.history-item.doctor {
-  background: #ecfdf5;
-  border-left: 3px solid #14b8a6;
-}
-.history-item.insurance {
-  background: #fdf2f8;
-  border-left: 3px solid #db2777;
-}
-.history-item.school-fees {
-  background: #eef2ff;
-  border-left: 3px solid #6366f1;
-}
-.history-item.books {
-  background: #fefce8;
-  border-left: 3px solid #ca8a04;
-}
-.history-item.personal-care {
-  background: #fff1f2;
-  border-left: 3px solid #e11d48;
-}
-.history-item.gym {
-  background: #fef2f2;
-  border-left: 3px solid #ef4444;
-}
-.history-item.salon {
-  background: #f0fdf4;
-  border-left: 3px solid #16a34a;
-}
-.history-item.travel {
-  background: #f0f9ff;
-  border-left: 3px solid #0ea5e9;
-}
-.history-item.flight {
-  background: #e0f2fe;
-  border-left: 3px solid #0284c7;
-}
-.history-item.hotel {
-  background: #fefce8;
-  border-left: 3px solid #eab308;
-}
-.history-item.gifts {
-  background: #fef2f2;
-  border-left: 3px solid #be123c;
-}
-.history-item.charity {
-  background: #ecfdf5;
-  border-left: 3px solid #059669;
-}
-.history-item.savings {
-  background: #f0fdf4;
-  border-left: 3px solid #22c55e;
-}
-.history-item.investments {
-  background: #f5f3ff;
-  border-left: 3px solid #8b5cf6;
-}
-.history-item.pets {
-  background: #fdf4ff;
-  border-left: 3px solid #a855f7;
-}
-.history-item.home-maintenance {
-  background: #fef2f2;
-  border-left: 3px solid #dc2626;
-}
-.history-item.childcare {
-  background: #fefce8;
-  border-left: 3px solid #eab308;
-}
-.history-item.taxes {
-  background: #fef2f2;
-  border-left: 3px solid #7f1d1d;
-}
-.history-item.other {
-  background: #f9fafb;
-  border-left: 3px solid #4b5563;
-}
+/* History Item Backgrounds */
+.history-item.food { background: #f0fdf4; border-left: 3px solid #22c55e; }
+.history-item.transport { background: #eff6ff; border-left: 3px solid #260e5e; }
+.history-item.shopping { background: #fef2f2; border-left: 3px solid #ef4444; }
+.history-item.entertainment { background: #fefce8; border-left: 3px solid #f59e0b; }
+.history-item.bills { background: #f5f3ff; border-left: 3px solid #6366f1; }
+.history-item.healthcare { background: #ecfdf5; border-left: 3px solid #14b8a6; }
+.history-item.education { background: #f0f9ff; border-left: 3px solid #0284c7; }
+.history-item.groceries { background: #fefce8; border-left: 3px solid #eab308; }
+.history-item.fuel { background: #fef2f2; border-left: 3px solid #b91c1c; }
+.history-item.public-transport { background: #f0f9ff; border-left: 3px solid #8b5cf6; }
+.history-item.clothing { background: #fdf4ff; border-left: 3px solid #c026d3; }
+.history-item.electronics { background: #ecfdf5; border-left: 3px solid #10b981; }
+.history-item.movies { background: #fef9c3; border-left: 3px solid #eab308; }
+.history-item.subscriptions { background: #f1f5f9; border-left: 3px solid #334155; }
+.history-item.electricity { background: #fff7ed; border-left: 3px solid #ea580c; }
+.history-item.water { background: #eff6ff; border-left: 3px solid #3b82f6; }
+.history-item.internet { background: #eef2ff; border-left: 3px solid #6366f1; }
+.history-item.rent { background: #fef2f2; border-left: 3px solid #dc2626; }
+.history-item.mortgage { background: #f3f4f6; border-left: 3px solid #1e40af; }
+.history-item.medicines { background: #f0fdf4; border-left: 3px solid #22c55e; }
+.history-item.doctor { background: #ecfdf5; border-left: 3px solid #14b8a6; }
+.history-item.insurance { background: #fdf2f8; border-left: 3px solid #db2777; }
+.history-item.school-fees { background: #eef2ff; border-left: 3px solid #6366f1; }
+.history-item.books { background: #fefce8; border-left: 3px solid #ca8a04; }
+.history-item.personal-care { background: #fff1f2; border-left: 3px solid #e11d48; }
+.history-item.gym { background: #fef2f2; border-left: 3px solid #ef4444; }
+.history-item.salon { background: #f0fdf4; border-left: 3px solid #16a34a; }
+.history-item.travel { background: #f0f9ff; border-left: 3px solid #0ea5e9; }
+.history-item.flight { background: #e0f2fe; border-left: 3px solid #0284c7; }
+.history-item.hotel { background: #fefce8; border-left: 3px solid #eab308; }
+.history-item.gifts { background: #fef2f2; border-left: 3px solid #be123c; }
+.history-item.charity { background: #ecfdf5; border-left: 3px solid #059669; }
+.history-item.savings { background: #f0fdf4; border-left: 3px solid #22c55e; }
+.history-item.investments { background: #f5f3ff; border-left: 3px solid #8b5cf6; }
+.history-item.pets { background: #fdf4ff; border-left: 3px solid #a855f7; }
+.history-item.home-maintenance { background: #fef2f2; border-left: 3px solid #dc2626; }
+.history-item.childcare { background: #fefce8; border-left: 3px solid #eab308; }
+.history-item.taxes { background: #fef2f2; border-left: 3px solid #7f1d1d; }
+.history-item.other { background: #f9fafb; border-left: 3px solid #4b5563; }
 
-/* Share Toggle Container */
+/* Share Toggle & Friend Split */
 .share-toggle-containerr {
   display: flex;
   justify-content: space-between;
@@ -551,7 +469,6 @@ span.totalcost {
   cursor: pointer;
 }
 
-/* Custom Toggle Switch */
 .share-toggle-containerr .slide {
   position: relative;
   display: inline-block;
@@ -585,7 +502,6 @@ span.totalcost {
   transform: translateX(24px);
 }
 
-/* Friend Split Container */
 .friend-split-containerr {
   margin-top: 15px;
   padding: 15px;
@@ -661,8 +577,6 @@ span.totalcost {
   }
 }
 
-/* Responsive Design */
-
 /* Scrollbar styling */
 .friend-split-list::-webkit-scrollbar {
   width: 6px;
@@ -681,270 +595,70 @@ span.totalcost {
 .friend-split-list::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
-.InactiveDays {
-  position: relative;
-  text-align: center;
-  padding: 0px 24px;
-  width: 100%;
-  box-sizing: border-box;
-  background: linear-gradient(
-    135deg,
-    rgba(203, 213, 225, 0.9) 0%,
-    rgba(148, 163, 184, 0.9) 100%
-  );
-  color: #1e293b; /* slate-800 for better readability */
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  border-radius: 12px;
-  margin-bottom: 15px;
-  border-left: 6px solid #94a3b8; /* slate-400 as accent border */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 1rem;
-  line-height: 1.5;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
 
-.InactiveDays:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-/* Optional icon styling */
-.InactiveDays::before {
-  content: "⏳";
-  font-size: 1.5em;
-}
-
-.InactiveDays h4 {
-}
-.deleteContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100dvh;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-  backdrop-filter: blur(5px); /* This creates the blur effect */
-  z-index: 1000; /* Ensure it's above other content */
-}
-
-.delBox {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 340px;
-  text-align: center;
-}
-
-.delBox h5 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.buttonContainers {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.buttonContainers button {
-  padding: 8px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.buttonContainers button:first-child {
-  background-color: #f0f0f0;
-  color: #333;
-}
-
-.buttonContainers button:first-child:hover {
-  background-color: #e0e0e0;
-}
-
-.buttonContainers button:last-child {
-  background-color: #ff4444;
-  color: white;
-}
-
-.buttonContainers button:last-child:hover {
-  background-color: #cc0000;
-}
-/* Undo Popup Styles */
-.undo-popup {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 12px 24px;
-  background: linear-gradient(145deg, #2d3748, #1a202c);
-  color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  animation: slideUp 0.3s ease-out forwards;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.undo-popup p {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 500;
-}
-
-.undo-popup button {
-  background: linear-gradient(145deg, #ff8c42, #ff6b21);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 6px 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-}
-
-.undo-popup button:hover {
-  background: linear-gradient(145deg, #ff6b21, #ff8c42);
-  transform: translateY(-1px);
-}
-
-.undo-popup button:active {
-  transform: translateY(0);
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(0, 0, 0, 0.1);
-}
-.submit-btn:disabled {
-  background-color: #a0a0a0; /* dimmed color */
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-/* Fade out animation when disappearing */
-.undo-popup.fade-out {
-  animation: fadeOut 0.3s ease-in forwards;
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(-50%) translateY(20px);
-  }
-}
-/* 980px Breakpoint */
+/* Responsive Design */
 @media (max-width: 980px) {
   .form-container {
     flex-direction: column;
     align-items: center;
     padding: 30px 0;
   }
-
   .expense-form {
     width: 60%;
     margin-bottom: 30px;
   }
-
   #data-box::before {
     background-position: top 80px left 120px, top 400px right 30px;
   }
 }
 
-/* 768px Breakpoint */
 @media (max-width: 768px) {
   .expense-form {
     width: 75%;
   }
-  .undo-popup {
-    width: 300px;
-  }
   .form-group input {
     width: 80%;
   }
-
   .expense-form button {
     width: 80%;
   }
-
   #data-box::before {
     background-size: 70px 60px, 60px 50px;
     background-position: top 80px left 10px, top 400px right 30px;
   }
-
   .entry-header {
     grid-template-columns: 2fr 2fr 1fr;
   }
 }
 
-/* 640px Breakpoint */
 @media (max-width: 640px) {
   .expense-form {
     width: 85%;
   }
-
   .form-group input {
     width: 80%;
   }
-
   .expense-form button {
     width: 90%;
   }
-
   #data-box::before {
     opacity: 0.6;
     background-position: top 10px left 10px, top 450px right 30px;
   }
-
   .summary-box h4 {
     font-size: 20px;
   }
-
   .limit-value,
   .summary-box .label {
     font-size: 18px;
   }
-
   span.totalcost {
     font-size: 22px;
   }
 }
 
-/* 520px Breakpoint */
 @media (max-width: 520px) {
   .expense-history ul {
-    list-style: none;
     width: 90%;
     margin: 0 auto;
     padding: 0;
@@ -952,27 +666,22 @@ span.totalcost {
   .expense-form {
     width: 95%;
   }
-
   #data-box::before {
     background-size: 50px 40px, 40px 30px;
     background-position: top 80px left 120px, top 400px right 30px;
     display: none;
   }
-
   .entry-header {
     grid-template-columns: 4fr 2fr 1fr;
     font-size: 14px;
   }
-
   .entry-details span {
     font-size: 15px;
   }
-
   .delete-btn {
     scale: 1;
     width: 50px;
   }
-
   .category-tag {
     font-size: 14px;
     padding: 0;
@@ -990,7 +699,6 @@ span.totalcost {
   }
 }
 
-/* 480px Breakpoint */
 @media (max-width: 480px) {
   .share-toggle-label {
     font-size: 15px;
@@ -1006,24 +714,16 @@ span.totalcost {
     width: 45px;
     height: 24px;
   }
-
   .slide:after {
     width: 20px;
     height: 20px;
   }
-
   .share-toggle-input:checked + .slide:after {
     transform: translateX(21px);
   }
-
-  .friend-split-container {
-    padding: 12px;
-  }
-
   .friend-split-info {
     font-size: 13px;
   }
-
   .friend-split-email {
     font-size: 11px;
   }
@@ -1034,35 +734,27 @@ span.totalcost {
   .form-group label {
     font-size: 14px;
   }
-
   .form-group input {
     padding: 8px;
     font-size: 14px;
   }
-
   .expense-form button {
     padding: 12px 8px;
     font-size: 14px;
   }
-
   .entry-header {
     grid-template-columns: 4fr 2fr 1fr;
   }
-
   .history-item {
     padding: 8px 5px;
-    /* border-right: 2px solid rgb(255, 113, 113); */
   }
-
   .summary-box h4 {
     font-size: 18px;
   }
-
   .limit-value,
   .summary-box .label {
     font-size: 16px;
   }
-
   span.totalcost {
     font-size: 20px;
   }
@@ -1090,26 +782,16 @@ span.totalcost {
     padding: 20px 5px;
     width: 200px;
   }
-
   .delBox h5 {
     font-size: 1.1rem;
   }
-  .undo-popup p {
-    font-size: 0.8rem;
-  }
-  .undo-popup {
-    width: 230px;
-  }
 }
+
 @media (max-width: 360px) {
-  .undo-popup p {
-    font-size: 0.6rem;
-  }
-  .undo-popup {
+  .delBox {
     width: 200px;
   }
-  .undo-popup button {
-    border-radius: 8px;
-    padding: 3px 13px;
+  .delBox h5 {
+    font-size: 1.1rem;
   }
 }
