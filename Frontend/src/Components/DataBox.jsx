@@ -30,6 +30,9 @@ export default function DataBox() {
   const exchangeRate = 1 / 85.1;
 const [inactiveDates,setInactiveDates] = useState()
 const[deletePopup,setDeletePopup] = useState('')
+const [lastDeleted, setLastDeleted] = useState(null);
+const [undoTimer, setUndoTimer] = useState(null);
+
 const trailingActions = (id) => (
 
   <TrailingActions>
@@ -193,19 +196,50 @@ const getLastExpenseDayDiff = async () => {
     setSharedWith([]);
     setError("");
   };
+const handleDeleteYes = async () => {
+const deletedItem = history.find((item)=> item._id === deletePopup);
+if (!deletedItem) return;
+  const deleteId = deletePopup;
+setHistory((prev) => prev.filter((item)=> item._id !== deletePopup));
+setLastDeleted(deletedItem);
+setDeletePopup('');
 
-  const handleDeleteYes = async () => {
+
+
+
+const timer = setTimeout(async () => {
     try {
-      const res = await api.delete(`api/expenses/${deletePopup}`);
+      const res = await api.delete(`api/expenses/${deleteId}`);
       if (res.data.success) {
-        toast.success(res.data.message);
+        setLastDeleted(null)
         fetchHistory();
-        setDeletePopup('')
+        
       }
     } catch (err) {
       console.error(err.message);
     }
+  },4000);
+setUndoTimer(timer)
+}
+
+const handleUndo = () =>{
+  if(undoTimer){
+    clearTimeout(undoTimer);
+    setUndoTimer(null)
+  }
+if(lastDeleted){
+  setHistory((prev) => [lastDeleted,...prev]);
+  setLastDeleted(null)
+  toast.success("Undo Successful")
+}
+
+}
+useEffect(() => {
+  return () => {
+    if (undoTimer) clearTimeout(undoTimer);
   };
+}, [undoTimer]);
+
 
 const formatDateTime = (dateString) => {
   const date = new Date(dateString);
@@ -475,6 +509,13 @@ setDeletePopup('')
             </SwipeableList>
         </ul>
       </section>
+      {lastDeleted && (
+  <div className="undo-popup">
+    <p>Expense deleted. Undo?</p>
+    <button onClick={handleUndo}>Undo</button>
+  </div>
+)}
+
     </section>
   );
 }
