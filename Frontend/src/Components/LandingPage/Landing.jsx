@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Landing.css";
 import { useNavigate } from "react-router-dom";
-
+import Footer from "../../utilities/Footer"
 
 export default function Landing() {
     const navigate = useNavigate()
@@ -120,6 +120,7 @@ const handlelick = () =>{
           </div>
         </div>
       </section>
+      <Footer/>
     </div>
   );
 }

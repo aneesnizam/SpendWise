@@ -14,6 +14,7 @@ import Loading from "./Loading/Loading";
 const FuelCalculator = lazy(() => import("./FuelCalculator/FuelCalculator"));
 const Calculator = lazy(() => import("./Calculator/Calculator"));
 const Help = lazy(() => import("./Help/Help"));
+import Footer from "../utilities/Footer"
 
 export default function Home() {
   const { currentView, fetchFriendsData } = userlogindata();
@@ -91,6 +92,7 @@ export default function Home() {
     <main id="home-page">
       <Nav />
       <section className="content-area">{renderView()}</section>
+      <Footer/>
     </main>
   );
 }

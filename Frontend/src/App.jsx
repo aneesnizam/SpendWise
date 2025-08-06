@@ -6,14 +6,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import GuestRoute from "./utilities/GuestRoute";
 import ProtectedRoute from "./utilities/ProtectedRoute";
-import {
-  requestNotificationPermission,
-  subscribeUserToPush,
-} from "./utilities/pushNotifications";
 import userlogindata from "./utilities/Authstore";
 import Landing from "./Components/LandingPage/Landing";
-import Register from "./Components/Register";
+
+import PrivacyPolicy from "./Components/PrivacyPolicy/PrivacyPolicy"
 export default function App() {
+
 
 
   const { user } = userlogindata();
@@ -87,6 +85,7 @@ export default function App() {
               </GuestRoute>
             }
           />
+           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             path="/login"
             element={

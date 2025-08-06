@@ -26,16 +26,16 @@ export default function Login() {
   } = userlogindata();
 
   // Load remembered credentials (if any)
-  useEffect(() => {
-    const savedCredentials = localStorage.getItem("rememberedCredentials");
-    if (savedCredentials) {
-      const { email: savedEmail, password: savedPassword } =
-        JSON.parse(savedCredentials);
-      setEmail(savedEmail);
-      setPassword(savedPassword);
-      setRememberMe(true);
-    }
-  }, []);
+useEffect(() => {
+  const savedCredentials = localStorage.getItem("rememberedCredentials");
+  if (savedCredentials) {
+    // Only the email is available now
+    const { email: savedEmail } = JSON.parse(savedCredentials);
+    setEmail(savedEmail);
+    setPassword(""); // Clear the password field
+    setRememberMe(true);
+  }
+}, []);
 
   const handleSignin = async () => {
     setError("");
@@ -64,14 +64,12 @@ export default function Login() {
         api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
         // Remember credentials if selected
-        if (rememberMe) {
-          localStorage.setItem(
-            "rememberedCredentials",
-            JSON.stringify({ email, password })
-          );
-        } else {
-          localStorage.removeItem("rememberedCredentials");
-        }
+      if (rememberMe) {
+  // Only store the email, NOT the password
+  localStorage.setItem("rememberedCredentials", JSON.stringify({ email }));
+} else {
+  localStorage.removeItem("rememberedCredentials");
+}
 
         toast.success(message || "Login successful");
         navigate("/home");
